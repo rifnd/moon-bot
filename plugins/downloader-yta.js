@@ -21,9 +21,7 @@ let handler = async (m, {
       thumbnail: json.thumbnail
     }).then(async () => {
       conn.sendMessage(m.chat, {
-        url: {
-          json.data.link
-        },
+        document: { url: json.data.link },
         fileName: json.title + '.mp3',
         mimetype: 'audio/mp3'
       }, {
@@ -36,7 +34,7 @@ let handler = async (m, {
   }
 }
 handler.help = ['ytmp3']
-hamdler.tags = ['downloader']
+handler.tags = ['downloader']
 handler.command = /^(yt(mp3|a))$/i 
 handler.limit = 1 
 
