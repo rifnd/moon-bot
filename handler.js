@@ -907,17 +907,16 @@ module.exports = {
                 if (chat.welcome) {
                     let groupMetadata = await this.groupMetadata(id) || (conn.chats[id] || {}).metadata
                     for (let user of participants) {
-                        let pp = 'https://telegra.ph/file/b9d24a37ee7b604903cf6.jpg'
+                        let pp = require('./src/pp.png')
                         try {
                             pp = await this.profilePictureUrl(user, 'image')
                         } catch (e) { } finally {
                             text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', await this.getName(id)).replace('@desc', groupMetadata.desc.toString()) :
                                 (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
-                            //this.sendFile(id, pp, 'pp.jpg', text, null, false, { mentions: [user] })
                             this.sendMessageModify(id, text, null, {
-                                thumbnail: await conn.getBuffer(pp),
-                                thumbnailUrl: pp,
-                                sourceUrl: linkgc
+                              largeThumb: true,
+                              thumbnail: pp,
+                              url: linkgc
                             })
                         }
                     }
@@ -988,29 +987,8 @@ Untuk mematikan fitur ini, ketik
         await conn.reply(owner[0] + '@s.whatsapp.net', `*NOTIF CALLER BOT!*\n\n@${callerId.split`@`[0]} telah menelpon *${conn.user.name}*\n\n ${callerId.split`@`[0]}\n`, null, {
             mentions: [callerId]
         })
-        conn.delay(10000) // supaya tidak spam
+        Func.delay(10000) // supaya tidak spam
     })
-
-global.dfail = (type, m, conn) => {
-    let msg = {
-        rowner: 'Perintah ini hanya dapat digunakan oleh _*OWWNER!1!1!*_',
-        owner: 'Perintah ini hanya dapat digunakan oleh _*Owner Bot*_!',
-        mods: 'Perintah ini hanya dapat digunakan oleh _*Moderator*_ !',
-        premium: '*Premium*\n1 Months *IDR 10000*\n1 Years *IDR 90000*\n\nHubungi *owner* kami..',
-        banned: 'Perintah ini hanya untuk pengguna yang terbanned..',
-        created: 'Perintah ini hanya pengguna yang sudah membuat base\nContoh: #createbase Moon',
-        group: 'Perintah ini hanya dapat digunakan di grup!',
-        private: 'Perintah ini hanya dapat digunakan di Chat Pribadi!',
-        admin: 'Perintah ini hanya untuk *Admin* grup!',
-        botAdmin: 'Jadikan bot sebagai *Admin* untuk menggunakan perintah ini!',
-        unreg: 'Silahkan daftar untuk menggunakan fitur ini dengan cara mengetik:\n\n*#daftar nama.umur*\n\nContoh: *#daftar Manusia.16*',
-        restrict: 'Fitur ini di *disable*!',
-        game: 'Fitur game dinonaktifkan',
-        rpg: 'Fitur RPG dinonaktifkan'
-    }[type]
-    if (msg) return m.reply(msg)
-
-}
 
 let fs = require('fs')
 let chalk = require('chalk')
