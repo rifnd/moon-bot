@@ -8,20 +8,21 @@ let tags = {
 const defaultMenu = {
     before: `
 ┌──⭓ ${set.wm}
+│
 │ Hai, %name!
 │
-│ › *Limit* : %limit
-│ › *Role* : %role*
-│ › *Level* : %level (%exp / %maxexp)* [%xp4levelup lagi untuk levelup]
-│ › *Exp* : %totalexp
+│ ›  *Limit* : %limit
+│ ›  *Role* : %role
+│ ›  *Level* : %level (%exp / %maxexp) [%xp4levelup lagi untuk levelup]
+│ ›  *Exp* : %totalexp
 │ 
-│ › *Tanggal* : %week %weton, %date
-│ › *Tanggal Islam* : %dateIslamic
-│ › *Waktu* : *%time
+│ ›  *Tanggal* : %week %weton, %date
+│ ›  *Tanggal Islam* : %dateIslamic
+│ ›  *Waktu* : %time
 │
-│ › *Uptime* : %uptime (%muptime)
-│ › *Database* : %rtotalreg of %totalreg
-│ › *Github* : %github
+│ ›  *Uptime* : %uptime (%muptime)
+│ ›  *Database* : %rtotalreg of %totalreg
+│ ›  *Github* : %github
 │ 
 └───────⭓
 %readmore`.trimStart(),
