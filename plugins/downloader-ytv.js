@@ -23,7 +23,7 @@ let handler = async (m, {
   }
 }
 handler.help = ['ytmp4']
-hamdler.tags = ['downloader']
+handler.tags = ['downloader']
 handler.command = /^(yt(mp4|v))$/i 
 handler.limit = 1 
 
