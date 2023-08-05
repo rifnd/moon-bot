@@ -8,6 +8,7 @@ let handler = async (m, {
     m.reply(status.wait)
     try {
         const json = await Func.fetchJson(API('alya', '/api/ig', { url: args[0] }, 'apikey'))
+        if (!json.status) return m.reply(Func.jsonFormat(json))
         for (let v of json.data) {
             await conn.sendFile(m.chat, v.url, '', wm, m)
         }
