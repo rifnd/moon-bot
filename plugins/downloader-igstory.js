@@ -16,7 +16,7 @@ let handler = async (m, {
         return m.reply(status.error)
     }
 }
-handler.help = ['igstory']
+handler.help = ['igstory'].map(v => v + ' <url/username>')
 handler.tags = ['downloader']
 handler.command = /^(igs|igstory|instagramstory)$/i
 handler.limit = 1
