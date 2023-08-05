@@ -9,7 +9,7 @@ let handler = async (m, {
         const json = await Func.fetchJson(API('alya', '/api/igs2', { q: args[0] }, 'apikey'))
         if (!json.status) return m.reply(Func.jsonFormat(json))
         for (let v of json.data) {
-            await conn.sendFile(m.chat, v.url, '', set.wm, m)
+            await conn.sendFile(m.chat, v.url, '', global.set.wm, m)
         }
     } catch (e) {
         console.log(e)
