@@ -131,7 +131,8 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
         }
         text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
         conn.sendMessageModify(m.chat, text.trim(), m, {
-            thumbnailUrl: global.set.thumbnail
+          largeThumb: true,
+          url: global.set.link
         })
     } catch (e) {
         conn.reply(m.chat, 'Maaf, menu sedang error', m)
