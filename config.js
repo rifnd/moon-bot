@@ -18,11 +18,12 @@ global.set = {
     wm: 'ᴍᴏᴏɴ ʙᴏᴛ ᴏɴʟɪɴᴇ',
     footer: 'ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ʙʏ ᴍᴏᴏɴ',
     packname: 'Sticker By',
-    author: '@naando.io',
-    multiplier: 7,
-    max_upload: 70,
-    intervalmsg: 1800
+    author: '@naando.io'
 }
+
+global.multiplier = 7
+global.max_upload = 70
+global.intervalmsg = 1800
 
 global.Func = require('./lib/functions')
 
