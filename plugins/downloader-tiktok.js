@@ -19,9 +19,9 @@ let handler = async (m, {
                 if (!res.status) return m.reply(Func.jsonFormat(re))
                 res.data.map(v => conn.sendFile(m.chat, v.url, '', json.title, m))
             }
-            if (json.data.video_nowm) return conn.sendFile(m.chat, json.data.video_nowm, json.title, m)
+            if (json.data.video_nowm) return conn.sendFile(m.chat, json.data.video_nowm, '', json.title, m)
         } else if (command == 'ttwm' || command == 'tikwm') {
-            conn.sendFile(m.chat, json.data.video_wm, json.title, m)
+            conn.sendFile(m.chat, json.data.video_wm, '', json.title, m)
         } else if (command == 'ttaudio' || command == 'tikmp3') {
             conn.sendFile(m.chat, json.data.music, '', '', m)
         }
