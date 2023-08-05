@@ -1,25 +1,28 @@
 let fs = require('fs')
 let path = require('path')
 let levelling = require('../lib/levelling')
-let tags = {}
+let tags = {
+  downloader: 'DOWNLOADER',
+  sticker: 'STICKER'
+}
 const defaultMenu = {
     before: `
 ┌──⭓ ${set.wm}
 │ Hai, %name!
 │
-│ Tersisa *%limit Limit*
-│ Role *%role*
-│ Level *%level (%exp / %maxexp)* [%xp4levelup lagi untuk levelup]
-│ %totalexp XP in Total
+│ › *Limit* : %limit
+│ › *Role* : %role*
+│ › *Level* : %level (%exp / %maxexp)* [%xp4levelup lagi untuk levelup]
+│ › *Exp* : %totalexp
 │ 
-│ Tanggal: *%week %weton, %date*
-│ Tanggal Islam: *%dateIslamic*
-│ Waktu: *%time*
+│ › *Tanggal* : %week %weton, %date
+│ › *Tanggal Islam* : %dateIslamic
+│ › *Waktu* : *%time
 │
-│ Uptime: *%uptime (%muptime)*
-│ Database: %rtotalreg of %totalreg
-│ Github:
-│ %github
+│ › *Uptime* : %uptime (%muptime)
+│ › *Database* : %rtotalreg of %totalreg
+│ › *Github* : %github
+│ 
 └───────⭓
 %readmore`.trimStart(),
     header: '┌──⭓ *%category*\n│',
@@ -99,8 +102,8 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
                     ...help.filter(menu => menu.tags && menu.tags.includes(tag) && menu.help).map(menu => {
                         return menu.help.map(help => {
                             return body.replace(/%cmd/g, menu.prefix ? help : '%p' + help)
-                                .replace(/%islimit/g, menu.limit ? '(Ⓛ)' : '')
-                                .replace(/%isPremium/g, menu.premium ? '(Ⓟ)' : '')
+                                .replace(/%islimit/g, menu.limit ? 'Ⓛ' : '')
+                                .replace(/%isPremium/g, menu.premium ? 'Ⓟ' : '')
                                 .trim()
                         }).join('\n')
                     }),
