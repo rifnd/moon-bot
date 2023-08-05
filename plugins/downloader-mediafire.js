@@ -22,10 +22,7 @@ let handler = async (m, {
             largeThumb: true,
             thumbnail: 'https://telegra.ph/file/98417f85e45f3cae84bee.jpg'
         }).then(async () => {
-            conn.sendMedia(m.chat, json.data.link, m, {
-                filename: json.data.filename,
-                mentions: [m.sender]
-            })
+          conn.sendFile(m.chat, json.data.link, '', m)
         })
     } catch (e) {
         console.log(e)
