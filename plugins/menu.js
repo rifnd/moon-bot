@@ -11,9 +11,9 @@ const defaultMenu = {
  Hai, %name!
  
 %readmore`.trimStart(),
-    header: '┌──⭓ _*%category*_\n│',
-    body: '│ ›  %cmd %islimit %isPremium',
-    footer: '│\n└───────⭓\n',
+    header: '*%category*',
+    body: '› %cmd %islimit %isPremium',
+    footer: '\n',
     after: `
 *%npmname@^%version*
 ${'```%npmdesc```'}
