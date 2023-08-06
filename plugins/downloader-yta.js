@@ -21,9 +21,9 @@ let handler = async (m, {
       largeThumb: true,
       thumbnail: json.thumbnail
     }).then(async () => {
-      conn.sendFile(m.chat, json.data.link, json.title, '', m, {
-        document: true,
-        APIC: await Func.fetchBuffer(json.thumbnail)
+      conn.sendMessage(m.chat, json.data.link, m, {
+        filename: json.title + '.mp3',
+        mentions: [m.sender]
       })
     })
   } catch (e) {
