@@ -26,7 +26,7 @@ let handler = async (m, {
     return m.reply(status.error)
   }
 }
-handler.help = ['ytmp4'].map(v => v + ' <url>')
+handler.help = ['ytmp4']
 handler.tags = ['downloader']
 handler.command = /^(yt(mp4|v))$/i 
 handler.limit = 1 
