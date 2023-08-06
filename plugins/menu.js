@@ -8,11 +8,10 @@ let tags = {
 }
 const defaultMenu = {
     before: `
- Hai, %name!
- 
-%readmore`.trimStart(),
+ Hai, %name
+`.trimStart(),
     header: '*%category*',
-    body: '› %cmd %islimit %isPremium',
+    body: '› %cmd',
     footer: '\n',
     after: `
 *%npmname@^%version*
