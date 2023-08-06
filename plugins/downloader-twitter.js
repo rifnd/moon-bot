@@ -10,14 +10,17 @@ let handler = async (m, {
         const json = await Func.fetchJson(API('alya', '/api/twitter', { url: args[0] }, 'apikey'))
         if (!json.status) return m.reply(Func.jsonFormat(json))
         for (let v of json.data) {
-            conn.sendFile(m.chat, v.url, '', set.wm, m)
+            conn.sendMedia(m.chat, v.url, m, {
+              caption: global.set.wm,
+              mentions: [m.sender]
+            })
         }
     } catch (e) {
         console.log(e)
         return m.reply(status.error)
     }
 }
-handler.help = ['twitter'].map(v => v + ' <url>')
+handler.help = ['twitter']
 handler.tags = ['downloader']
 handler.command = /^(twitter)$/i
 handler.limit = 1
