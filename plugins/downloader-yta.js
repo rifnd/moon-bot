@@ -21,7 +21,7 @@ let handler = async (m, {
       largeThumb: true,
       thumbnail: json.thumbnail
     }).then(async () => {
-      conn.sendMessage(m.chat, json.data.link, m, {
+      conn.sendMedia(m.chat, json.data.link, m, {
         filename: json.title + '.mp3',
         mentions: [m.sender]
       })
