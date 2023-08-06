@@ -17,7 +17,8 @@ let handler = async (m, {
     ca += global.set.footer
     let xSize = Func.sizeLimit(json.data.size, global.set.max_upload)
     if (xSize.oversize) return m.reply(`Ukuran file (${json.data.size}) terlalu besar, silahkan download sendiri lewat link ini : ${await (await Func.shortlink(json.data.url))}`)
-    conn.sendMedia(m.chat, json.data.link, m, {
+    conn.sendMedia(m.chat, json.data.url, m, {
+      filename: json.title + '.mp4',
       caption: ca,
       mentions: [m.sender]
     })
@@ -28,7 +29,7 @@ let handler = async (m, {
 }
 handler.help = ['ytmp4']
 handler.tags = ['downloader']
-handler.command = /^(yt(mp4|v))$/i 
-handler.limit = 1 
+handler.command = /^(yt(mp4|v))$/i
+handler.limit = 1
 
 module.exports = handler

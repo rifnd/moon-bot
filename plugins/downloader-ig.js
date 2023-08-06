@@ -10,8 +10,9 @@ let handler = async (m, {
         const json = await Func.fetchJson(API('alya', '/api/ig', { url: args[0] }, 'apikey'))
         if (!json.status) return m.reply(Func.jsonFormat(json))
         for (let v of json.data) {
-            conn.sendFile(m.chat, v.url, m, {
-              mentions: [m.sender]
+            conn.sendMedia(m.chat, v.url, m, {
+                caption: global.set.wm,
+                mentions: [m.sender]
             })
         }
     } catch (e) {

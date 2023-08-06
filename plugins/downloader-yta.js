@@ -21,7 +21,7 @@ let handler = async (m, {
       largeThumb: true,
       thumbnail: json.thumbnail
     }).then(async () => {
-      conn.sendMedia(m.chat, json.data.link, m, {
+      conn.sendMedia(m.chat, json.data.url, m, {
         filename: json.title + '.mp3',
         mentions: [m.sender]
       })
@@ -33,7 +33,7 @@ let handler = async (m, {
 }
 handler.help = ['ytmp3']
 handler.tags = ['downloader']
-handler.command = /^(yt(mp3|a))$/i 
-handler.limit = 1 
+handler.command = /^(yt(mp3|a))$/i
+handler.limit = 1
 
 module.exports = handler

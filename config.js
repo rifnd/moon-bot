@@ -1,6 +1,7 @@
 global.owner = [
+    ['6281252848955'],
     ['6285815700861'],
-    ['6281252848955', 'Owner', true]
+    ['6281252848955', 'owner', true]
 ]
 global.mods = ['0']
 global.prems = ['0']

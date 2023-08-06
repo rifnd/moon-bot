@@ -2,9 +2,15 @@ let fs = require('fs')
 let path = require('path')
 let levelling = require('../lib/levelling')
 let tags = {
-  downloader: 'DOWNLOADER',
-  owner: 'OWNER',
-  sticker: 'STICKER',
+    downloader: 'DOWNLOADER',
+    game: 'GAME',
+    group: 'GROUP',
+    info: 'INFO',
+    internet: 'INTERNET',
+    owner: 'OWNER',
+    rpg: 'RPG',
+    sticker: 'STICKER',
+    tools: 'TOOLS',
 }
 const defaultMenu = {
     before: `
@@ -12,9 +18,8 @@ const defaultMenu = {
 `.trimStart(),
     header: '*%category*',
     body: '› %cmd',
-    footer: '\n',
-    after: `
-*%npmname@^%version*
+    footer: '',
+    after: `*%npmname@^%version*
 ${'```%npmdesc```'}
 `,
 }
@@ -115,8 +120,8 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
         }
         text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
         conn.sendMessageModify(m.chat, text.trim(), m, {
-          largeThumb: true,
-          url: global.set.link
+            largeThumb: true,
+            url: global.set.link
         })
     } catch (e) {
         conn.reply(m.chat, 'Maaf, menu sedang error', m)
