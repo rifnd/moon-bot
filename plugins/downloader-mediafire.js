@@ -22,14 +22,17 @@ let handler = async (m, {
             largeThumb: true,
             thumbnail: 'https://telegra.ph/file/98417f85e45f3cae84bee.jpg'
         }).then(async () => {
-          conn.sendFile(m.chat, json.data.link, '', m)
+          conn.sendMedia(m.chat, json.data.link, m, {
+            filename: json.data.filename,
+            mentions: [m.sender]
+          })
         })
     } catch (e) {
         console.log(e)
         return m.reply(status.error)
     }
 }
-handler.help = ['mediafire'].map(v => v + ' <url>')
+handler.help = ['mediafire']
 handler.tags = ['downloader']
 handler.command = /^(mediafire)$/i
 handler.limit = 1
