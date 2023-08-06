@@ -3,19 +3,13 @@ let path = require('path')
 let levelling = require('../lib/levelling')
 let tags = {
   downloader: 'DOWNLOADER',
-  sticker: 'STICKER'
+  owner: 'OWNER',
+  sticker: 'STICKER',
 }
 const defaultMenu = {
     before: `
  Hai, %name!
  
-⭓──────────────────────⭓
- ›  *Tanggal* : %week %weton, %date
- ›  *Runtime* : %uptime (%muptime)
- ›  *Database* : %rtotalreg of %totalreg
- ›  *Github* : %github
-⭓──────────────────────⭓
-
 %readmore`.trimStart(),
     header: '┌──⭓ _*%category*_\n│',
     body: '│ ›  %cmd %islimit %isPremium',
