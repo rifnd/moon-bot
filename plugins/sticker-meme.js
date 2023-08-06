@@ -1,6 +1,10 @@
 const uploadImage = require('../lib/uploadImage')
-let handler = async (m, { conn, text, usedPrefix, command }) => {
-
+let handler = async (m, { 
+  conn,
+  text,
+  usedPrefix,
+  command
+}) => {
     let [atas, bawah] = text.split`|`
     let q = m.quoted ? m.quoted : m
     let mime = (q.msg || q).mimetype || ''
@@ -9,8 +13,10 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     let img = await q.download()
     let url = await uploadImage(img)
     let meme = `https://api.memegen.link/images/custom/${encodeURIComponent(atas ? atas : '')}/${encodeURIComponent(bawah ? bawah : '')}.png?background=${url}`
-    conn.sendSticker(m.chat, meme, m, { packname: packname, author: author })
-
+    conn.sendSticker(m.chat, meme, m, {
+      packname: global.set.packname,
+      author: global.set.author
+    })
 }
 handler.help = ['smeme']
 handler.tags = ['sticker']
