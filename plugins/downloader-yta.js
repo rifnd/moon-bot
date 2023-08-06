@@ -31,7 +31,7 @@ let handler = async (m, {
     return m.reply(status.error)
   }
 }
-handler.help = ['ytmp3'].map(v => v + ' <url>')
+handler.help = ['ytmp3']
 handler.tags = ['downloader']
 handler.command = /^(yt(mp3|a))$/i 
 handler.limit = 1 
