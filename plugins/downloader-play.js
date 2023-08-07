@@ -8,9 +8,14 @@ let handler = async (m, {
   try {
     let yt = await (await yts(text)).all
     let json = await Func.fetchJson(API('alya', '/api/yta', { url: yt[0].url }, 'apikey'))
+    m.reply(status.error)
     if (!json.status) return m.reply(Func.jsonFormat)
-    let teks = `${json.title}\n`
-    teks += `${yt[0].description}`
+    let ca = `❏  *Y T - P L A Y*\n\n`
+    ca += ` ›  *Judul* : ` + json.title + `\n`
+    ca += ` ›  *Durasi* : ` + json.duration + `\n`
+    ca += ` ›  *Penonton* : ` + json.views + `\n`
+    ca += ` ›  *Ukuran* : ` + json.data.size + `\n\n`
+    ca += global.set.footer
     let xSize = Func.sizeLimit(json.data.size, global.set.max_upload)
     if (xSize.oversize) return m.reply(`Ukuran file (${json.data.size}) terlalu besar, silahkan download sendiri lewat link ini : ${await (await Func.shortlink(json.data.url))}`)
     conn.sendMessageModify(m.chat, teks, m, {
