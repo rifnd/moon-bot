@@ -1,7 +1,7 @@
 let handler = async (m, { conn, isBotAdmin }) => {
   try {
     if (m.isGroup) {
-      if (!m.quoted) throw m.reply("Reply to the message you want to delete.");
+      if (!m.quoted) throw m.reply("Balas pesan yang ingin kamu hapus.");
       conn.sendMessage(m.chat, {
         delete: {
           remoteJid: m.chat,
@@ -13,7 +13,7 @@ let handler = async (m, { conn, isBotAdmin }) => {
     } else if (!m.isGroup) {
       if (!m.quoted) throw false;
       let { chat, fromMe, id, isBaileys } = m.quoted;
-      if (!isBaileys) return m.reply("The message was not sent by a bot!.");
+      if (!isBaileys) return m.reply("Pesan tidak dikirim oleh bot!.");
       conn.sendMessage(m.chat, {
         delete: {
           remoteJid: m.chat,
