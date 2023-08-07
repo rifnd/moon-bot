@@ -1,7 +1,7 @@
 const { MessageType } = require('@whiskeysockets/baileys')
 let handler = async (m, { conn, usedPrefix, owner }) => {
     try {
-        if (!db.data.settings[conn.user.jid].rpg) throw dfail('rpg', m, conn)
+        if (!db.data.settings[conn.user.jid].rpg) return m.reply(status.rpg)
         let __timers = (new Date - global.db.data.users[m.sender].lastadventure)
         let _timers = (3600000 - __timers)
         let timers = clockString(_timers)
