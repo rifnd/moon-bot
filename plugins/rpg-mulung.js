@@ -1,21 +1,22 @@
-
 const timeout = 86400000
 
-let handler = async (m, { conn, usedPrefix, text }) => {
-  if (!db.data.settings[conn.user.jid].rpg) throw dfail('rpg', m, conn)
+let handler = async (m, {
+  conn, usedPrefix, text
+}) => {
+  if (!db.data.settings[conn.user.jid].rpg) return m.reply(status.rpg)
   let time = global.db.data.users[m.sender].lastmulung + 86400000
-  if (new Date - global.db.data.users[m.sender].lastmulung< 86400000) throw `Anda sudah lelah untuk mulung\nTunggu selama ${msToTime(time - new Date())} lagi`
-	let botolnye = `${Math.floor(Math.random() * 1000)}`.trim()
-	let kalengnye = `${Math.floor(Math.random() * 1000)}`.trim()
-	let kardusnye = `${Math.floor(Math.random() * 1000)}`.trim()
-	global.db.data.users[m.sender].botol += botolnye * 1
-	global.db.data.users[m.sender].kaleng += kalengnye * 1
-	global.db.data.users[m.sender].kardus += kardusnye * 1
-	global.db.data.users[m.sender].lastmulung = new Date * 1
+  if (new Date - global.db.data.users[m.sender].lastmulung < 86400000) throw `Anda sudah lelah untuk mulung\nTunggu selama ${msToTime(time - new Date())} lagi`
+  let botolnye = `${Math.floor(Math.random() * 1000)}`.trim()
+  let kalengnye = `${Math.floor(Math.random() * 1000)}`.trim()
+  let kardusnye = `${Math.floor(Math.random() * 1000)}`.trim()
+  global.db.data.users[m.sender].botol += botolnye * 1
+  global.db.data.users[m.sender].kaleng += kalengnye * 1
+  global.db.data.users[m.sender].kardus += kardusnye * 1
+  global.db.data.users[m.sender].lastmulung = new Date * 1
   m.reply(`Selamat kamu mendapatkan : \n+${botolnye} Botol\n+${kardusnye} Kardus\n+${kalengnye} Kaleng`)
   setTimeout(() => {
-					conn.reply(m.chat, `Yuk waktunya mulung lagi 😅`, m)
-					}, timeout)
+    conn.reply(m.chat, `Yuk waktunya mulung lagi 😅`, m)
+  }, timeout)
 }
 handler.help = ['mulung']
 handler.tags = ['rpg']
@@ -38,14 +39,14 @@ module.exports = handler
 
 function msToTime(duration) {
   var milliseconds = parseInt((duration % 1000) / 100),
-    seconds = Math.floor((duration / 1000) % 60),
-    minutes = Math.floor((duration / (1000 * 60)) % 60),
-    hours = Math.floor((duration / (1000 * 60 * 60)) % 24)
-    
-  
-  hours = (hours < 10) ? "0" + hours : hours
-  minutes = (minutes < 10) ? "0" + minutes : minutes
-  seconds = (seconds < 10) ? "0" + seconds : seconds
+  seconds = Math.floor((duration / 1000) % 60),
+  minutes = Math.floor((duration / (1000 * 60)) % 60),
+  hours = Math.floor((duration / (1000 * 60 * 60)) % 24)
+
+
+  hours = (hours < 10) ? "0" + hours: hours
+  minutes = (minutes < 10) ? "0" + minutes: minutes
+  seconds = (seconds < 10) ? "0" + seconds: seconds
 
   return hours + " jam " + minutes + " menit " + seconds + " detik"
 }
