@@ -3,9 +3,11 @@ let fetch = require('node-fetch')
 let timeout = 180000
 let poin = 500
 let tiketcoin = 1
-let handler = async (m, { conn, usedPrefix }) => {
-  if (!db.data.settings[conn.user.jid].game) throw dfail('game', m, conn)
-  conn.tebakanime = conn.tebakanime ? conn.tebakanime : {}
+let handler = async (m, {
+  conn, usedPrefix
+}) => {
+  if (!db.data.settings[conn.user.jid].game) return m.reply(status.game)
+  conn.tebakanime = conn.tebakanime ? conn.tebakanime: {}
   let id = m.chat
   if (id in conn.tebakanime) {
     conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.tebakanime[id][0])
@@ -16,18 +18,22 @@ let handler = async (m, { conn, usedPrefix }) => {
   let json = await res.json()
   // if (!json.status) throw json
   let caption = `
-Timeout *${(timeout / 1000).toFixed(2)} detik*
-Ketik ${usedPrefix}nime untuk clue
-Bonus: ${poin} XP
-TiketCoin: ${tiketcoin}
-    `.trim()
+  Timeout *${(timeout / 1000).toFixed(2)} detik*
+  Ketik ${usedPrefix}nime untuk clue
+  Bonus: ${poin} XP
+  TiketCoin: ${tiketcoin}
+  `.trim()
   conn.tebakanime[id] = [
-    await conn.sendFile(m.chat, json.soal, 'tebakanime.jpg', caption, m, false, { thumbnail: Buffer.alloc(0) }),
-    json, poin,
+    await conn.sendFile(m.chat, json.soal, 'tebakanime.jpg', caption, m, false, {
+      thumbnail: Buffer.alloc(0)
+    }),
+    json,
+    poin,
     setTimeout(() => {
       if (conn.tebakanime[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, conn.tebakanime[id][0])
       delete conn.tebakanime[id]
-    }, timeout)
+    },
+      timeout)
   ]
 }
 handler.help = ['tebakanime']
