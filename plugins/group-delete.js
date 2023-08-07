@@ -28,7 +28,7 @@ let handler = async (m, { conn, isBotAdmin }) => {
   }
 };
 handler.help = ["delete"];
-handler.tags = ["tools"];
+handler.tags = ["group"];
 handler.command = /^del(ete)?$/i;
 handler.limit = true;
 
