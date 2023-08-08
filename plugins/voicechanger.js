@@ -48,7 +48,7 @@ let handler = async (m, {
     throw e
   }
 }
-handler.help = ['bass', 'blown', 'deep', 'earrape', 'fast', 'fat', 'nightcore', 'reverse', 'robot', 'slow', 'smooth', 'tupai', 'vibra'].map(v => v + ' [vn]')
+handler.help = ['bass', 'blown', 'deep', 'earrape', 'fast', 'fat', 'nightcore', 'reverse', 'robot', 'slow', 'smooth', 'tupai', 'vibra'].map(v => v + '')
 handler.tags = ['voice']
 handler.command = /^(bass|blown|deep|earrape|fas?t|nightcore|reverse|robot|slow|smooth|tupai|squirrel|chipmunk|vibra)$/i
 handler.limit = true
