@@ -18,7 +18,7 @@ let handler = async (m, {
     ca += global.set.footer
     let xSize = Func.sizeLimit(json.data.size, global.set.max_upload)
     if (xSize.oversize) return m.reply(`Ukuran file (${json.data.size}) terlalu besar, silahkan download sendiri lewat link ini : ${await (await Func.shortlink(json.data.url))}`)
-    conn.sendMessageModify(m.chat, teks, m, {
+    conn.sendMessageModify(m.chat, ca, m, {
       largeThumb: true,
       thumbnail: json.thumbnail
     }).then(async () => {
