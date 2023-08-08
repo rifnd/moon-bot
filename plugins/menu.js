@@ -11,6 +11,7 @@ let tags = {
     rpg: 'RPG',
     sticker: 'STICKER',
     tools: 'TOOLS',
+    voice: 'VOICE CHANGER',
 }
 const defaultMenu = {
     before: `
