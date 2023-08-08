@@ -3,6 +3,7 @@ let path = require('path')
 let levelling = require('../lib/levelling')
 let tags = {
     downloader: 'DOWNLOADER',
+    effect: 'EFFECT',
     game: 'GAME',
     group: 'GROUP',
     info: 'INFO',
