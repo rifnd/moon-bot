@@ -97,7 +97,7 @@ let handler = async (m, {
     return m.reply(Func.jsonFormat(e))
   }
 }
-handler.help = handler.command = ['jail', 'blur', 'invert', 'sepia', 'wasted', 'wanted', 'grayscale', '300years', 'afusion', 'approved', 'badge', 'badslap', 'beautiful', 'blurple', 'brazzers', 'burn', 'circle', 'crush', 'deepfry']
+handler.help = handler.command = ['jail', 'blur', 'invert', 'sepia', 'wasted', 'wanted', 'grayscale', '300years', 'afusion', 'approved', 'badge', 'badslap', 'beautiful', 'blurple', 'brazzers', 'burn', 'circle', 'crush', 'deepfry', 'dictator']
 handler.tags = ['effect']
 handler.limit = 1
 
