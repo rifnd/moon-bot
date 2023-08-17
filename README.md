@@ -60,3 +60,38 @@ module.exports = handler
 
 ```
 
+### Instalasi & Run
+```
+$ npm install
+$ npm start
+```
+
+menggunakan PM2
+
+```
+$ npm install pm2 -g
+$ npm install
+$ pm2 start index.js && pm2 save && pm2 logs
+```
+
+### Argumen `node . [--options]`
+
+Contoh : node . --autread
+
+### `--self`
+
+Mengabaikan yang lain
+
+### `--autoread`
+
+autored chat
+
+### `--db`
+
+contoh : `node . --db 'mongodburi'`
+Untuk menghubungkan ke database, pakai mongodb
+
+[![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) | [![Nando35](https://github.com/Nando35.png?size=100)](https://github.com/Nando35)
+----|----
+[Nurutomo](https://github.com/Nurutomo) | [Nando35](https://github.com/Nando35)
+ Penulis / Pencipta | Penerjemah
