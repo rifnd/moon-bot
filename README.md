@@ -91,6 +91,7 @@ autored chat
 contoh : `node . --db 'mongodburi'`
 Untuk menghubungkan ke database, pakai mongodb
 
+
 [![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) | [![Nando35](https://github.com/Nando35.png?size=100)](https://github.com/Nando35)
 ----|----
 [Nurutomo](https://github.com/Nurutomo) | [Nando35](https://github.com/Nando35)
