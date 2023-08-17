@@ -8,7 +8,7 @@
 - [x] imagemagick
 
 ### Settings di config.js
-```
+```Javascript
 global.owner = [
     ['6281252848955'],
     ['6285815700861'],
