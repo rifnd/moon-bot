@@ -4,13 +4,14 @@ let handler = async (m, {
     args
 }) => {
     if (!args[0]) return m.reply(Func.example(usedPrefix, command, 'bulansutena'))
-    m.reply(status.wait)
+    m.react('🕐')
+    let old = new Date()
     try {
         const json = await Func.fetchJson(API('alya', '/api/igs2', { q: args[0] }, 'apikey'))
         if (!json.status) return m.reply(Func.jsonFormat(json))
         for (let v of json.data) {
             conn.sendMedia(m.chat, v.url, m, {
-              caption: global.set.wm,
+              caption: `• *Fetching* : ${((new Date - old) * 1)} ms`,
               mentions: [m.sender]
             })
         }

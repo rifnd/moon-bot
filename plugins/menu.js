@@ -8,6 +8,7 @@ let tags = {
     group: 'GROUP',
     info: 'INFO',
     internet: 'INTERNET',
+    maker: 'MAKER',
     owner: 'OWNER',
     rpg: 'RPG',
     sticker: 'STICKER',

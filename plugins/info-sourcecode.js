@@ -1,9 +1,9 @@
 let handler = async m => {
     teks = `
-Name : Moon
-Version : v1.1.1
+Name : ${require('../package.json').name}
+Version : v${require('../package.json').version}
 
-Script : https://github.com/Nando35/mmon-bot
+Repo : ${require('../package.json').homepage}
 RestApi : https://api.alyachan.online`
     conn.sendMessageModify(m.chat, teks, m, {
         title: 'Moon - Bot',
