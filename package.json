@@ -1,6 +1,6 @@
 {
   "name": "moon-bot",
-  "version": "1.1.1",
+  "version": "2.9.0",
   "description": "Simple whatsapp bot",
   "main": "index.js",
   "directories": {
@@ -30,6 +30,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "human-readable": "^0.2.1",
     "jimp": "latest",
+    "jsdom": "20.0.3",
     "lodash": "^4.17.21",
     "lowdb": "^2.1.0",
     "moment-timezone": "^0.5.43",
