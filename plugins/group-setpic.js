@@ -8,7 +8,7 @@ let handler = async (m, {
     if (/image/.test(mime)) {
       let img = await q.download()
       if (!img) throw 'Gambar tidak ditemukan'
-      await conn.updateProfilePicture(m.chat, img)
+      await conn.updateProfile(m.chat, img)
     } else return m.reply(`kirim/balas gambar dengan caption *${usedPrefix + command}*`)
   }
   handler.help = ['setpic']

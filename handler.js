@@ -939,7 +939,7 @@ module.exports = {
                 this.sendMessageModify(id, text, 0, {
                   largeThumb: true,
                   thumbnail: pp,
-                  url: linkgc
+                  url: global.set.link
                 })
               }
             }

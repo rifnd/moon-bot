@@ -8,14 +8,14 @@ let handler = async (m, {
     if (!text) return conn.reply(m.chat, Func.example(usedPrefix, command, 'Utopia'), m)
     let yt = await (await yts(text)).all
     if (yt.length == 0) return conn.reply(m.chat, Func.jsonFormat(yt), m)
-    let teks = `*YT SEARCH*\n\n`
+    let teks = `乂  *Y T - S E A R C H*\n\n`
     yt.map((v, i) => {
       if (i < 8) {
         teks += `*` + (i + 1) + `*. ` + v.title + `\n`
-        teks += ` ›  *Durasi* : ` + v.timestamp + `\n`
-        teks += ` ›  *Penonton* : ` + v.views + `\n`
-        teks += ` ›  *Upload* : ` + v.ago + `\n`
-        teks += ` ›  *Url* : ` + v.url + `\n\n`
+        teks += `  ∘  *Durasi* : ` + v.timestamp + `\n`
+        teks += `  ∘  *Penonton* : ` + v.views + `\n`
+        teks += `  ∘  *Upload* : ` + v.ago + `\n`
+        teks += `  ∘  *Url* : ` + v.url + `\n\n`
       }
     })
     m.reply(teks + global.set.footer)
