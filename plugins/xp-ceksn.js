@@ -1,4 +1,4 @@
-const { MessageType } = require('@adiwajshing/baileys')
+const { MessageType } = require('@whiskeysockets/baileys')
 const { createHash } = require('crypto')
 let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i
 let handler = async function (m, { conn, text, usedPrefix }) {
