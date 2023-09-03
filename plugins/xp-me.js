@@ -29,7 +29,7 @@ let handler = async (m, {
     let prem = global.prems.includes(who.split`@`[0])
     let jodoh = `@${setting.pasangan.split`@`[0]}`
     let pme = `乂  *U S E R - I N F O*\n\n`
-    pme += `  ∘  *Name* : ${username} ${setting.registered ? '(' + name + ') ' : ''}\n`
+    pme += `  ∘  *Name* : ${username} ${setting.registered ? '(' + setting.name + ') ' : ''}\n`
     pme += `  ∘  *Partner* : ${setting.pasangan ? jodoh : '×'}\n`
     pme += `  ∘  *Exp* : ${Func.formatNumber(setting.exp)} (${setting.exp - min} / ${xp})\n`
     pme += `  ∘  *Level* : ${setting.level}\n`
@@ -50,5 +50,4 @@ let handler = async (m, {
 }
 handler.help = handler.command = ['me']
 handler.tag = ['xp']
-
 module.exports = handler

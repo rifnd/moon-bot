@@ -10,8 +10,9 @@ let handler = async (m, {
     let media = await q.download()
     let url = await scrap.uploader(media)
     m.reply(status.wait)
-    let json = await Func.fetchJson(API('alya', '/api/enhance', {
-      image: url.data.url
+    let json = await Func.fetchJson(API('alya', '/api/ai-photo-editors', {
+      image: url.data.url,
+      style: 'gta_5'
     }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
     conn.sendFile(m.chat, json.data.url, '', global.set.wm, m)
@@ -20,7 +21,7 @@ let handler = async (m, {
     return m.reply(Func.jsonFormat(e))
   }
 }
-handler.help = handler.command = ['remini']
+handler.help = handler.command = ['gta5style']
 handler.tags = ['tools']
 handler.limit = 1
 module.exports = handler

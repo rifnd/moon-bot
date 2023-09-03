@@ -10,17 +10,15 @@ let handler = async (m, {
     let media = await q.download()
     let url = await scrap.uploader(media)
     m.reply(status.wait)
-    let json = await Func.fetchJson(API('alya', '/api/enhance', {
-      image: url.data.url
-    }, 'apikey'))
+    let json = await Func.fetchJson(API('alya', '/api/toanime', { image: url.data.url, style: 'studio_original_painting_comic_triple' }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
-    conn.sendFile(m.chat, json.data.url, '', global.set.wm, m)
+    conn.sendFile(m.chat, json.data.img_urls[0], '', global.set.wm, m)
   } catch (e) {
     console.log(e)
     return m.reply(Func.jsonFormat(e))
   }
 }
-handler.help = handler.command = ['remini']
+handler.help = handler.command = ['toanime']
 handler.tags = ['tools']
 handler.limit = 1
 module.exports = handler

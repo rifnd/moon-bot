@@ -12,30 +12,13 @@ async function handler(m, {
           room.check(m.sender),
         )
         if (!room) {
-          await this.reply(
-            m.chat,
-            Func.texted(
-              'bold',
-              'Kamu sedang tidak berada di anonymous chat!, ketik .start untuk memulai anonymous chat',
-            ),
-            m,
-          )
+          await this.reply(m.chat, Func.texted('bold', 'Kamu sedang tidak berada di anonymous chat!, ketik .start untuk memulai anonymous chat'), m)
           throw 0
         }
-        this.reply(
-          m.chat,
-          Func.texted('bold', 'Kamu telah memberhentikan chat.'),
-          m,
-        )
+        this.reply(m.chat, Func.texted('bold', 'Kamu telah memberhentikan chat.'), m)
         let other = room.other(m.sender)
         if (other)
-          this.reply(
-            m.chat,
-            Func.texted(
-              'bold',
-              'Partner telah memberhentikan chat, ketik .start untuk mencari partner lagi.',
-            ),
-          )
+          this.reply(m.chat, Func.texted('bold', 'Partner telah memberhentikan chat, ketik .start untuk mencari partner lagi.'), m)
         delete this.anonymous[room.id]
         if (command === 'stop') break
       }
@@ -72,10 +55,7 @@ async function handler(m, {
     }
   }
   handler.help = ['start', 'skip', 'stop', 'next']
-  handler.tags = 'anonymous'
-  
+  handler.tags = ['anonymous']
   handler.command = ['start', 'skip', 'stop', 'next', 'search']
   handler.private = true
-  
   module.exports = handler
-  
