@@ -1,16 +1,16 @@
 global.owner = [
-    ['6281252848955'],
-    ['6285815700861'],
-    ['6281252848955', 'owner', true]
+    ['6289530656600'],
+    ['6289530656600'],
+    ['6289530656600', 'owner', true]
   ]
 global.mods = ['0']
-global.prems = ['6285815700861', '6281252848955']
+global.prems = ['6289530656600', '6289530656600']
 
 global.APIs = {
   alya: 'https://api.alyachan.biz.id'
 }
 global.APIKeys = {
-  'https://api.alyachan.biz.id': 'liyacomel'
+  'https://api.alyachan.biz.id': 'bpPmGD'
 }
 
 global.set = {
