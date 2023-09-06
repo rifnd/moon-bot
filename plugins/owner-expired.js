@@ -21,9 +21,8 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     m
   );
 };
-handler.help = ["expired"]
+handler.help = handler.command = ["expired"]
 handler.tags = ["owner"]
-handler.command = /^(expired)$/i
 handler.owner = true
 handler.fail = null
 module.exports = handler

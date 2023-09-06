@@ -6,9 +6,8 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     conn.reply(owner[0] + '@s.whatsapp.net', teks1, m)
     conn.reply(m.chat, 'Masalah berhasil dikirimkan ke Owner', m)
 }
-handler.help = ['report']
+handler.help = handler.command = ['report']
 handler.tags = ['info']
-handler.command = /^(report|lpr|lapor)$/i
 handler.owner = false
 handler.mods = false
 handler.premium = false

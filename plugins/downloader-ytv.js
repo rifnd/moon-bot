@@ -33,7 +33,6 @@ let handler = async (m, {
 }
 handler.help = ['ytmp4']
 handler.tags = ['downloader']
-handler.command = /^(yt(mp4|v))$/i
+handler.command = ['ytv', 'ytmp4']
 handler.limit = 1
-
 module.exports = handler

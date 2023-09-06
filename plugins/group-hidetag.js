@@ -28,8 +28,7 @@ let handler = async (m, { isOwner, isAdmin, conn, text, participants }) => {
 }
 handler.help = ['hidetag']
 handler.tags = ['group']
-handler.command = /^(h(ide?tag)?|pengumuman|announce?(d)?)$/i
+handler.command = ['hidetag', 'h']
 handler.admin = true
 handler.group = true
-
 module.exports = handler

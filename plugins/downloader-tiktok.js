@@ -23,12 +23,12 @@ let handler = async (m, {
               caption: json.title,
               mentions: [m.sender]
             })
-        } else if (command == 'ttwm' || command == 'tikwm') {
+        } else if (command == 'tikwm') {
             conn.sendMedia(m.chat, json.data.video_wm, m, {
               caption: json.title,
               mentions: [m.sender]
             })
-        } else if (command == 'ttaudio' || command == 'tikmp3') {
+        } else if (command == 'tikmp3') {
             conn.sendMedia(m.chat, json.data.music, m, {
               mentions: [m.sender]
             })
@@ -40,7 +40,6 @@ let handler = async (m, {
 }
 handler.help = ['tiktok', 'tikwm', 'tikmp3']
 handler.tags = ['downloader']
-handler.command = /^(tt|tiktok|ttwm|tikwm|ttaudio|tikmp3)$/i
+handler.command = ['tiktok', 'tt', 'tikwm', 'tikmp3']
 handler.limit = 1
-
 module.exports = handler

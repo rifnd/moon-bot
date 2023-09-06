@@ -2,7 +2,6 @@ let buatall = 1
 let handler = async (m, {
   conn, args, usedPrefix, isOwner
 }) => {
-  if (!db.data.settings[conn.user.jid].game) return m.reply(status.game)
   conn.judi = conn.judi ? conn.judi: {}
   if (m.chat in conn.judi) return m.reply('Masih ada yang melakukan judi disini, tunggu sampai selesai!!')
   else conn.judi[m.chat] = true
@@ -41,14 +40,12 @@ let handler = async (m, {
     delete conn.judi[m.chat]
   }
 }
-handler.help = ['judi']
+handler.help = handler.command = ['judi']
 handler.tags = ['game']
-handler.command = /^(judi)$/i
+handler.game = true
 handler.limit = true
 handler.group = true
-
 handler.fail = null
-
 module.exports = handler
 
 function pickRandom(list) {

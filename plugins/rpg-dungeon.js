@@ -4,7 +4,6 @@ async function handler(m, {
     command,
     text
   }) {
-    if (!db.data.settings[conn.user.jid].rpg) return m.reply(status.rpg)
     let user = global.db.data.users[m.sender]
     let SWORD = user.sword < 1
     let ARMOR = user.armor < 1
@@ -783,8 +782,9 @@ async function handler(m, {
   
   handler.help = ['dungeon'].map(v => v + ' ')
   handler.tags = ['game']
-  handler.command = /^(du?n?g?e?o?n?)$/i
+  handler.command = ['dungeon']
   handler.group = true
+  handler.rpg = true
   handler.limit = true
   handler.mods = false
   

@@ -5,7 +5,6 @@ let handler = async (m, {
   usedPrefix,
   text
 }) => {
-  if (!db.data.settings[conn.user.jid].rpg) return m.reply(status.rpg)
   //      let timerand = `${Math.floor(Math.random() * 259200000)}`.trim()
   let time = global.db.data.users[m.sender].lastnambang + 28800000
   if (new Date - global.db.data.users[m.sender].lastnambang < 28800000) throw `Anda sudah menambang\nMohon tunggu hasil pertambangan mu\nTunggu selama ${msToTime(time - new Date())} lagi`
@@ -33,9 +32,9 @@ let handler = async (m, {
 }
 handler.help = ['nambang']
 handler.tags = ['rpg']
-handler.command = /^(nambang)/i
+handler.command = ['nambang']
 handler.group = true
-
+handler.rpg = true
 handler.fail = null
 handler.limit = true
 handler.exp = 0

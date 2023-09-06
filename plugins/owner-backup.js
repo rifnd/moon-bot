@@ -6,7 +6,7 @@ let handler = async (m, { conn, text }) => {
 }
 handler.help = ['backup']
 handler.tags = ['owner']
-handler.command = /^(getdatabase|backup)$/i
+handler.command = ['backup']
 handler.owner = true
 
 module.exports = handler

@@ -20,5 +20,4 @@ let handler = async (m, {
 handler.help = handler.command = ['threads']
 handler.tags = ['downloader']
 handler.limit = true
-
 module.exports = handler

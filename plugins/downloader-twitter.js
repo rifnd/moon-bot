@@ -21,9 +21,7 @@ let handler = async (m, {
     return m.reply(status.error)
   }
 }
-handler.help = ['twitter']
+handler.help = handler.command = ['twitter']
 handler.tags = ['downloader']
-handler.command = /^(twitter)$/i
 handler.limit = 1
-
 module.exports = handler

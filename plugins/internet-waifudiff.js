@@ -17,7 +17,6 @@ let handler = async (m, {
 }
 handler.help = ['waifudiff']
 handler.tags = ['internet']
-handler.command = /^waifudiff(usion)?$/i
+handler.command = ['waifudiff', 'waifudiffusion']
 handler.limit = 1
-
 module.exports = handler

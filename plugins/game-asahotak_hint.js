@@ -7,6 +7,6 @@ let handler = async (m, { conn }) => {
     let clue = ans.replace(/[bcdfghjklmnpqrstvwxyz]/g, '_')
     m.reply('```' + clue + '```')
 }
-handler.command = /^ao$/i
+handler.command = ['ao']
 handler.limit = true
 module.exports = handler

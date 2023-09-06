@@ -25,11 +25,12 @@ let handler = async (m, {
 }
 handler.help = ['nebang']
 handler.tags = ['rpg']
-handler.command = /^(nebang)/i
+handler.command = ['nebang']
 handler.owner = false
 handler.mods = false
 handler.premium = false
 handler.group = true
+handler.rpg = true
 handler.private = false
 
 handler.admin = false

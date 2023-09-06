@@ -29,7 +29,6 @@ let handler = async (m, { conn, isBotAdmin }) => {
 }
 handler.help = ['delete']
 handler.tags = ['group']
-handler.command = /^del(ete)?$/i
+handler.command = ['delete', 'del']
 handler.limit = true
-
 module.exports = handler

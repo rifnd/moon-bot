@@ -24,6 +24,6 @@ let handler = async (m, { usedPrefix,
 }
 handler.help = ['tts']
 handler.tags = ['tools']
-handler.command = /^g?tts$/i
+handler.command = ['tts', 'gtts']
 handler.limit = 1
 module.exports = handler

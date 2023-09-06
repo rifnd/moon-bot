@@ -12,8 +12,7 @@ let handler = async (m, { conn, args }) => {
 }
 handler.help = ['link']
 handler.tags = ['group']
-handler.command = /^link(g(c|ro?up))?$/i
+handler.command = ['linkgc', 'link']
 handler.group = 1
 handler.admin = 0
-
 module.exports = handler

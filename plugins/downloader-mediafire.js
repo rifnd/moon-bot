@@ -32,9 +32,7 @@ let handler = async (m, {
         return m.reply(status.error)
     }
 }
-handler.help = ['mediafire']
+handler.help = handler.command = ['mediafire']
 handler.tags = ['downloader']
-handler.command = /^(mediafire)$/i
 handler.limit = 1
-
 module.exports = handler

@@ -24,7 +24,7 @@ ${txt}
 
 handler.help = ['groups']
 handler.tags = ['info']
-handler.command = /^(group(s|list)|(s|list)group)$/i
+handler.command = ['groups', 'listgc']
 
 module.exports = handler
 

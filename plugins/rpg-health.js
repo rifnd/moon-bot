@@ -22,9 +22,10 @@ let handler = async (m, {
   
   handler.help = ['heal']
   handler.tags = ['rpg']
-  handler.command = /^(heal)$/i
+  handler.command = ['heal']
   handler.limit = true
   handler.group = true
+  handler.rpg = true
   module.exports = handler
   
   function isNumber(number) {

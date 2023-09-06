@@ -13,8 +13,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 }
 handler.help = ['group']
 handler.tags = ['group']
-handler.command = /^(group)$/i
+handler.command = ['group', 'gcsetting']
 handler.admin = true
 handler.botAdmin = true
-
 module.exports = handler

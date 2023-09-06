@@ -1,7 +1,6 @@
 let handler = async (m, {
   text, usedPrefix
 }) => {
-  if (!db.data.settings[conn.user.jid].game) return m.reply(status.game)
   let salah = `Pilihan Yang Tersedia\n\nGunting, Kertas, Batu\n\n${usedPrefix}suit gunting\n\nKasih Spasi!`
   if (!text) throw salah
   var astro = Math.random()
@@ -42,11 +41,10 @@ let handler = async (m, {
     throw salah
   }
 }
-handler.help = ['suit']
+handler.help = handler.command = ['suit']
 handler.tags = ['game']
-handler.command = /^(suit)$/i
 handler.group = true
 handler.register = true
 handler.limit = true
-
+handler.game = true
 module.exports = handler

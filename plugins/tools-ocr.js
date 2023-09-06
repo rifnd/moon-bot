@@ -22,7 +22,7 @@ let handler = async (m, { conn, text }) => {
 
 handler.help = ['ocr']
 handler.tags = ['tools']
-handler.command = /^(ocr)$/i
+handler.command = ['ocr']
 handler.limit = true
 
 module.exports = handler

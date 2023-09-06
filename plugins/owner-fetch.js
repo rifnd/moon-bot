@@ -29,6 +29,5 @@ let handler = async (m, { text }) => {
 };
 handler.help = ["fetch"].map((v) => v + " ");
 handler.tags = ["owner"];
-handler.command = /^(fetch|get)$/i;
-
+handler.command = ['fetch', 'get']
 module.exports = handler;

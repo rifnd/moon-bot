@@ -380,11 +380,12 @@ let handler = async (m, {
     }
   }
 
-  handler.help = ['pancing']
+  handler.help = handler.command = ['pancing']
   handler.tags = ['game']
-  handler.command = /^(pancing)$/i
   handler.register = true
   handler.limit = true
+  handler.game = true
+  handler.group = true
 
   module.exports = handler
   function clockString(ms) {

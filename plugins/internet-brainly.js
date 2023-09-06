@@ -22,5 +22,4 @@ let handler = async (m, {
 handler.help = handler.command = ['brainly']
 handler.tags = ['internet']
 handler.limit = 1
-
 module.exports = handler

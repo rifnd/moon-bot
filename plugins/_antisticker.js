@@ -20,5 +20,4 @@ handler.before = function(m, {
   }
   return true
 }
-
 module.exports = handler

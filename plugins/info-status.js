@@ -28,8 +28,7 @@ let handler = async (m, { conn }) => {
 }
 handler.help = ['status']
 handler.tags = ['info']
-handler.command = /^(stat?s?|bot(stat?s?))$/i
-
+handler.command = ['stats', 'status', 'botstat']
 module.exports = handler
 
 function clockString(ms) {

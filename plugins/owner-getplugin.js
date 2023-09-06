@@ -7,7 +7,6 @@ let handler = async (m, { usedPrefix, command, text }) => {
 }
 handler.help = ['getplugin'].map(v => v + ' ')
 handler.tags = ['owner']
-handler.command = /^(getplugin|gp)$/i
+handler.command = ['gp', 'getplugin']
 handler.owner = true
-
 module.exports = handler

@@ -14,6 +14,5 @@ RestApi : https://api.alyachan.online`
 }
 handler.help = ['sourcecode']
 handler.tags = ['info']
-handler.command = /^(sc|sourcecode)$/i
-
+handler.command = ['sc', 'sourcecode']
 module.exports = handler

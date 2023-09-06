@@ -6,7 +6,6 @@ const {
     usedPrefix,
     owner
   }) => {
-    if (!db.data.settings[conn.user.jid].rpg) return m.reply(status.rpg)
     try {
       let __timers = (new Date - global.db.data.users[m.sender].lastadventure)
       let _timers = (3600000 - __timers)
@@ -77,11 +76,11 @@ const {
     }
   }
   
-  handler.help = ['adventure']
+  handler.help = handler.command = ['adventure']
   handler.tags = ['rpg']
-  handler.command = /^(adventure)$/i
   handler.limit = true
   handler.group = true
+  handler.rpg = true
   handler.fail = null
   
   module.exports = handler

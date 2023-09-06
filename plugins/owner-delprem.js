@@ -13,5 +13,4 @@ handler.help = handler.command = ['delprem']
 handler.tags = ['owner']
 handler.owner = true
 handler.fail = null
-
 module.exports = handler

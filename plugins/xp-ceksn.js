@@ -22,7 +22,7 @@ ${usedPrefix}unreg ${sn}
 
 handler.help = ['ceksn']
 handler.tags = ['xp']
-handler.command = /^(ceksn)$/i
+handler.command = ['ceksn']
 handler.register = true
 handler.limit = true
 module.exports = handler

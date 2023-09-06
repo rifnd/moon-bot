@@ -27,6 +27,6 @@ let handler = async (m, {
 }
 handler.help = ['swm']
 handler.tags = ['sticker']
-handler.command = /^wm|swm$/i
+handler.command = ['swm', 'wm', 'stikerwm', 'stickerwm']
 
 module.exports = handler

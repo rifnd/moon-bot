@@ -29,7 +29,7 @@ let handler = async (m, { usedPrefix, command, text }) => {
   }
   handler.help = ['translate'].map((v) => v + ' ')
   handler.tags = ['tools']
-  handler.command = /^(tr(anslate)?)$/i
+  handler.command = ['tr', 'translate']
   handler.limit = true
   
   module.exports = handler

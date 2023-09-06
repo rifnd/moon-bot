@@ -25,8 +25,7 @@ let handler = async (m, { conn, text, usedPrefix }) => {
 
   return conn.reply(m.chat, `Total *"${i - 1}"* User${text}`, m, { contextInfo: { mentionedJid: conn.parseMention(text) } })
 }
-handler.help = ['premlist']
+handler.help = handler.command = ['premlist']
 handler.tags = ['info']
-handler.command = /^(listpremium|premiumlist|listprem|premlist)$/i
 handler.limit = true
 module.exports = handler

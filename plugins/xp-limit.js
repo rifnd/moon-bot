@@ -7,6 +7,6 @@ let handler = async (m) => {
   }
   handler.help = ['limit']
   handler.tags = ['xp']
-  handler.command = /^(limit)$/i
+  handler.command = ['limit']
   module.exports = handler
   

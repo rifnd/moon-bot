@@ -20,5 +20,5 @@ let handler = async (m, {
 }
 handler.help = ['toimage']
 handler.tags = ['tools']
-handler.command = /^toima?ge?$/i
+handler.command = ['toimage', 'toimg']
 module.exports = handler

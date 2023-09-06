@@ -31,7 +31,6 @@ let handler = async (m, {
   let timeoutwww = 60000
   let timeoutwwww = 600000
   let type = (args[0] || '').toLowerCase()
-  if (!db.data.settings[conn.user.jid].rpg) return m.reply(status.rpg)
   switch (type) {
     case 'ramuan':
       let apelu = global.db.data.users[m.sender].apel
@@ -551,9 +550,10 @@ Selamat kamu mendapatkan Exp:
 
 handler.help = ['meracik']
 handler.tags = ['rpg']
-handler.command = /^(meracik|racik)$/i
+handler.command = ['meracik', 'racik']
 handler.limit = true
 handler.group = true
+handler.rpg = true
 module.exports = handler
 
 function pickRandom(list) {

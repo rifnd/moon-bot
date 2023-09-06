@@ -20,7 +20,7 @@ let handler = async (m, {
 }
 handler.help = ['monthly']
 handler.tags = ['xp']
-handler.command = /^(monthly)$/i
+handler.command = ['monthly']
 
 module.exports = handler
 

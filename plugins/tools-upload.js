@@ -17,7 +17,7 @@ ${isTele ? '(No Expiry Date)' : '(Unknown)'}`)
 }
 handler.help = ['upload']
 handler.tags = ['tools']
-handler.command = /^upload|tourl$/i
+handler.command = ['upload', 'tourl']
 handler.limit = true
 
 module.exports = handler

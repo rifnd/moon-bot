@@ -34,8 +34,6 @@ let handler = async (m, {
 }
 handler.help = ['join']
 handler.tags = ['owner']
-handler.command = /^(join)?$/i
-
+handler.command = ['join']
 handler.owner = true
-
 module.exports = handler

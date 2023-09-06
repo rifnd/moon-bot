@@ -31,10 +31,9 @@ let handler = async (m, {
       timeout)
   ]
 }
-handler.help = ['lengkapikalimat']
+handler.help = handler.command = ['lengkapikalimat']
 handler.tags = ['game']
-handler.command = /^lengkapikalimat/i
+handler.game = true
 handler.limit = true
 handler.group = true
-
 module.exports = handler

@@ -34,9 +34,9 @@ let handler = async (m, {
       timeout)
   ]
 }
-handler.help = ['siapakahaku']
+handler.help = handler.command = ['siapakahaku']
 handler.tags = ['game']
-handler.command = /^siapa(kah)?aku/i
 handler.limit = true
 handler.group = true
+handler.game = true
 module.exports = handler

@@ -22,7 +22,7 @@ let handler = async (m, {
 }
 handler.help = ['daily']
 handler.tags = ['xp']
-handler.command = /^(daily)$/i
+handler.command = ['daily']
 handler.owner = false
 handler.mods = false
 handler.premium = false

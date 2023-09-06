@@ -19,9 +19,7 @@ let handler = async (m, {
     return m.reply(status.error)
   }
 }
-handler.help = ['pindl']
+handler.help = handler.command = ['pindl']
 handler.tags = ['downloader']
-handler.command = /^(pindl)$/i
 handler.limit = 1
-
 module.exports = handler

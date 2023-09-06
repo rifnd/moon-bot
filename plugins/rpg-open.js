@@ -10,7 +10,6 @@ let handler = async (m, {
     let Lmao = `Hanya support 1, 10, 100, 1000\nContoh penggunaan: *${usedPrefix}open ${args > 2 ? _lmao : pickRandom(['common', 'uncommon', 'mythic', 'legendary'])} 10*`
     let type = (args[0] || '').toLowerCase()
     let jumlah = (args[1] || '').toLowerCase()
-    if (!db.data.settings[conn.user.jid].rpg) return m.reply(status.rpg)
     switch (type) {
       case 'common':
         switch (jumlah) {

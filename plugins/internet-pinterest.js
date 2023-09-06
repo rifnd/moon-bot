@@ -18,9 +18,7 @@ let handler = async (m, {
     return m.reply(status.error)
   }
 }
-handler.help = ['pinterest']
+handler.help = handler.command = ['pinterest']
 handler.tags = ['internet']
-handler.command = /^(pin(terest))?$/i 
 handler.limit = 1 
-
 module.exports = handler

@@ -8,7 +8,7 @@ let handler = async (m, {
   
   handler.help = ['setdesc']
   handler.tags = ['group']
-  handler.command = /^set(deskripsi|desc)?$/i
+  handler.command = ['setdesc']
   handler.owner = false
   handler.mods = false
   handler.premium = false
@@ -17,6 +17,5 @@ let handler = async (m, {
   handler.register = false
   handler.admin = true
   handler.botAdmin = true
-  
   module.exports = handler
   

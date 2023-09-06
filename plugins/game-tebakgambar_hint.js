@@ -7,7 +7,6 @@ let handler = async (m, { conn }) => {
     let clue = ans.replace(/[AIUEOaiueo]/g, '_')
     conn.reply(m.chat, '```' + clue + '```\nBalas soalnya, bukan pesan ini', conn.tebakgambar[id][0])
 }
-handler.command = /^hint$/i
+handler.command = ['hint']
 handler.limit = true
-
 module.exports = handler

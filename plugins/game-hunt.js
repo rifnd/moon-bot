@@ -1,7 +1,6 @@
 let handler = async (m, {
   conn, text
 }) => {
-  if (!db.data.settings[conn.user.jid].game) return m.reply(status.game)
   let monsters = [{
     area: 1,
     name: "Goblin"
@@ -223,12 +222,11 @@ let handler = async (m, {
   } else throw `Tunggu *${timers}* Untuk Berburu Lagi`
 }
 
-handler.help = ['hunter']
+handler.help = handler.command = ['hunter']
 handler.tags = ['game']
-handler.command = /^hunter/i
 handler.limit = true
 handler.group = true
-handler.fail = null
+handler.game = true
 
 module.exports = handler
 

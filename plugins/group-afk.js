@@ -6,8 +6,7 @@ let handler = async (m, { text }) => {
 ${conn.getName(m.sender)} is now AFK${text ? ': ' + text : ''}
 `)
 }
-handler.help = ['afk']
+handler.help = handler.command = ['afk']
 handler.tags = ['group']
-handler.command = /^afk$/i
 handler.limit = 0
 module.exports = handler

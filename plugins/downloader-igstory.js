@@ -22,7 +22,6 @@ let handler = async (m, {
 }
 handler.help = ['igstory']
 handler.tags = ['downloader']
-handler.command = /^(igs|igstory|instagramstory)$/i
+handler.command = ['igstory', 'instagramstory']
 handler.limit = 1
-
 module.exports = handler

@@ -60,9 +60,7 @@ let handler = async (m, { usedPrefix, command }) => {
     return m.reply(status.fail);
   }
 };
-handler.help = ["cnnnews", "tribunnews", "kompasnews", "inews"];
+handler.help = handler.command = ["cnnnews", "tribunnews", "kompasnews", "inews"];
 handler.tags = ["internet"];
-handler.command = /^(cnnnews|tribunnews|kompasnews|inews)?$/i;
 handler.limit = true;
-
 module.exports = handler;

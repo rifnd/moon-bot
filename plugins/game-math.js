@@ -28,12 +28,11 @@ let handler = async (m, {
       math.time)
   ]
 }
-handler.help = ['math']
+handler.help = handler.command = ['math']
 handler.tags = ['game']
-handler.command = /^math/i
+handler.game = true
 handler.limit = true
 handler.group = true
-
 module.exports = handler
 
 let modes = {

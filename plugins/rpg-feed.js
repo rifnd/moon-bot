@@ -25,7 +25,6 @@ let handler = async (m, {
     let centaur = global.db.data.users[m.sender].centaur
     let griffin = global.db.data.users[m.sender].griffin
     let hero = global.db.data.users[m.sender].hero
-    if (!db.data.settings[conn.user.jid].rpg) return m.reply(status.rpg)
     switch (type) {
       case 'rubah':
         if (rubah == 0) return m.reply('*Kamu belum memiliki Pet Rubah*')
@@ -292,9 +291,10 @@ let handler = async (m, {
   }
   handler.help = ['feed']
   handler.tags = ['rpg']
-  handler.command = /^(feed(ing)?)$/i
+  handler.command = ['feed', 'feeding']
   handler.limit = true
   handler.group = true
+  handler.rpg = true
   
   module.exports = handler
   

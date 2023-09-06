@@ -165,8 +165,8 @@ let handler = async (m, {
     throw e
   }
 }
-handler.help = ['menu', 'help', '?']
-handler.command = /^(menu|help|\?)$/i
+handler.help = ['menu']
+handler.command = ['menu', 'help']
 handler.owner = false
 handler.mods = false
 handler.premium = false

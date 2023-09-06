@@ -1,7 +1,6 @@
 let handler = async (m, {
   conn, usedPrefix, participants
 }) => {
-  if (!db.data.settings[conn.user.jid].game) return m.reply(status.game)
   conn.level = global.db.data.users[m.sender]
   conn.fight = conn.fight ? conn.fight: {}
   const delay = time => new Promise(res => setTimeout(res, time));
@@ -65,10 +64,10 @@ let handler = async (m, {
 }
 handler.help = ['fighting']
 handler.tags = ['game']
-handler.command = /^(fight(ing)?)$/i
+handler.command = ['fight', 'fighting']
 handler.limit = true
 handler.group = true
-
+handler.game = true
 module.exports = handler
 
 function getRandom(min, max) {

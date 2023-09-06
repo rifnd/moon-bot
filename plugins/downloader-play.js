@@ -41,8 +41,7 @@ let handler = async (m, {
     return m.reply(status.error)
   }
 }
-handler.help = ['play'].map((v) => v + '')
+handler.help = handler.command = ['play']
 handler.tags = ['downloader']
-handler.command = /^(play)$/i
 handler.limit = 1
 module.exports = handler

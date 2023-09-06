@@ -15,7 +15,7 @@ let handler = async (m, {
   }
   handler.help = ['setppbot']
   handler.tags = ['owner']
-  handler.command = /^set(pp|ppbot)$/i
+  handler.command = ['setpp', 'setppbot']
   handler.owner = true
   module.exports = handler
   

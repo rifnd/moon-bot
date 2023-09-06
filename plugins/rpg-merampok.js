@@ -5,7 +5,6 @@ let handler = async (m, {
     usedPrefix,
     command
   }) => {
-    if (!db.data.settings[conn.user.jid].rpg) return m.reply(status.rpg)
     let dapat = (Math.floor(Math.random() * 100000))
     let nomors = m.sender
     let who
@@ -28,9 +27,10 @@ let handler = async (m, {
   }
   handler.help = ['merampok']
   handler.tags = ['rpg']
-  handler.command = /^merampok$/
+  handler.command = ['merampok']
   handler.limit = true
   handler.group = true
+  handler.rpg = true
   module.exports = handler
   
   function pickRandom(list) {

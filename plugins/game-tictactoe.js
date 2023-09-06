@@ -64,7 +64,8 @@ let handler = async (m, {
 
 handler.help = ['tictactoe']
 handler.tags = ['game']
-handler.command = /^(tictactoe|t{3})$/
+handler.command = ['tictactoe', 'ttt']
 handler.limit = true
-
+handler.game = true
+handler.group = true
 module.exports = handler

@@ -13,10 +13,9 @@ let handler = async (m, {
   }
   handler.help = ['setpic']
   handler.tags = ['group']
-  handler.command = /^set(pic|ppgc)?$/i
+  handler.command = ['setpic', 'setppgc']
   handler.group = true
   handler.admin = true
   handler.botAdmin = true
-  
   module.exports = handler
   

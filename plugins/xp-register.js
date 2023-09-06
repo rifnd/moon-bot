@@ -31,6 +31,6 @@ const {
   }
   handler.help = ['register'].map((v) => v + '')
   handler.tags = ['xp']
-  handler.command = /^(reg(ister)?)$/i
+  handler.command = ['reg', 'register', 'daftar']
   module.exports = handler
   

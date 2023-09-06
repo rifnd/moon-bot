@@ -5,7 +5,7 @@ let handler = async (m, {
   usedPrefix,
   text
 }) => {
-  if (!db.data.settings[conn.user.jid].rpg) return m.reply(status.rpg)
+ 
   let time = global.db.data.users[m.sender].lastmulung + 1800000
   if (new Date - global.db.data.users[m.sender].lastmulung < 1800000) throw `Anda sudah lelah untuk mulung\nTunggu selama ${msToTime(time - new Date())} lagi`
   let botolnye = `${Math.floor(Math.random() * 1000)}`.trim()
@@ -22,11 +22,12 @@ let handler = async (m, {
 }
 handler.help = ['mulung']
 handler.tags = ['rpg']
-handler.command = /^(mulung)/i
+handler.command = ['mulung']
 handler.owner = false
 handler.mods = false
 handler.premium = false
 handler.group = true
+handler.rpg = true
 handler.private = false
 
 handler.admin = false

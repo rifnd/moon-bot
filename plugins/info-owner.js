@@ -6,6 +6,5 @@ let handler = async (m, {
 }
 handler.help = ['owner']
 handler.tags = ['info']
-handler.command = /^(owner|creator)$/i
-
+handler.command = ['owner', 'creator']
 module.exports = handler

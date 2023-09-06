@@ -19,7 +19,7 @@ let handler = async (m, { isPrems }) => {
     
 handler.help = ['weekly']
 handler.tags = ['xp']
-handler.command = /^(weekly)$/i
+handler.command = ['weekly']
 handler.limit = true
 handler.fail = null
 

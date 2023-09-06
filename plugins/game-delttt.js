@@ -14,10 +14,8 @@ let handler = async (m, { conn, text }) => {
 //BY RIZXYU
 handler.help = ['delttt']
 handler.tags = ['game']
-handler.command = /^(delttt|delsesittt|delsesitt)$/i
+handler.command = ['delttt', 'delsesittt', 'delsesitt']
 handler.limit = true
-
 handler.register = false
 handler.fail = null
-
 module.exports = handler

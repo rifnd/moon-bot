@@ -6,7 +6,6 @@ let poin = 500
 let handler = async (m, {
   conn, usedPrefix
 }) => {
-  if (!db.data.settings[conn.user.jid].game) return m.reply(status.game)
   conn.tebaklirik = conn.tebaklirik ? conn.tebaklirik: {}
   let id = m.chat
   if (id in conn.tebaklirik) {
@@ -36,10 +35,9 @@ let handler = async (m, {
       timeout)
   ]
 }
-handler.help = ['tebaklirik']
+handler.help = handler.command = ['tebaklirik']
 handler.tags = ['game']
-handler.command = /^tebaklirik/i
 handler.limit = true
 handler.group = true
-
+handler.game = true
 module.exports = handler

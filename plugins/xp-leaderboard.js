@@ -41,7 +41,7 @@ let handler = async (m, { conn, args, participants }) => {
   }
   handler.help = ['leaderboard']
   handler.tags = ['xp']
-  handler.command = /^(leaderboard|lb)$/i
+  handler.command = ['leaderboard', 'lb']
   handler.owner = false
   handler.mods = false
   handler.premium = false

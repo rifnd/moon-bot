@@ -6,7 +6,6 @@ let tiketcoin = 1
 let handler = async (m, {
   conn, usedPrefix
 }) => {
-  if (!db.data.settings[conn.user.jid].game) return m.reply(status.game)
   conn.asahotak = conn.asahotak ? conn.asahotak: {}
   let id = m.chat
   if (id in conn.asahotak) {
@@ -34,10 +33,9 @@ let handler = async (m, {
       timeout)
   ]
 }
-handler.help = ['asahotak']
+handler.help = handler.command = ['asahotak']
 handler.tags = ['game']
-handler.command = /^asahotak/i
 handler.limit = true
+handler.game = true
 handler.group = true
-
 module.exports = handler

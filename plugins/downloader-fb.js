@@ -12,15 +12,15 @@ let handler = async (m, {
         let result = json.data.find(v => v.quality == 'HD' && v.response == 200)
         if (result) {
             conn.sendMedia(m.chat, result.url, m, {
-              caption: '• Kualitas HD',
-              mentions: [m.sender]
+                caption: '• Kualitas HD',
+                mentions: [m.sender]
             })
         } else {
             let result = json.data.find(v => v.quality == 'SD' && v.response == 200)
             if (!result) return m.reply(status.fail)
             conn.sendMedia(m.chat, result.url, m, {
-              caption: '• Kualitas SD',
-              mentions: [m.sender]
+                caption: '• Kualitas SD',
+                mentions: [m.sender]
             })
         }
     } catch (e) {
@@ -30,7 +30,6 @@ let handler = async (m, {
 }
 handler.help = ['facebook']
 handler.tags = ['downloader']
-handler.command = /^(fb|facebook)$/i
+handler.command = ['fb', 'facebook']
 handler.limit = 1
-
-module.exports = handler 
+module.exports = handler

@@ -16,6 +16,6 @@ let handler = async (m, { conn, usedPrefix, command, text }) => {
 handler.help = ['emojimix']
 handler.tags = ['sticker']
 handler.limit = true
-handler.command = /^((s)?e(mo)?(ji)?mix)$/i
+handler.command = ['emojimix', 'emomix']
 
 module.exports = handler

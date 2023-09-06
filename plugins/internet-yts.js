@@ -26,6 +26,5 @@ let handler = async (m, {
 }
 handler.help = ['ytsearch']
 handler.tags = ['internet']
-handler.command = /^yts(earch)?$/i
-
+handler.command = ['yts', 'ytsearch']
 module.exports = handler

@@ -1,7 +1,6 @@
 let fetch = require('node-fetch')
 let winScore = 1000
 async function handler(m) {
-  if (!db.data.settings[conn.user.jid].game) return m.reply(status.game)
   this.game = this.game ? this.game: {}
   let id = 'family100_' + m.chat
   if (id in this.game) {
@@ -27,10 +26,9 @@ async function handler(m) {
     winScore,
   }
 }
-handler.help = ['family100']
+handler.help = handler.command = ['family100']
 handler.tags = ['game']
-handler.command = /^family100$/i
 handler.limit = true
 handler.group = true
-
+handler.game = true
 module.exports = handler

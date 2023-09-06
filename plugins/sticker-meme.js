@@ -20,7 +20,7 @@ let handler = async (m, {
 }
 handler.help = ['smeme']
 handler.tags = ['sticker']
-handler.command = /^(s(tic?ker)?me(me)?)$/i
+handler.command = ['smeme', 'stickermeme', 'stikermeme']
 
 handler.limit = true
 

@@ -741,57 +741,57 @@ module.exports = {
                if (!['owner-unbanned.js'].includes(name) && user && user?.banned) return              
             }
             if (plugin.rowner && plugin.owner && !(isROwner || isOwner)) { // Both Owner
-              fail('owner', m, this)
+              dfail('owner', m, this)
               continue
             }
             if (plugin.rowner && !isROwner) { // Real Owner
-              fail('rowner', m, this)
+              dfail('rowner', m, this)
               continue
             }
             if (plugin.owner && !isOwner) { // Number Owner
-              fail('owner', m, this)
+              dfail('owner', m, this)
               continue
             }
             if (plugin.mods && !isMods) { // Moderator
-              fail('mods', m, this)
+              dfail('mods', m, this)
               continue
             }
             if (plugin.premium && !isPrems) { // Premium
-              fail('premium', m, this)
+              dfail('premium', m, this)
               continue
             }
             if (plugin.banned && !isBans) { // Banned
-              fail('banned', m, this)
+              dfail('banned', m, this)
               continue
             }
             if (plugin.created && !isCreated) { // Created
-              fail('created', m, this)
+              dfail('created', m, this)
               continue
             }
             if (plugin.group && !m.isGroup) { // Group Only
-              fail('group', m, this)
+              dfail('group', m, this)
               continue
             } else if (plugin.botAdmin && !isBotAdmin) { // You Admin
-              fail('botAdmin', m, this)
+              dfail('botAdmin', m, this)
               continue
             } else if (plugin.admin && !isAdmin) { // User Admin
-              fail('admin', m, this)
+              dfail('admin', m, this)
               continue
             }
             if (plugin.private && m.isGroup) { // Private Chat Only
-              fail('private', m, this)
+              dfail('private', m, this)
               continue
             }
             if (plugin.register == true && _user.registered == false) { // Butuh daftar?
-              fail('unreg', m, this)
+              dfail('unreg', m, this)
               continue
             }
-            if (plugin.game && !global.db.data.settings.game) { // game mode
-              fail('game', m, this)
+            if (plugin.game && db.data.settings[this.user.jid].game == false) { // game mode
+              m.reply(status.game)
               continue
             }
-            if (plugin.rpg && !global.db.data.settings.rpg) { // RPG mode
-              fail('rpg', m, this)
+            if (plugin.rpg && db.data.settings[this.user.jid].rpg == false) { // RPG mode
+              m.reply(status.rpg)
               continue
             }
             m.isCommand = true

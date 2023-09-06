@@ -12,7 +12,6 @@ let {
     usedPrefix,
     text
   }) => {
-    if (!db.data.settings[conn.user.jid].rpg) return m.reply(status.rpg)
     let time = global.db.data.users[m.sender].lastmining + 3600000
     if (new Date - global.db.data.users[m.sender].lastmining < 3600000) throw `Anda sudah mengambil hadiah\ntunggu selama ${msToTime(time - new Date())} lagi`
     //let xpee = `${Math.floor(Math.random(global.db.data.users[m.sender].exp += miningxp) * 5000)}`.trim()
@@ -34,11 +33,12 @@ let {
   }
   handler.help = ['mining']
   handler.tags = ['rpg']
-  handler.command = /^(mining)/i
+  handler.command = ['mining']
   handler.owner = false
   handler.mods = false
   handler.premium = false
-  handler.group = false
+  handler.group = true
+  handler.rpg = true
   handler.private = false
   
   handler.admin = false

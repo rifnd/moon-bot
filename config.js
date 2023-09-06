@@ -10,26 +10,27 @@ global.APIs = {
   alya: 'https://api.alyachan.biz.id'
 }
 global.APIKeys = {
-  'https://api.alyachan.biz.id': 'liyacomel'
+  'https://api.alyachan.biz.id': 'Your Key' // Silahkan register dulu
 }
 
 global.set = {
-  link: 'https://chat.whatsapp.com/IaXnDzbbhNfBfTv0nN7bJI',
-  thumbnail: 'https://i.ibb.co/gtr5L2k/Supermoon-2012.jpg',
-  wm: `© moon-bot v${require('./package.json').version}`,
-  footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ ᴍᴏᴏɴ',
-  packname: 'Sticker By',
-  author: 'moon-bot'
+  link: 'https://chat.whatsapp.com/IaXnDzbbhNfBfTv0nN7bJI', // Link 
+  thumbnail: 'https://i.ibb.co/gtr5L2k/Supermoon-2012.jpg', // Ukuran max thumbnail 150kb
+  wm: `© moon-bot v${require('./package.json').version}`, // Watermark
+  footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ ᴍᴏᴏɴ', // Footer 
+  packname: 'Sticker By', //packname sticker
+  author: 'moon-bot' //author sticker
 }
 
-global.multiplier = 50
-global.max_upload = 70
-global.intervalmsg = 1800
+global.multiplier = 100 // Semakin besar, semakin sulit naik level
+global.max_upload = 70 // Max ukuran upload bot
+global.intervalmsg = 1800 // Supaya tidak spam
 
-global.Func = new(require('./lib/functions'))
-global.scrap = require('./lib/scrape')
+global.Func = new (require('./lib/functions')) // Function biar gampang
+global.scrap = require('./lib/scrape') // Scraper
 
 global.status = {
+  // Pesan status
   wait: 'Sedang diproses. . .',
   invalid: 'URL tidak valid.',
   wrong: 'Format salah.',
@@ -74,14 +75,11 @@ global.rpg = {
       gold: '👑',
       emerald: '💚',
     }
-    let results = Object.keys(emot)
-      .map((v) => [v, new RegExp(v, 'gi')])
-      .filter((v) => v[1].test(string))
+    let results = Object.keys(emot).map((v) => [v, new RegExp(v, 'gi')]).filter((v) => v[1].test(string))
     if (!results.length) return ''
     else return emot[results[0][0]]
   },
 }
-
 
 const fs = require('fs')
 const chalk = require('chalk')

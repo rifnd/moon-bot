@@ -2,7 +2,6 @@
 let handler = async (m, {
   conn, text, usedPrefix, command
 }) => {
-  if (!db.data.settings[conn.user.jid].rpg) return m.reply(status.rpg)
   let dapat = (Math.floor(Math.random() * 10000))
   let healtu = (Math.floor(Math.random() * 100))
   let nomors = m.sender
@@ -28,9 +27,10 @@ let handler = async (m, {
 
 handler.help = ['membunuh']
 handler.tags = ['rpg']
-handler.command = /^membunuh$/
+handler.command = ['membunuh']
 handler.limit = true
 handler.group = true
+handler.rpg = true
 handler.premium = true
 handler.false = null
 

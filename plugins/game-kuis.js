@@ -2,7 +2,6 @@ conn.kuis = conn.kuis ? conn.kuis: {}
 let handler = async (m, {
   conn, usedPrefix
 }) => {
-  if (!db.data.settings[conn.user.jid].game) return m.reply(status.game)
   let id = m.chat
   if (id in conn.kuis) return conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.kuis[id][0])
   conn.kuis[id] = [
@@ -16,15 +15,13 @@ let handler = async (m, {
       30000)
   ]
 }
-handler.help = ['kuis']
+handler.help = handler.command = ['kuis']
 handler.tags = ['game']
-handler.command = /^(kuis)$/i
-handler.group = false
-handler.private = false
-
+handler.game = true
+handler.group = true
 handler.limit = true
+handler.private = false
 handler.fail = null
-
 module.exports = handler
 
 function pickRandom(list) {
