@@ -1,12 +1,10 @@
 let fetch = require('node-fetch')
-
 let timeout = 180000
 let poin = 500
 let tiketcoin = 1
 let handler = async (m, {
   conn, usedPrefix
 }) => {
-  if (!db.data.settings[conn.user.jid].game) return m.reply(status.game)
   conn.siapakahaku = conn.siapakahaku ? conn.siapakahaku: {}
   let id = m.chat
   if (id in conn.siapakahaku) {
