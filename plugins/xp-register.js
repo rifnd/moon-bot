@@ -1,6 +1,4 @@
-const {
-    createHash
-  } = require('crypto')
+const { createHash } = require('crypto')
   let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i
   let handler = async function(m, {
     text,
@@ -8,29 +6,36 @@ const {
     command
   }) {
     let user = db.data.users[m.sender]
-    if (user.registered === true) return m.reply(`Nomor kamu sudah terdaftar, jika ingin daftar ulang kirim ${usedPrefix + command} sn`)
+    if (user.registered === true) return m.reply(`Your number has been registered, if you want to re-register, send it ${usedPrefix + command} sn`)
     if (!Reg.test(text)) return m.reply(Func.example(usedPrefix, command, 'nando.19'))
-    let [_, name, splitter, age] = text.match(Reg);
-    if (!name) return m.reply('Masukan nama kamu!')
-    if (!age) return m.reply('Masukan umur kamu')
+    let [_, name, splitter, age] = text.match(Reg)
+    if (!name) return m.reply('Enter your name')
+    if (!age) return m.reply('Enter your age')
     age = parseInt(age)
-    if (name.length > 20) return m.reply(`Nama terlalu panjang.`)
-    if (age > 80) return m.reply('Umur terlalu tua')
-    if (age < 5) return m.reply('Umur terlalu muda, emang bayi bisa ngetik?')
+    if (name.length > 20) return m.reply('Name is too long')
+    if (age > 80) return m.reply('Too old')
+    if (age < 5) return m.reply('Too young, can babies type?')
     user.name = name.trim()
     user.age = age
     user.regTime = +new Date()
     user.registered = true
+    user.limit += 100
+    user.exp += 20000
+    user.money += 10000
     let sn = createHash('md5').update(m.sender).digest('hex')
-    let teks = `
-     - Nama : ${name}
-     - Umur : ${age} tahun
-     - SN : ${sn}
+    let teks = `*Registered successfully*
+    
+  ∘ Name : ${name}
+  ∘ Umur : ${age} years old
+  ∘ SN : ${sn}
+  
+  + 100 limit
+  + 20.000 exp
+  + 10.000 money
   `
-    m.reply(`✅ Pendaftaran berhasil`)
+    m.reply(teks)
   }
   handler.help = ['register'].map((v) => v + '')
   handler.tags = ['xp']
   handler.command = ['reg', 'register', 'daftar']
   module.exports = handler
-  

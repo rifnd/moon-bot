@@ -20,7 +20,13 @@ let tags = {
 }
 const defaultMenu = {
   before: `%ucapan, %tag
-Berikut daftar perintah yang tersedia.
+I am an automatic system (WhatsApp Bot), which can help you to complete small jobs such as downloading videos or images etc. just via WhatsApp.
+
+∘  *Date* : *%week %weton, %date*
+∘  *Runtime* : %uptime (%muptime)
+∘  *User* : %rtotalreg of %totalreg
+∘  *Web* : https://moonbot.online
+∘  *Source* : %github
 
 `.trimStart(),
   header: '乂  *%category*\n',
@@ -193,11 +199,11 @@ function clockString(ms) {
 
 function ucapan() {
   let time = moment.tz('Asia/Jakarta').format('HH')
-  let res = `Jangan lupa tidur`
-  if (time >= 5) res = `Selamat pagi`
-  if (time >= 11) res = `Selamat siang`
-  if (time >= 15) res = `Selamat sore`
-  if (time >= 18) res = `Selamat senja`
-  if (time >= 19) res = `Selamat malam`
+  let res = `Don't forget to sleep`
+  if (time >= 5) res = `Good morning`
+  if (time >= 11) res = `Good afternoon`
+  if (time >= 15) res = `Good afternoon`
+  if (time >= 18) res = `Have a good evening`
+  if (time >= 19) res = `Good night`
   return res
 }

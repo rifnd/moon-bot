@@ -1,7 +1,11 @@
 const { MessageType } = require('@whiskeysockets/baileys')
 const { createHash } = require('crypto')
 let Reg = /\|?(.*)([.|] *?)([0-9]*)$/i
-let handler = async function (m, { conn, text, usedPrefix }) {
+let handler = async function(m, {
+  conn,
+  text,
+  usedPrefix
+}) {
   let __waktutionskh = new Date() - db.data.users[m.sender].snlast
   let _waktutionskh = +86400000 - __waktutionskh
   let waktutionskh = clockString(_waktutionskh)
@@ -9,17 +13,10 @@ let handler = async function (m, { conn, text, usedPrefix }) {
     db.data.users[m.sender].snlast = new Date() * 1
     db.data.users[m.sender].limit -= 5
     let sn = createHash('md5').update(m.sender).digest('hex')
-    m.reply(
-      `
-${usedPrefix}unreg ${sn}
-`.trim()
-    )
+    m.reply(`${usedPrefix}unreg ${sn}`)
   } else
-    m.reply(
-      `Kamu sudah unreg.. tunggu ${waktutionskh} untuk bisa kembali unreg`
-    )
+    m.reply(`You have unregistered, wait another ${waktutionskh} to be able to unregister again.`)
 }
-
 handler.help = ['ceksn']
 handler.tags = ['xp']
 handler.command = ['ceksn']
