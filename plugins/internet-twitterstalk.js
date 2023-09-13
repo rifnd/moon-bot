@@ -28,4 +28,4 @@ handler.help = ['twitstalk']
 handler.tags = ['internet']
 handler.command = ['twitstalk', 'twitterstalk']
 handler.limit = true
-module.exports = handlerinternet
+module.exports = handler
