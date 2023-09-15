@@ -3,35 +3,37 @@ let path = require('path')
 let moment = require('moment-timezone')
 let levelling = require('../lib/levelling')
 let tags = {
-  anonymous: 'A N O N Y M O U S - C H A T',
-  downloader: 'D O W N L O A D E R',
-  effect: 'E F F E C T',
-  game: 'G A M E',
-  group: 'G R O U P',
-  info: 'I N F O',
-  internet: 'I N T E R N E T',
-  maker: 'M A K E R',
-  owner: 'O W N E R',
-  rpg: 'R P G',
-  sticker: 'S T I C K E R',
-  tools: 'T O O L S',
-  xp: 'U S E R - I N F O',
-  voice: 'V O I C E - C H A N G E R',
+  anonymous: 'ANONYMOUS - CHAT',
+  downloader: 'DOWNLOADER',
+  effect: 'EFFECT',
+  fun: 'FUN',
+  game: 'GAME',
+  group: 'GROUP',
+  info: 'INFO',
+  internet: 'INTERNET',
+  maker: 'MAKER',
+  owner: 'OWNER',
+  rpg: 'RPG',
+  sticker: 'STICKER',
+  tools: 'TOOLS',
+  xp: 'USER - INFO',
+  voice: 'VOICE - CHANGER',
 }
 const defaultMenu = {
   before: `%ucapan, %tag
 I am an automatic system (WhatsApp Bot), which can help you to complete small jobs such as downloading videos or images etc. just via WhatsApp.
 
-∘  *Date* : *%week %weton, %date*
-∘  *Runtime* : %uptime (%muptime)
-∘  *User* : %rtotalreg of %totalreg
-∘  *Web* : https://moonbot.online
-∘  *Source* : %github
+╭  ∘  *Date* : %week %weton, %date
+│  ∘  *Runtime* : %uptime (%muptime)
+│  ∘  *User* : %rtotalreg of %totalreg
+│  ∘  *Rest APIs* : https://api.alyachan.biz.id
+╰  ∘  *Source* : %github
 
-`.trimStart(),
-  header: '乂  *%category*\n',
-  body: 'ㅤ∘ %cmd',
-  footer: '',
+If you find a bug or want a premium upgrade, please contact the owner.
+%readmore`.trimStart(),
+  header: '╭  _*%category*_\n│',
+  body: '│  ∘ %cmd',
+  footer: '│\n╰⊶\n',
   after: `*%npmname@^%version*
 ${'```%npmdesc```'}
 `,
@@ -42,17 +44,8 @@ let handler = async (m, {
 }) => {
   try {
     let package = JSON.parse(await fs.promises.readFile(path.join(__dirname, '../package.json')).catch(_ => '{}'))
-    let {
-      exp,
-      limit,
-      level,
-      role
-    } = global.db.data.users[m.sender]
-    let {
-      min,
-      xp,
-      max
-    } = levelling.xpRange(level, global.multiplier)
+    let { exp, limit, level, role } = global.db.data.users[m.sender]
+    let { min, xp, max } = levelling.xpRange(level, global.multiplier)
     let name = conn.getName(m.sender)
     let tag = `@${m.sender.replace(/@.+/g, '')}`
     let d = new Date(new Date + 3600000)
