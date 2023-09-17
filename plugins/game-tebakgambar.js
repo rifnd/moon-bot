@@ -23,13 +23,13 @@ let handler = async (m, {
   Tiketcoin: 1 Tiketcoin
   `.trim()
   conn.tebakgambar[id] = [
-    await conn.sendFile(m.chat, json.img, 'tebakgambar.jpg', caption, m, false, {
+    /*await conn.sendFile(m.chat, json.img, 'tebakgambar.jpg', caption, m, false, {
       thumbnail: Buffer.alloc(0)
-    }),
-    /*await conn.sendMessageModify(m.chat, caption, m, {
-        thumbnail: json.img,
-        thumbnailUrl: json.img
     }),*/
+    await conn.sendMessage(m.chat, { 
+      image: { url: json.img }, 
+      caption: caption 
+    }, { quoted: m }),
     json,
     poin,
     setTimeout(() => {
