@@ -15,7 +15,7 @@ global.APIKeys = {
 
 global.set = {
   link: 'https://chat.whatsapp.com/IaXnDzbbhNfBfTv0nN7bJI', // Link 
-  thumbnail: 'https://i.ibb.co/gtr5L2k/Supermoon-2012.jpg', // Ukuran max thumbnail 150kb
+  thumbnail: 'https://telegra.ph/file/749c6b7544efeff028487.jpg', // Ukuran max thumbnail 150kb
   wm: `© moon-bot v${require('./package.json').version}`, // Watermark
   footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ ᴍᴏᴏɴ', // Footer 
   packname: 'Sticker By', //packname sticker
