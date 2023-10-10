@@ -12,35 +12,29 @@ let handler = async (m, {
     if (!json.status) return m.reply(Func.jsonFormat(json))
     let teks = `乂  *T I K T O K*\n\n`
     teks += `  ∘  *Author* : ${json.author.nickname}\n`
-    teks += `  ∘  *Likes* : ${json.stats.likes}\n`
-    teks += `  ∘  *Shares* : ${json.stats.share}\n`
-    teks += `  ∘  *Comments* : ${json.stats.comment}\n`
+    teks += `  ∘  *Like* : ${json.stats.likes}\n`
+    teks += `  ∘  *Share* : ${json.stats.share}\n`
+    teks += `  ∘  *Comment* : ${json.stats.comment}\n`
     teks += `  ∘  *Duration* : ${json.duration}\n`
     teks += `  ∘  *Sound* : ${json.music_info.title} - ${json.music_info.author}\n`
     teks += `  ∘  *Caption* : ${json.title}\n`
     teks += `  ∘  *Fetching* : ${((new Date - old) * 1)} ms\n\n`
-    teks += global.set.footer
+    teks += global.footer
     if (command == 'tiktok' || command == 'tt') {
-      if (json.duration === 0) {
-        let res = await Func.fetchJson(API('alya', '/api/ttslide', { url: args[0] }, 'apikey'))
-        if (!res.status) return m.reply(Func.jsonFormat(re))
-        res.data.map(v => conn.sendFile(m.chat, v.url, '', teks, m))
+      let result = json.data.find(v => v.type == 'nowatermark')
+      if (!result) {
+        json.data.map(x => {
+          conn.sendFile(m.chat, x.url, Func.filename('jpg'), teks, m)
+        })
+      } else {
+        conn.sendFile(m.chat, result.url, Func.filename('mp4'), teks, m)
       }
-      if (json.data.video_nowm) return conn.sendMedia(m.chat, json.data.video_nowm, m, {
-        caption: teks,
-        mentions: [m.sender]
-      })
     } else if (command == 'tikwm') {
-      conn.sendMedia(m.chat, json.data.video_wm, m, {
-        caption: teks,
-        mentions: [m.sender]
-      })
+      conn.sendFile(m.chat, json.data.find(v => v.type == 'watermark').url, Func.filename('mp4'), teks, m)
     } else if (command == 'tikmp3') {
-      conn.sendMedia(m.chat, json.data.music, m, {
-        mentions: [m.sender]
-      })
+      conn.sendFile(m.chat, json.music_info.url, Func.filename('mp3'), '', m)
     }
-  } catch {
+  } catch (e) {
     console.log(e)
     return m.reply(status.error)
   }
