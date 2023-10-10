@@ -19,7 +19,7 @@ let handler = async (m, {
     teks += `  ∘  *Sound* : ${json.music_info.title} - ${json.music_info.author}\n`
     teks += `  ∘  *Caption* : ${json.title}\n`
     teks += `  ∘  *Fetching* : ${((new Date - old) * 1)} ms\n\n`
-    teks += global.footer
+    teks += global.set.footer
     if (command == 'tiktok' || command == 'tt') {
       let result = json.data.find(v => v.type == 'nowatermark')
       if (!result) {
