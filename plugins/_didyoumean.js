@@ -1,4 +1,4 @@
-const didyoumean = require('didyoumean')
+/*const didyoumean = require('didyoumean')
 const similarity = require('similarity')
 let handler = (m) => m 
 handler.before = async function(m, {
@@ -20,4 +20,4 @@ handler.before = async function(m, {
   }
   return true
 }
-module.exports = handler
+module.exports = handler*/

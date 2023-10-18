@@ -606,7 +606,9 @@ module.exports = {
         if (opts['swonly'] && m.chat !== 'status@broadcast') return
         if (typeof m.text !== 'string') m.text = ''
 
-        const isROwner = [conn.decodeJid(global.conn.user.id), ...global.owner.map(([number, isCreator, isDeveloper]) => number)].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
+        const isROwner = [conn.decodeJid(global.conn.user.id),
+          ...global.owner.map(([number, isCreator, isDeveloper]) => number)
+        ].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
         const isOwner = isROwner || m.fromMe
         const isMods = isOwner || global.mods.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
         const isPrems = db.data.users[m.sender].premium
@@ -931,15 +933,11 @@ module.exports = {
               try {
                 pp = await this.profilePictureUrl(user)
               } catch (e) {} finally {
-                text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', await this.getName(id)).replace('@desc', groupMetadata.desc.toString()) :
-                  (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
-                /*this.sendFile(id, pp, 'pp.jpg', text, null, false, {
-                  mentions: [user]
-                })*/
-                this.sendMessageModify(id, text, 0, {
+                text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', await this.getName(id)).replace('@desc', groupMetadata.desc) : (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
+                this.sendMessageModify(id, text, null, {
                   largeThumb: true,
                   thumbnail: pp,
-                  url: global.set.link
+                  url: global.set.link,
                 })
               }
             }

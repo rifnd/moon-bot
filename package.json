@@ -24,12 +24,10 @@
   "homepage": "https://github.com/Nando35/moon-bot#readme",
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
-    "@whiskeysockets/baileys": "^6.4.0",
+    "@whiskeysockets/baileys": "github:whiskeysockets/baileys",
     "awesome-phonenumber": "^5.6.0",
-    "canvacord": "5.4.8",
     "cfonts": "^2.10.1",
     "chalk": "^4.1.2",
-    "didyoumean": "1.2.2",
     "fluent-ffmpeg": "^2.1.2",
     "human-readable": "^0.2.1",
     "jimp": "0.16.1",

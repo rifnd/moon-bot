@@ -7,10 +7,10 @@ global.mods = ['0']
 global.prems = ['6285815700861', '6281252848955']
 
 global.APIs = {
-  alya: 'https://api.alyachan.biz.id'
+  alya: 'https://api.alyachan.xyz'
 }
 global.APIKeys = {
-  'https://api.alyachan.biz.id': 'Your Key' // Silahkan register dulu
+  'https://api.alyachan.biz.id': 'yourkey' // Silahkan register dulu
 }
 
 global.set = {
