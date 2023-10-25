@@ -5,12 +5,11 @@ global.owner = [
   ]
 global.mods = ['0']
 global.prems = ['6285815700861', '6281252848955']
-
 global.APIs = {
-  alya: 'https://api.alyachan.xyz'
+  alya: 'https://api.alyachan.pro'
 }
 global.APIKeys = {
-  'https://api.alyachan.biz.id': 'yourkey' // Silahkan register dulu
+  'https://api.alyachan.pro': 'matamu' // Silahkan register dulu
 }
 
 global.set = {

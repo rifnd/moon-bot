@@ -1,5 +1,5 @@
 ### MOON-BOT
-> Script ini gratis, menggunakan 99% api dari [AlyaChan-APIs](https://api.alyachan.biz.id)
+> Script ini gratis, menggunakan 99% api dari [AlyaChan-APIs](https://api.alyachan.pro)
 
 ### Yang dibutuhkan
 - [x] Server
@@ -19,11 +19,11 @@ global.mods = ['0']
 global.prems = ['6285815700861', '6281252848955']
 
 global.APIs = {
-  alya: 'https://api.alyachan.biz.id'
+  alya: 'https://api.alyachan.pro'
 }
 
 global.APIKeys = {
-  'https://api.alychan.biz.id', 'YOURKEY'
+  'https://api.alychan.pro', 'YOURKEY'
 }
 
 global.set = {
@@ -48,7 +48,7 @@ let handler = async (m, {
   args
 }) => {
   try {
-
+    // jembuten
   } catch (e) {
     console.log(e)
   }
@@ -90,6 +90,10 @@ autored chat
 
 contoh : `node . --db 'mongodburi'`
 Untuk menghubungkan ke database, pakai mongodb
+
+### `--pairing`
+
+menggunakan kode
 
 
 [![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) | [![Nando35](https://github.com/Nando35.png?size=100)](https://github.com/Nando35)
