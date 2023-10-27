@@ -21,3 +21,6 @@ rad.json
 #Test results file
 TestResults.xml
 node_modules
+session/*-*
+tmp/
+package-lock.json

@@ -1,6 +1,6 @@
 {
   "name": "moon-bot",
-  "version": "2.9.0",
+  "version": "2.9.1",
   "description": "Simple whatsapp bot",
   "main": "index.js",
   "directories": {
@@ -24,7 +24,7 @@
   "homepage": "https://github.com/Nando35/moon-bot#readme",
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
-    "@whiskeysockets/baileys": "github:whiskeysockets/baileys",
+    "@whiskeysockets/baileys": "npm:@whiskeysockets/baileys",
     "awesome-phonenumber": "^5.6.0",
     "cfonts": "^2.10.1",
     "chalk": "^4.1.2",

@@ -574,28 +574,28 @@ module.exports = {
           let settings = db.data.settings[this.user.jid]
           if (typeof settings !== 'object') db.data.settings[this.user.jid] = {}
           if (settings) {
- 						if (!'anticall' in settings) settings.anticall = true
- 						if (!'grouponly' in settings) settings.grouponly = false
- 						if (!'autoread' in settings) settings.autoread = true
- 						if (!'autoreset' in settings) settings.autoreset = true
- 						if (!'backup' in settings) settings.backup = true
- 						if (!isNumber(settings.backupTime)) settings.backupTime = 0
- 						if (!'game' in settings) settings.game = false
- 						if (!'rpg' in settings) settings.rpg = false
- 						if (!isNumber(settings.autoresetTime))
- 							settings.autoresetTime = new Date() * 1 + 3600000 * 720
- 					} else
- 						db.data.settings[this.user.jid] = {
- 							anticall: true,
- 							grouponly: false,
-							autoread: true,
- 							autoreset: true,
- 							backup: true,
- 							backupTime: 0,
- 							game: false,
- 							rpg: false,
- 							autoresetTime: new Date() * 1 + 3600000 * 720,
- 						}
+            if (!'anticall' in settings) settings.anticall = true
+            if (!'grouponly' in settings) settings.grouponly = false
+            if (!'autoread' in settings) settings.autoread = true
+            if (!'autoreset' in settings) settings.autoreset = true
+            if (!'backup' in settings) settings.backup = true
+            if (!isNumber(settings.backupTime)) settings.backupTime = 0
+            if (!'game' in settings) settings.game = false
+            if (!'rpg' in settings) settings.rpg = false
+            if (!isNumber(settings.autoresetTime))
+              settings.autoresetTime = new Date() * 1 + 3600000 * 720
+          } else
+            db.data.settings[this.user.jid] = {
+              anticall: true,
+              grouponly: false,
+              autoread: true,
+              autoreset: true,
+              backup: true,
+              backupTime: 0,
+              game: false,
+              rpg: false,
+              autoresetTime: new Date() * 1 + 3600000 * 720,
+            }
         } catch (e) {
           console.error(e)
         }
@@ -739,8 +739,8 @@ module.exports = {
             if (m.chat in db.data.chats || m.sender in db.data.users) {
               let chat = db.data.chats[m.chat]
               let user = db.data.users[m.sender]
-               if (!['owner-unbanned.js'].includes(name) && chat && chat?.isBanned && !isOwner && !isAdmin) return // Kecuali ini, bisa digunakan
-               if (!['owner-unbanned.js'].includes(name) && user && user?.banned) return              
+              if (!['owner-unbanned.js'].includes(name) && chat && chat?.isBanned && !isOwner && !isAdmin) return // Kecuali ini, bisa digunakan
+              if (!['owner-unbanned.js'].includes(name) && user && user?.banned) return
             }
             if (plugin.rowner && plugin.owner && !(isROwner || isOwner)) { // Both Owner
               dfail('owner', m, this)
@@ -984,7 +984,7 @@ Untuk mematikan fitur ini, ketik
     }
   },
 
-conn.ws.on('CB:call', async function callUpdatePushToDb(json) {
+  conn.ws.on('CB:call', async function callUpdatePushToDb(json) {
     let call = json.tag
     let callerId = json.attrs.from
     console.log({

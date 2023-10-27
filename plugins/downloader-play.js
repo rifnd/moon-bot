@@ -23,6 +23,7 @@ let handler = async (m, {
       largeThumb: true,
       thumbnail: json.thumbnail
     }).then(async () => {
+      // document
       conn.sendMessage(m.chat, {
         document: {
           url: json.data.url
@@ -32,6 +33,11 @@ let handler = async (m, {
       }, {
         quoted: m
       })
+      // Audio
+      /*conn.sendMedia(m.chat, json.data.url, m, {
+        filename: json.title + '.mp3',
+        mentions: [m.sender]
+      })*/
     })
   } catch (e) {
     console.log(e)

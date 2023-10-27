@@ -26,7 +26,7 @@ I am an automatic system (WhatsApp Bot), which can help you to complete small jo
 ╭  ∘  *Date* : %week %weton, %date
 │  ∘  *Runtime* : %uptime (%muptime)
 │  ∘  *User* : %rtotalreg of %totalreg
-│  ∘  *Rest APIs* : https://api.alyachan.biz.id
+│  ∘  *Rest APIs* : https://api.alyachan.pro
 ╰  ∘  *Source* : %github
 
 If you find a bug or want a premium upgrade, please contact the owner.
@@ -317,7 +317,7 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
       let capt = `${ucapan()} @${m.sender.replace(/@.+/g, '')}\n`
       capt += `I am an automatic system (WhatsApp Bot), which can help you to complete small jobs such as downloading videos or images etc. just via WhatsApp.\n\n`
       capt += `∘  *User* : ${rtotalreg} of ${totalreg}\n`
-      capt += `∘  *Rest Api* : https://api.alyachan.xyz\n`
+      capt += `∘  *Rest Api* : https://api.alyachan.pro\n`
       capt += `∘  *Source* : https://github.com/Nando35/moon-bot\n\n`
       capt += `If you find a bug or want a premium upgrade, please contact the owner.\n\n`
       capt += `┌  ∘  ${_p + command} anonymous\n`

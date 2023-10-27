@@ -5,6 +5,7 @@ global.owner = [
   ]
 global.mods = ['0']
 global.prems = ['6285815700861', '6281252848955']
+
 global.APIs = {
   alya: 'https://api.alyachan.pro'
 }
