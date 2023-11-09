@@ -1,13 +1,14 @@
 {
   "name": "moon-bot",
-  "version": "2.9.1",
+  "version": "2.9.2",
   "description": "Simple whatsapp bot",
   "main": "index.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node . --autoread",
+    "mode": "node . --autoread --gconly"
   },
   "repository": {
     "type": "git",

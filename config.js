@@ -1,36 +1,37 @@
+// Owner
 global.owner = [
-    ['6281252848955'],
-    ['6285815700861'],
-    ['6281252848955', 'owner', true]
-  ]
-global.mods = ['0']
-global.prems = ['6285815700861', '6281252848955']
-
+  ['6281252848955', 'Owner', true],
+  ['6285815700861']
+]
+// Moderator
+global.mods = ['6281252848955']
+// Web Api
 global.APIs = {
   alya: 'https://api.alyachan.pro'
 }
+// APikey register di https://api.alyachan.pro
 global.APIKeys = {
-  'https://api.alyachan.pro': 'matamu' // Silahkan register dulu
+  'https://api.alyachan.pro': 'yourkey'
 }
-
+// Option
 global.set = {
-  link: 'https://chat.whatsapp.com/IaXnDzbbhNfBfTv0nN7bJI', // Link 
-  thumbnail: 'https://telegra.ph/file/749c6b7544efeff028487.jpg', // Ukuran max thumbnail 150kb
-  wm: `© moon-bot v${require('./package.json').version}`, // Watermark
-  footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ ᴍᴏᴏɴ', // Footer 
-  packname: 'Sticker By', //packname sticker
-  author: 'moon-bot' //author sticker
+  link: 'https://chat.whatsapp.com/IaXnDzbbhNfBfTv0nN7bJI',
+  thumbnail: 'https://telegra.ph/file/749c6b7544efeff028487.jpg',
+  wm: `© moon-bot v${require('./package.json').version}`,
+  footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ ᴍᴏᴏɴ',
+  packname: 'Sticker By',
+  author: 'moon-bot'
 }
-
-global.multiplier = 100 // Semakin besar, semakin sulit naik level
-global.max_upload = 70 // Max ukuran upload bot
-global.intervalmsg = 1800 // Supaya tidak spam
-
-global.Func = new (require('./lib/functions')) // Function biar gampang
-global.scrap = require('./lib/scrape') // Scraper
-
+// Lain lain
+global.multiplier = 1000 // Semakin besar semakin sulit naik level
+global.max_upload = 70 // Batas maks mengirim file
+global.intervalmsg = 1800 // Agar tidak spam
+global.ram_usage = 2100000000 // 2GB, hitung sendiri
+// Function & Scrape
+global.Func = new(require('./lib/functions'))
+global.scrap = require('./lib/scrape')
+// Message
 global.status = {
-  // Pesan status
   wait: 'Sedang diproses. . .',
   invalid: 'URL tidak valid.',
   wrong: 'Format salah.',
@@ -46,7 +47,7 @@ global.status = {
   game: 'Fitur game belum diaktifkan.',
   rpg: 'Fitur RPG belum diaktifkan.'
 }
-
+// Emoticon RPG
 global.rpg = {
   emoticon(string) {
     string = string.toLowerCase()
@@ -80,7 +81,6 @@ global.rpg = {
     else return emot[results[0][0]]
   },
 }
-
 const fs = require('fs')
 const chalk = require('chalk')
 let file = require.resolve(__filename)
