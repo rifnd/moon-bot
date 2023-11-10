@@ -25,24 +25,23 @@ let handler = async (m, {
       m.reply(status.wait)
       let json = await Func.fetchJson(API('alya', '/api/apkget', { url: urls[text - 1] }, 'apikey'))
       if (!json.status) return m.reply(Func.jsonFormat(json))
-      let teks = `乂  *P L A Y S T O R E*\n\n`
-      teks += '	◦  *Name* : ' + json.data.title + '\n'
-      teks += '	◦  *Version* : ' + json.data.androidversion + '\n'
-      teks += '	◦  *Size* : ' + json.data.file.size + '\n'
+      let teks = `乂  *A P K*\n\n`
+      teks += '	◦  *Name* : ' + json.data.name + '\n'
+      teks += '	◦  *Version* : ' + json.data.version + '\n'
+      teks += '	◦  *Size* : ' + json.data.size + '\n'
       teks += '	◦  *Category* : ' + json.data.category + '\n'
-      teks += '	◦  *Developer* : ' + json.data.developer + '\n'
-      teks += '	◦  *Installed* : ' + json.data.installed + '\n'
-      teks += '	◦  *Update* : ' + json.data.updated + '\n'
-      teks += '	◦  *Price* : ' + json.data.price + '\n\n'
-      teks += global.footer
-      let chSize = Func.sizeLimit(json.data.file.size, global.max_upload)
-      if (chSize.oversize) return m.reply(`Ukuran file (${json.data.file.size}) terlalu besar, silahkan download sendiri lewat link ini : ${await (await Func.shortlink(json.data.file.url))}`)
+      teks += '	◦  *Installed* : ' + json.data.download + '\n'
+      teks += '	◦  *Update* : ' + json.data.update + '\n'
+      teks += '	◦  *Rating* : ' + json.data.rating + '\n\n'
+      teks += global.set.footer
+      let chSize = Func.sizeLimit(json.data.size, global.max_upload)
+      if (chSize.oversize) return m.reply(`Ukuran file (${json.data.size}) terlalu besar, silahkan download sendiri lewat link ini : ${await (await Func.shortlink(json.data.url))}`)
       conn.sendMessageModify(m.chat, teks, m, {
         largeThumb: true,
-        thumbnail: json.data.icon
+        thumbnail: json.data.thumbnail
       }).then(async () => {
-        conn.sendMedia(m.chat, json.data.file.url, m, {
-          fileName: json.data.title + '.apk',
+        conn.sendMedia(m.chat, json.data.url, m, {
+          fileName: json.data.name + '.apk',
           mimetype: 'application',
           mentions: [m.sender]
         })

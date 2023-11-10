@@ -6,8 +6,9 @@
 - [x] WhatsApp
 - [x] ffmpeg
 - [x] imagemagick
+- [x] Apikey
 
-### Settings di config.js
+### Setting di config.js
 ```Javascript
 global.owner = [
     ['6281252848955'],
