@@ -43,22 +43,35 @@ global.intervalmsg = 1800
 
 ### Plugins
 ```Javascript
-let handler = async (m, {
+let handler = async(m, {
+  conn,
   usedPrefix,
   command,
-  args
+  args,
+  text,
+  users,
+  isOwner,
+  isPrem
 }) => {
   try {
-    // jembuten
-  } catch (e) {
+    // di isi sembarang cok
+  } catch {
     console.log(e)
+    return conn.reply(m.chat, Func.jsonFormat(e), m)
   }
 }
-handler.help = ['command']
-handler.tags = ['category']
-handler.command = /^(command)$/i
-module.exports = handler
-
+handler.help = ['command'] // anunya
+handler.tags = ['category'] // category nya
+handler.command = /^(command)$/i // command nya
+handler.group = Boolean // buat grup
+handler.limit = Boolean // pake limit
+handler.game = Boolean // fitur game
+handler.rpg = Boolean // fitur rpg
+handler.owner = Boolean // khusus owner
+handler.admin = Boolean // khusus admin
+handler.botAdmin = Boolean // bot harus jadi admin
+handler.premium = Boolean // khusus premium
+handler.private = Boolean // khusus chat pribadi
 ```
 
 ### Instalasi & Run
