@@ -22,6 +22,8 @@ global.set = {
   packname: 'Sticker By',
   author: 'moon-bot'
 }
+// number 
+global.pairingNumber = 6283862074769
 // Lain lain
 global.multiplier = 1000 // Semakin besar semakin sulit naik level
 global.max_upload = 70 // Batas maks mengirim file
