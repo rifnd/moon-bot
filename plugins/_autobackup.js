@@ -1,4 +1,4 @@
-/*let fs = require('fs')
+let fs = require('fs')
 let moment = require('moment-timezone')
 let handler = (m) => m
 handler.all = async function(m) {
@@ -26,4 +26,4 @@ handler.all = async function(m) {
     }
     return !0
 }
-module.exports = handler */
+module.exports = handler
