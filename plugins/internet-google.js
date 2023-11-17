@@ -11,8 +11,8 @@ let handler = async (m, {
       let teks = `乂  *G O O G L E*\n\n`
       json.data.map((v, i) => {
         teks += `*` + (i + 1) + `.* ` + v.title + `\n`;
-        teks += ` ∘ *Snippet* : ` + v.snippet + `\n`;
-        teks += ` ∘ *Link* : ` + v.url + `\n\n`;
+        teks += `  ∘  *Snippet* : ` + v.snippet + `\n`;
+        teks += `  ∘  *Link* : ` + v.url + `\n\n`;
       })
       m.reply(teks)
     }
@@ -21,8 +21,8 @@ let handler = async (m, {
       for (let i = 0; i < 5; i++) {
         let random = Math.floor(json.data.length * Math.random())
         let caption = `乂  *G O O G L E - I M A G E*\n\n`
-        caption += `	◦ *Title* : ${json.data[random].origin.title}\n`
-        caption += `	◦ *Dimensions* : ${json.data[random].width} × ${json.data[random].height}\n\n`
+        caption += `  ◦  *Title* : ${json.data[random].origin.title}\n`
+        caption += `  ◦  *Dimensions* : ${json.data[random].width} × ${json.data[random].height}\n\n`
         caption += global.footer
         conn.sendFile(m.chat, json.data[random].url, 'google.jpg', caption, m)
         await Func.delay(2500)

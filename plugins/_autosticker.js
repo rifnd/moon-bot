@@ -1,6 +1,6 @@
 const { sticker } = require('../lib/sticker')
 let handler = m => m
-handler.all = async function(m) {
+handler.all = async function (m) {
   let chat = db.data.chats[m.chat]
   let user = db.data.users[m.sender]
   if (chat.stiker && !chat.isBanned && !user.banned && !m.isBaileys) {
@@ -34,4 +34,3 @@ module.exports = handler
 const isUrl = (text) => {
   return text.match(new RegExp(/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)(jpe?g|gif|png|mp4)/, 'gi'))
 }
-  

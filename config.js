@@ -1,8 +1,7 @@
 // Owner
 global.owner = [
   ['6281252848955'],
-  ['6281252848955', 'Owner', true],
-  ['6285815700861']
+  ['6281252848955', 'Owner', true]
 ]
 // Moderator
 global.mods = ['6281252848955']
@@ -31,7 +30,7 @@ global.max_upload = 70 // Batas maks mengirim file
 global.intervalmsg = 1800 // Agar tidak spam
 global.ram_usage = 2100000000 // 2GB, hitung sendiri
 // Function & Scrape
-global.Func = new(require('./lib/functions'))
+global.Func = new (require('./lib/functions'))
 global.scrap = require('./lib/scrape')
 // Message
 global.status = {

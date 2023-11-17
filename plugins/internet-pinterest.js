@@ -20,5 +20,5 @@ let handler = async (m, {
 }
 handler.help = handler.command = ['pinterest']
 handler.tags = ['internet']
-handler.limit = 1 
+handler.limit = 1
 module.exports = handler

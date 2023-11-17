@@ -4,7 +4,7 @@ let debugMode = !1
 let winScore = 50000
 let playScore = 20000
 
-handler.before = async function(m) {
+handler.before = async function (m) {
 	let ok
 	let isWin = !1
 	let isTie = !1

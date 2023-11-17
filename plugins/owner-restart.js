@@ -3,7 +3,7 @@ let handler = async (m, {
 }) => {
   if (!process.send) throw 'Dont: node main.js\nDo: node index.js'
   if (global.conn.user.jid == conn.user.jid) {
-    await m.reply('Sedang Mereset Bot...\nMohon tunggu sekitar 1 menit')
+    await m.reply('Resetting the bot...Please wait about 1 minute.')
     await global.db.write()
     process.send('reset')
   } else throw '_eeeeeiiittsssss..._'

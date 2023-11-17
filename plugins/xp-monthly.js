@@ -4,24 +4,22 @@ const limitfree = 20
 const limitprem = 40
 const moneyfree = 20000
 const moneyprem = 40000
-
 let handler = async (m, {
   isPrems
 }) => {
   let time = global.db.data.users[m.sender].lastmonthly + 2592000000
-  if (new Date - global.db.data.users[m.sender].lastmonthly < 2592000000) throw `Anda sudah mengklaim, klaim bulanan ini\ntunggu selama ${msToTime(time - new Date())} lagi`
+  if (new Date - global.db.data.users[m.sender].lastmonthly < 2592000000) return m.reply(`You've claimed this month\wait for ${msToTime(time - new Date())} again`)
   // conn.reply(m.chat, `Anda sudah mengklaim dan mendapatkan :`, m)
   global.db.data.users[m.sender].exp += isPrems ? prem : free
   global.db.data.users[m.sender].money += isPrems ? moneyprem : moneyfree
   global.db.data.users[m.sender].limit += isPrems ? limitprem : limitfree
   // global.db.data.users[m.sender].pet += 3
-  conn.reply(m.chat, `Selamat kamu mendapatkan:\n\n+${isPrems ? prem : free} Exp\n+${isPrems ? moneyprem : moneyfree} Money\n+${isPrems ? limitprem : limitfree} Limit`, m)
+  conn.reply(m.chat, `Congratulations you got : \n\n+${isPrems ? prem : free} exp\n+${isPrems ? moneyprem : moneyfree} money\n+${isPrems ? limitprem : limitfree} limit`, m)
   global.db.data.users[m.sender].lastmonthly = new Date * 1
 }
 handler.help = ['monthly']
 handler.tags = ['xp']
 handler.command = ['monthly']
-
 module.exports = handler
 
 function msToTime(duration) {

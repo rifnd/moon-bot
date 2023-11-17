@@ -6,7 +6,7 @@ let handler = async (m, { usedPrefix, command }) => {
       json.data.map((v, i) => {
         if (i < 10) {
           teks += "*" + (i + 1) + "*. " + v.berita + "\n";
-          teks += `   ${tn}  *Url* : ` + v.berita_url + "\n\n";
+          teks += `  ◦  *Url* : ` + v.berita_url + "\n\n";
         }
       });
       conn.sendMessageModify(m.chat, teks + nma, m, {
@@ -19,9 +19,9 @@ let handler = async (m, { usedPrefix, command }) => {
       json.data.map((v, i) => {
         if (i < 10) {
           teks += "*" + (i + 1) + "*. " + v.title + "\n";
-          teks += `   ${tn}  *Time* : ` + v.time + `\n`;
-          teks += `   ${tn}  *Url* : ` + v.link + "\n";
-          teks += `   ${tn}  *Description* : ` + v.description + `\n\n`;
+          teks += `  ◦  *Time* : ` + v.time + `\n`;
+          teks += `  ◦  *Url* : ` + v.link + "\n";
+          teks += `  ◦  *Description* : ` + v.description + `\n\n`;
         }
       });
       conn.sendMessageModify(m.chat, teks + nma, m, {
@@ -34,8 +34,8 @@ let handler = async (m, { usedPrefix, command }) => {
       json.data.map((v, i) => {
         if (i < 10) {
           teks += "*" + (i + 1) + "*. " + v.title + "\n";
-          teks += `   ${tn}  *Time* : ` + v.time + `\n`;
-          teks += `   ${tn}  *Url* : ` + v.link + "\n\n";
+          teks += `  ◦  *Time* : ` + v.time + `\n`;
+          teks += `  ◦  *Url* : ` + v.link + "\n\n";
         }
       });
       conn.sendMessageModify(m.chat, teks + nma, m, {
@@ -48,9 +48,9 @@ let handler = async (m, { usedPrefix, command }) => {
       json.data.map((v, i) => {
         if (i < 10) {
           teks += "*" + (i + 1) + "*. " + v.berita + "\n";
-          teks += `   ${tn}  *Time* : ` + v.berita_diupload + `\n`;
-          teks += `   ${tn}  *Category* : ` + v.berita_jenis + `\n`;
-          teks += `   ${tn}  *Url* : ` + v.berita_url + "\n\n";
+          teks += `  ◦  *Time* : ` + v.berita_diupload + `\n`;
+          teks += `  ◦  *Category* : ` + v.berita_jenis + `\n`;
+          teks += `  ◦  *Url* : ` + v.berita_url + "\n\n";
         }
       });
       conn.reply(m.chat, teks + set.footer, m);

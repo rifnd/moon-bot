@@ -8,10 +8,10 @@ let handler = async (m, {
     let mime = (q.msg || q).mimetype || ''
     if (/image/.test(mime)) {
       let img = await q.download()
-      if (!img) throw 'Gambar tidak ditemukan'
+      if (!img) throw 'Image not found'
       await conn.updateProfile(bot, img)
-      conn.reply(m.chat, 'Sukses Mengganti Foto Profile Bot!', m)
-    } else return m.reply(`kirim/balas gambar dengan caption *${usedPrefix + command}*`)
+      conn.reply(m.chat, 'Successfully change bot profile picture', m)
+    } else return m.reply(`send/reply picture with caption *${usedPrefix + command}*`)
   }
   handler.help = ['setppbot']
   handler.tags = ['owner']

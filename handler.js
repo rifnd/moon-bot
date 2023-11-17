@@ -1,10 +1,7 @@
 const simple = require('./lib/simple')
 const util = require('util')
-const {
-  color
-} = require('./lib/color')
+const { color } = require('./lib/color')
 const moment = require("moment-timezone")
-
 const isNumber = x => typeof x === 'number' && !isNaN(x)
 const delay = ms => isNumber(ms) && new Promise(resolve => setTimeout(resolve, ms))
 
@@ -21,7 +18,7 @@ module.exports = {
       // console.log(m)
       const Tnow = (new Date() / 1000).toFixed(0)
       const seli = Tnow - m.messageTimestamp
-      if (seli > global.Intervalmsg) return console.log(new ReferenceError(`Pesan ${Intervalmsg} detik yang lalu diabaikan agar tidak nyepam`))
+      if (seli > global.intervalmsg) return console.log(new ReferenceError(`Pesan ${intervalmsg} detik yang lalu diabaikan agar tidak nyepam`))
 
       try {
         m = simple.smsg(this, m) || m
@@ -606,9 +603,7 @@ module.exports = {
         if (opts['swonly'] && m.chat !== 'status@broadcast') return
         if (typeof m.text !== 'string') m.text = ''
 
-        const isROwner = [conn.decodeJid(global.conn.user.id),
-          ...global.owner.map(([number, isCreator, isDeveloper]) => number)
-        ].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
+        const isROwner = [conn.decodeJid(global.conn.user.id), ...global.owner.map(([number, isCreator, isDeveloper]) => number)].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
         const isOwner = isROwner || m.fromMe
         const isMods = isOwner || global.mods.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
         const isPrems = db.data.users[m.sender].premium
@@ -931,7 +926,7 @@ module.exports = {
             for (let user of participants) {
               let pp = './src/avatar_contact.png'
               try {
-                pp = await this.profilePictureUrl(user)
+                pp = await this.profilePictureUrl(user, 'image')
               } catch (e) {} finally {
                 text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', await this.getName(id)).replace('@desc', groupMetadata.desc) : (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
                 this.sendMessageModify(id, text, null, {

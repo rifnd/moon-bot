@@ -15,12 +15,12 @@ let handler = async (m, { conn }) => {
   cot += `  ∘  *${Object.entries(db.data.users).filter((user) => user[1].banned).length}* Pengguna terbanned\n`
   cot += `  ∘  *Runtime* : ${uptime}\n\n`
   cot += `乂  *S Y S T E M*\n\n`
-  cot += `  ∘  ${setting.anticall ? '*[ √ ]*' : '*[ × ]*'}  Anti call\n`
-  cot += `  ∘  ${setting.autoread ? '*[ √ ]*' : '*[ × ]*'}  Auto read\n`
-  cot += `  ∘  ${setting.autoreset ? '*[ √ ]*' : '*[ × ]*'}  Auto reset\n`
-  cot += `  ∘  ${setting.grouponly ? '*[ √ ]*' : '*[ × ]*'}  Mode Group\n`
-  cot += `  ∘  ${setting.game ? '*[ √ ]*' : '*[ × ]*'}  Mode Game\n`
-  cot += `  ∘  ${setting.rpg ? '*[ √ ]*' : '*[ × ]*'}  Mode RPG\n\n`
+  cot += `  ∘  ${setting.anticall ? '*[ √ ]*' : '*[ × ]*'} Anti call\n`
+  cot += `  ∘  ${setting.autoread ? '*[ √ ]*' : '*[ × ]*'} Auto read\n`
+  cot += `  ∘  ${setting.autoreset ? '*[ √ ]*' : '*[ × ]*'} Auto reset\n`
+  cot += `  ∘  ${setting.grouponly ? '*[ √ ]*' : '*[ × ]*'} Mode Group\n`
+  cot += `  ∘  ${setting.game ? '*[ √ ]*' : '*[ × ]*'} Mode Game\n`
+  cot += `  ∘  ${setting.rpg ? '*[ √ ]*' : '*[ × ]*'} Mode RPG\n\n`
   cot += global.set.footer
   conn.sendMessageModify(m.chat, cot, m, {
     largeThumb: true,

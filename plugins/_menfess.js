@@ -1,5 +1,5 @@
 let handler = (m) => m
-handler.all = async function(m, {
+handler.all = async function (m, {
   conn
 }) {
   if (!m.chat.endsWith('@s.whatsapp.net')) return !0

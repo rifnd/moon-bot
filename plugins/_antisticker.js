@@ -1,5 +1,5 @@
 let handler = m => m
-handler.before = function(m, {
+handler.before = function (m, {
   isAdmin,
   isBotAdmin
 }) {
@@ -10,7 +10,7 @@ handler.before = function(m, {
   if (chat.antiSticker && isSticker) {
     if (isSticker === "stickerMessage") {
       if (global.opts) {
-        if (isAdmin || !isBotAdmin) {} else {
+        if (isAdmin || !isBotAdmin) { } else {
           m.reply('*Sticker detected*')
           //this.groupParticipantsUpdate(m.chat, [m.sender], "remove")
         }

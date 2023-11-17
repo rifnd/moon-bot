@@ -12,9 +12,9 @@ let handler = async (m, {
     for (let i = 0; i < 5; i++) {
       let ran = Math.floor(json.data.length * Math.random())
       let cap = `乂  *W A L L P A P E R*\n\n`
-      cap += ` ∘ *Size* : ` + json.data[ran].size + `\n`
-      cap += ` ∘ *Dimension* : ` + json.data[ran].size + `\n`
-      cap += ` ∘ *Keyword* : ` + json.data[ran].keywords + `\n\n`
+      cap += `  ∘  *Size* : ` + json.data[ran].size + `\n`
+      cap += `  ∘  *Dimension* : ` + json.data[ran].size + `\n`
+      cap += `  ∘  *Keyword* : ` + json.data[ran].keywords + `\n\n`
       cap += global.set.footer
       conn.sendFile(m.chat, json.data[ran].url, '', cap, m)
       await Func.delay(3000)
