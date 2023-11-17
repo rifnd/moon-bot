@@ -36,6 +36,8 @@ global.set = {
   author: '@naando.io'
 }
 
+global.pairingNumber = 6283862074769
+
 global.multiplier = 7
 global.max_upload = 70
 global.intervalmsg = 1800
