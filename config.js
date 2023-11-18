@@ -1,10 +1,10 @@
 // Owner
 global.owner = [
-  ['6281252848955'],
-  ['6281252848955', 'Owner', true]
+  ['6285879749335'],
+  ['6285879749335', 'Owner', true]
 ]
 // Moderator
-global.mods = ['6281252848955']
+global.mods = ['6285879749335']
 // Web Api
 global.APIs = {
   alya: 'https://api.alyachan.pro'
@@ -19,11 +19,11 @@ global.set = {
   thumbnail: 'https://telegra.ph/file/749c6b7544efeff028487.jpg',
   wm: `© moon-bot v${require('./package.json').version}`,
   footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ ᴍᴏᴏɴ',
-  packname: 'Sticker By',
+  packname: 'Sticker By Ranzzy',
   author: 'moon-bot'
 }
 // number 
-global.pairingNumber = 6283862074769
+global.pairingNumber = 6285879749335
 // Lain lain
 global.multiplier = 1000 // Semakin besar semakin sulit naik level
 global.max_upload = 70 // Batas maks mengirim file
