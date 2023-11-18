@@ -8,26 +8,33 @@ let handler = async (m, {
   if (!/^(?:https?:\/\/)?(?:www\.|m\.|music\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/.test(args[0])) return m.reply(status.invalid)
   m.react('🕛')
   try {
-    const json = await Func.fetchJson(API('alya', '/api/ytv', {
-      url: args[0]
-    }, 'apikey'))
+    const json = await Func.fetchJson(API('alya', '/api/ytv', { url: args[0] }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
     let ca = `乂  *Y T - M P 4*\n\n`
-    ca += ` ∘  *Judul* : ` + json.title + `\n`
-    ca += ` ∘  *Durasi* : ` + json.duration + `\n`
-    ca += ` ∘  *Penonton* : ` + json.views + `\n`
-    ca += ` ∘  *Ukuran* : ` + json.data.size + `\n\n`
+    ca += `  ∘  *Title* : ` + json.title + `\n`
+    ca += `  ∘  *Duration* : ` + json.duration + `\n`
+    ca += `  ∘  *Viewer* : ` + json.views + `\n`
+    ca += `  ∘  *Size* : ` + json.data.size + `\n\n`
     ca += global.set.footer
     let xSize = Func.sizeLimit(json.data.size, global.max_upload)
     if (xSize.oversize) return m.reply(`Ukuran file (${json.data.size}) terlalu besar, silahkan download sendiri lewat link ini : ${await (await Func.shortlink(json.data.url))}`)
-    conn.sendMedia(m.chat, json.data.url, m, {
-      filename: json.title + '.mp4',
+    // Document
+    /*conn.sendMessage(m.chat, {
+      document: { url: json.data.url },
       caption: ca,
-      mentions: [m.sender]
-    })
+      fileName: json.title + '.mp4',
+      mimetype: 'video/mp4'
+    }, { quoted: m })*/
+    // Video
+    conn.sendMessage(m.chat, { 
+      video: { url: json.data.url },
+      caption: ca,
+      fileName: json.title + '.mp4', 
+      mimetype: 'video/mp4'
+    }, { quoted: m })
   } catch (e) {
     console.log(e)
-    return m.reply(status.error)
+    return m.reply(Func.jsonFormat(e))
   }
 }
 handler.help = ['ytmp4']
