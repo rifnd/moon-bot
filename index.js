@@ -1,3 +1,4 @@
+if (process.argv.includes('--server')) require('./server')
 let cluster = require('cluster')
 let path = require('path')
 let fs = require('fs')

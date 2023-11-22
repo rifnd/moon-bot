@@ -25,3 +25,4 @@ session/
 tmp/
 database.json
 package-lock.json
+.replit

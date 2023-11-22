@@ -1,5 +1,4 @@
 run = "clear && node . --autoread --server"
-
 # run = "clear && pm2 kill && pm2 start index.js && pm2 save && pm2 logs"
 
 [nix]

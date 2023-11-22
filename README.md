@@ -1,18 +1,15 @@
 ### MOON-BOT
-> Script ini gratis, menggunakan 99% api dari [AlyaChan-APIs](https://api.alyachan.pro)
+> This script is 100% free, which uses the api from [AlyaChan-APIs](https://api.alyachan.pro)
 
-### Yang dibutuhkan
+### What is needed
 - [x] Server
 - [x] WhatsApp
-- [x] ffmpeg
-- [x] imagemagick
 - [x] Apikey
 
-### Setting di config.js
+### Set in config.js
 ```Javascript
 global.owner = [
     ['6281252848955'],
-    ['6285815700861'],
     ['6281252848955', 'owner', true]
 ]
 
@@ -38,7 +35,7 @@ global.set = {
 
 global.pairingNumber = 6283862074769
 
-global.multiplier = 7
+global.multiplier = 7 
 global.max_upload = 70
 global.intervalmsg = 1800
 ```
@@ -63,26 +60,26 @@ let handler = async(m, {
   }
 }
 handler.help = ['command'] // anunya
-handler.tags = ['category'] // category nya
-handler.command = /^(command)$/i // command nya
-handler.group = Boolean // buat grup
-handler.limit = Boolean // pake limit
-handler.game = Boolean // fitur game
-handler.rpg = Boolean // fitur rpg
-handler.owner = Boolean // khusus owner
-handler.admin = Boolean // khusus admin
+handler.tags = ['category'] // category
+handler.command = /^(command)$/i // command
+handler.group = Boolean // for group
+handler.limit = Boolean // use limit
+handler.game = Boolean // game mode
+handler.rpg = Boolean // rpg mode
+handler.owner = Boolean // for owner
+handler.admin = Boolean // for admin
 handler.botAdmin = Boolean // bot harus jadi admin
-handler.premium = Boolean // khusus premium
-handler.private = Boolean // khusus chat pribadi
+handler.premium = Boolean // bot must be an admin
+handler.private = Boolean // private chat only
 ```
 
-### Instalasi & Run
+### Install and run
 ```
 $ npm install
 $ npm start
 ```
 
-menggunakan PM2
+use PM2
 
 ```
 $ npm install pm2 -g
@@ -90,29 +87,29 @@ $ npm install
 $ pm2 start index.js && pm2 save && pm2 logs
 ```
 
-### Argumen `node . [--options]`
+### Arguments `node . [--options]`
 
-Contoh : node . --autread
+Example : node . --autoread
 
 ### `--self`
 
-Mengabaikan yang lain
+ignoring others
 
 ### `--autoread`
 
-autored chat
+auto read chat
 
 ### `--db`
 
-contoh : `node . --db 'mongodburi'`
-Untuk menghubungkan ke database, pakai mongodb
+Example : `node . --db 'mongodburi'`
+connects to the mongodb database
 
 ### `--pairing`
 
-menggunakan kode
+login using code, not scanning qr code
 
 
-[![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) | [![Nando35](https://github.com/Nando35.png?size=100)](https://github.com/Nando35)
+[![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) | [![Nando35](https://github.com/moonxxl.png?size=100)](https://github.com/moonxxl)
 ----|----
-[Nurutomo](https://github.com/Nurutomo) | [Nando35](https://github.com/Nando35)
- Penulis / Pencipta | Penerjemah
+[Nurutomo](https://github.com/Nurutomo) | [Nando](https://github.com/moonxxl)
+ Creator | Recoder

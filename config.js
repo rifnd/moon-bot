@@ -9,7 +9,7 @@ global.mods = ['6281252848955']
 global.APIs = {
   alya: 'https://api.alyachan.pro'
 }
-// APikey register di https://api.alyachan.pro
+// APikey register https://api.alyachan.pro
 global.APIKeys = {
   'https://api.alyachan.pro': 'yourkey'
 }
@@ -22,32 +22,34 @@ global.set = {
   packname: 'Sticker By',
   author: 'moon-bot'
 }
-// number 
-global.pairingNumber = 6283862074769
-// Lain lain
-global.multiplier = 1000 // Semakin besar semakin sulit naik level
-global.max_upload = 70 // Batas maks mengirim file
-global.intervalmsg = 1800 // Agar tidak spam
-global.ram_usage = 2100000000 // 2GB, hitung sendiri
+// login use code
+global.pairingNumber = 6283862074769 // fill in your bot number here
+// if you use replit
+global.replit_url = 'https://moon-bot.bidol40460.repl.co/'
+// other
+global.multiplier = 1000 // The bigger it gets the harder it is to level up
+global.max_upload = 70 // Maximum limit to send files
+global.intervalmsg = 1800 // To avoid spam on first login
+global.ram_usage = 2100000000 // Maximum 2GB ram, do the math yourself
 // Function & Scrape
 global.Func = new (require('./lib/functions'))
 global.scrap = require('./lib/scrape')
 // Message
 global.status = {
-  wait: 'Sedang diproses. . .',
-  invalid: 'URL tidak valid.',
-  wrong: 'Format salah.',
-  error: 'Terjadi kesalahan.',
-  premium: 'Fitur ini hanya untuk pengguna premium.',
-  admin: 'Perintah ini khusus untuk Admin.',
-  botAdmin: 'Jadikan bot admin untuk menggunakan perintah ini.',
-  owner: 'Perintah ini hanya untuk Owner.',
-  mod: 'Perintah ini hanya untuk Moderator.',
-  group: 'Perintah ini khusus Grup.',
-  private: 'Perintah ini khusus chat pribadi.',
-  register: 'Silahkan daftar terlebih dahulu untuk menggunakan perintah ini.',
-  game: 'Fitur game belum diaktifkan.',
-  rpg: 'Fitur RPG belum diaktifkan.'
+  wait: 'Processing. . .',
+  invalid: 'Invalid URL!',
+  wrong: 'Wrong format!',
+  error: 'Error occurred!',
+  premium: 'This feature is only for premium users.',
+  admin: 'This command is specific to Admins.',
+  botAdmin: 'Make the bot admin to use this command.',
+  owner: 'This command is for Owner only.',
+  mod: 'This command is for Moderators only.',
+  group: 'This command is Group specific.',
+  private: 'This command is private chat only.',
+  register: 'Please register first to use this command.',
+  game: 'The game feature has not been activated.',
+  rpg: 'The RPG feature has not been activated.'
 }
 // Emoticon RPG
 global.rpg = {
