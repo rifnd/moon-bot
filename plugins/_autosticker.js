@@ -13,7 +13,7 @@ handler.all = async function (m) {
       if (!img) return
       stiker = await sticker(img, false, packname, author)
     } else if (/video/.test(mime)) {
-      if ((q.msg || q).seconds > 11) return await this.reply(m.chat, 'durasi maks 10 detik!', m)
+      if ((q.msg || q).seconds > 11) return await this.reply(m.chat, 'Maximum duration of 10 seconds!', m)
       let img = await q.download()
       if (!img) return
       stiker = await sticker(img, false, packname, author)

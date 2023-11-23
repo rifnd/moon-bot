@@ -6,9 +6,7 @@ let handler = async (m, {
   try {
     if (!args[0]) return m.reply(Func.example(usedPrefix, command, 'https://v.douyin.com/ikq8axJ/'))
     if (!args[0].match(/(https:\/\/v.douyin.com)/g)) return m.reply(status.invalid)
-    const json = await Func.fetchJson(API('alya', '/api/douyin', {
-      url: args[0]
-    }, 'apikey'))
+    const json = await Func.fetchJson(API('alya', '/api/douyin', { url: args[0] }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
     if (command == 'douyin') {
       m.react('🕐')
@@ -19,19 +17,19 @@ let handler = async (m, {
       teks += `  ∘  *Url* : ${json.url}\n`
       let result = json.data.find(v => v.quality == 'hd')
       if (result) {
-        conn.sendFile(m.chat, result.url, '', teks + `  ∘  *Quality* : ${result.quality}\n\n${global.set.footer}`, m)
+        conn.sendMessage(m.chat, { video: { url: result.url }, caption: `*Quality* : ${result.quality}`, mimetype: 'video/mp4'}, { quoted: m })
       } else {
         let result = json.data.find(v => v.quality == 'sd')
-        conn.sendFile(m.chat, result.url, '', teks + `  ∘  *Quality* : ${result.quality}\n\n${global.set.footer}`, m)
+        conn.sendMessage(m.chat, { video: { url: result.url }, caption: `*Quality* : ${result.quality}`, mimetype: 'video/mp4'}, { quoted: m })
       }
     } else if (command == 'douyinwm') {
       m.react('🕐')
       let result = json.data.find(v => v.quality == 'watermark')
-      conn.sendFile(m.chat, result.url, '', `  ∘  *Quality* : ${result.quality}\n\n${global.set.footer}`, m)
+      conn.sendMessage(m.chat, { video: { url: result.url }, caption: `*Quality* : ${result.quality}`, mimetype: 'video/mp4'}, { quoted: m })
     } else if (command == 'douyinmp3') {
       m.react('🕐')
       let result = json.data.find(v => v.quality == '128kbps')
-      conn.sendFile(m.chat, result.url, '', '', m)
+      conn.sendMessage(m.chat, { audio: { url: result.url }, mimetype: 'audio/mpeg'}, { quoted: m })
     }
   } catch (e) {
     console.log(e)

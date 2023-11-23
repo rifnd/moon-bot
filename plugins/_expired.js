@@ -5,7 +5,7 @@ module.exports = {
     if (!chats.expired) return !0
     if (+new Date() > chats.expired) {
       const data = global.owner.filter(([id, isCreator]) => id && isCreator)
-      await m.reply("Masa aktif sewa di grup ini telah habis, bot akan keluar dari grup, jika ingin menyewa kembali silahkan hubungi Owner.")
+      await m.reply('The active rental period in this group has expired, the bot will leave the group, if you want to rent again, please contact the Owner.')
       chats.expired = 0
       await this.sendContact(m.chat, data.map(([id, name]) => [id, name]), m)
       await this.delay(10000)

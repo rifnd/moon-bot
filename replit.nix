@@ -1,5 +1,6 @@
 { pkgs }: {
     deps = [
+		pkgs.nodePackages.prettier
        pkgs.yarn
         pkgs.nodejs-16_x
         pkgs.openssh_with_kerberos

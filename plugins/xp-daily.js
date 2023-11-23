@@ -9,16 +9,11 @@ let handler = async (m, {
   isPrems
 }) => {
   let time = global.db.data.users[m.sender].lastclaim + 86400000
-  if (new Date - global.db.data.users[m.sender].lastclaim < 86400000) throw `Anda sudah mengklaim, klaim harian hari ini\ntunggu selama ${msToTime(time - new Date())} lagi`
-  //  conn.reply(m.chat, `Anda sudah mengklaim dan mendapatkan :`, m)
+  if (new Date - global.db.data.users[m.sender].lastclaim < 86400000) throw `You have already claimed, today's daily claim is waiting for ${msToTime(time - new Date())} again`
   global.db.data.users[m.sender].exp += isPrems ? prem : free
   global.db.data.users[m.sender].money += isPrems ? moneyprem : moneyfree
-  // global.db.data.users[m.sender].potion += 5
-  conn.reply(m.chat, `Selamat kamu mendapatkan:\n\n+${isPrems ? prem : free} Exp\n+${isPrems ? moneyprem : moneyfree} Money`, m)
+  conn.reply(m.chat, `Congratulations you got :\n\n+${isPrems ? prem : free} Exp\n+${isPrems ? moneyprem : moneyfree} Money`, m)
   global.db.data.users[m.sender].lastclaim = new Date * 1
-  setTimeout(() => {
-    conn.reply(m.chat, `Daily sudah bisa di dapatkan kembali`, m)
-  }, timeout)
 }
 handler.help = ['daily']
 handler.tags = ['xp']

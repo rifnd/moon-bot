@@ -4,10 +4,9 @@ let handler = async (m, {
   command
 }) => {
   let totalf = Object.values(global.plugins).filter((v) => v.help && v.tags).length
-  conn.reply(m.chat, `Total Fitur saat ini: ${totalf}`, m)
+  conn.reply(m.chat, `total current features : ${totalf}`, m)
 }
-handler.help = ['totalfitur']
+handler.help = handler.commands = ['totalfeatures']
 handler.tags = ['info']
-handler.command = ['totalfitur']
 handler.limit = true
 module.exports = handler

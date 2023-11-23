@@ -8,18 +8,21 @@ handler.before = async function(m) {
   let { banned } = db.data.users[m.chat]
   let username = conn.getName(m.sender)
   if (new Date - user.pc < 86400000) return // setiap 24 jam sekali
-  await this.reply(m.chat, `${ucapan()} ${username.replace(/@.+/, '')}\n\n${banned ? `Kamu terbanned` : `Ada yang bisa dibantu?`}`.trim(), m)
+  conn.sendMessageModify(m.chat, `Can I help you?\nI am a whatsapp bot that can help you to do small activities such as making stickers downloading media only through whatsapp.`, m, {
+    largeThumb: true,
+    url: global.set.link
+  })
   user.pc = new Date * 1
 }
 module.exports = handler
 
 function ucapan() {
   let time = moment.tz('Asia/Jakarta').format('HH')
-  let res = `Jangan lupa tidur`
-  if (time >= 5) res = `Selamat pagi`
-  if (time >= 11) res = `Selamat siang`
-  if (time >= 15) res = `Selamat sore`
-  if (time >= 18) res = `Selamat senja`
-  if (time >= 19) res = `Selamat malam`
+  let res = `Don't forget to sleep`
+  if (time >= 5) res = `Good Morning`
+  if (time >= 11) res = `Good Afternoon`
+  if (time >= 15) res = `Good Afternoon`
+  if (time >= 18) res = `Good Evening`
+  if (time >= 19) res = `Good Night`
   return res
 }

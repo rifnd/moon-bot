@@ -25,7 +25,7 @@ global.set = {
 // login use code
 global.pairingNumber = 6283862074769 // fill in your bot number here
 // if you use replit
-global.replit_url = 'https://moon-bot.bidol40460.repl.co/'
+global.replit_url = ''
 // other
 global.multiplier = 1000 // The bigger it gets the harder it is to level up
 global.max_upload = 70 // Maximum limit to send files

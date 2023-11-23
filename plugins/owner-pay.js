@@ -22,7 +22,7 @@ let handler = async (m, {
           db.data.users[who].exp += count * 1
           conn.reply(m.chat, `Added successfully ${count * 1} ${type}`, m)
           break // Attention, the exp cheat can make your database error!!
-        case 'Money':
+        case 'money':
           if (typeof db.data.users[who] == 'undefined') return m.reply('The user does not exist in the database')
           db.data.users[who].money += count * 1
           conn.reply(m.chat, `Added successfully ${count * 1} ${type}`, m)

@@ -8,7 +8,7 @@ handler.before = async (m, {
   if (m.chat.endsWith("broadcast")) return
   if (user.premiumTime != 0 && user.premium) {
     if (new Date() * 1 >= global.db.data.users[m.sender].premiumTime) {
-      conn.reply(m.chat, "Masa aktif premium kamu telah habis, jika kamu berminat untuk upgrade premium kembali, silahkan hubungi pemilik.", m).then(() => {
+      conn.reply(m.chat, 'Your premium has expired, if you are interested in upgrading your premium again, please contact the owner.', m).then(() => {
         db.data.users[m.sender].premium = false
         const data = global.owner.filter(([id, isCreator]) => id && isCreator)
         this.sendContact(m.chat, data.map(([id, name]) => [id, name]), m).then(() => { })

@@ -4,7 +4,7 @@ Name : ${require('../package.json').name}
 Version : v${require('../package.json').version}
 
 Repo : ${require('../package.json').homepage}
-RestApi : https://api.alyachan.online`
+RestApi : https://api.alyachan.pro`
     conn.sendMessageModify(m.chat, teks, m, {
         title: 'Moon - Bot',
         body: 'hi everybody',

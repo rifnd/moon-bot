@@ -15,7 +15,7 @@ let handler = async (m, {
     cap += `  ◦  *Play* : ` + json.data.play_count + `\n`
     cap += `  ◦  *Resolution* : ` + json.data.resolution + `\n`
     cap += `  ◦  *Duration* : ` + json.data.duration + `\n`
-    cap += `  ◦  *Description : ` + json.data.desc + `\n\n`
+    cap += `  ◦  *Description* : ` + json.data.desc + `\n\n`
     cap += global.set.footer
     conn.sendFile(m.chat, json.data.url, '', cap, m)
   } catch (e) {
