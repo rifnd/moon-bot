@@ -1,21 +1,11 @@
 let handler = async (m, {
-    conn,
-    args
-  }) => {
-    await conn.groupUpdateDescription(m.chat, `${args.join(" ")}`);
-    m.reply('Sukses mengganti deskripsi group')
-  }
-  
-  handler.help = ['setdesc']
-  handler.tags = ['group']
-  handler.command = ['setdesc']
-  handler.owner = false
-  handler.mods = false
-  handler.premium = false
-  handler.group = true
-  handler.private = false
-  handler.register = false
-  handler.admin = true
-  handler.botAdmin = true
-  module.exports = handler
-  
+  conn,
+  args
+}) => {
+  await conn.groupUpdateDescription(m.chat, `${args.join(" ")}`)
+  m.reply('Successfully change the group description')
+}
+handler.help = handler.command = ['setdesc']
+handler.tags = ['group']
+handler.group = handler.admin = handler.botAdmin = true
+module.exports = handler

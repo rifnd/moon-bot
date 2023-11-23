@@ -20,6 +20,7 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+#About Bot
 node_modules
 session/
 tmp/

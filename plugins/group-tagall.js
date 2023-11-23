@@ -10,5 +10,4 @@ handler.command = ['tagall']
 handler.admin = 1
 handler.group = 1
 handler.botAdmin = 1
-
 module.exports = handler

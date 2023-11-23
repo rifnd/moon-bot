@@ -5,10 +5,10 @@ async function handler(m, {
   conn,
   text
 }) {
-  this.anonymous = this.anonymous ? this.anonymous : {}  
-  let who = m.sender   
-  let room = Object.values(this.anonymous).find(room => room.check(who))  
-  if (!room) throw 'kamu tidak berada di anonymous chat'
+  this.anonymous = this.anonymous ? this.anonymous : {}
+  let who = m.sender
+  let room = Object.values(this.anonymous).find(room => room.check(who))
+  if (!room) return m.reply(Func.texted('bold', 'You are not in anonymous chat'))
   let other = room.other(who)
   var name
   if (text) name = text
@@ -20,9 +20,8 @@ async function handler(m, {
   FN:${name.replace(/\n/g, '\\n')}
   TEL;type=CELL;type=VOICE;waid=${number}:${PhoneNumber('+' + number).getNumber('international')}
   END:VCARD`
-  
-  this.reply(m.chat, `Kamu berhasil mengirim kontak kepada partner mu..`, m)
-  if (other) this.reply(other, `Partner mengirimkan kontak kepadamu`, m)
+  this.reply(m.chat, Func.texted('bold', `You successfully sent a contact to your partner.`), m)
+  if (other) this.reply(other, Func.texted('bold', `Partner sends contact to you`), m)
   if (other) this.sendMessage(other, {
     contacts: {
       displayName: name,

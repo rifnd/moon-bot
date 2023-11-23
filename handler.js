@@ -18,8 +18,7 @@ module.exports = {
       // console.log(m)
       const Tnow = (new Date() / 1000).toFixed(0)
       const seli = Tnow - m.messageTimestamp
-      if (seli > global.intervalmsg) return console.log(new ReferenceError(`Pesan ${intervalmsg} detik yang lalu diabaikan agar tidak nyepam`))
-
+      if (seli > global.intervalmsg) return console.log(new ReferenceError(`Message ${intervalmsg} seconds ago ignored so as not to nyepam`))
       try {
         m = simple.smsg(this, m) || m
         if (!m) return
@@ -579,8 +578,7 @@ module.exports = {
             if (!isNumber(settings.backupTime)) settings.backupTime = 0
             if (!'game' in settings) settings.game = false
             if (!'rpg' in settings) settings.rpg = false
-            if (!isNumber(settings.autoresetTime))
-              settings.autoresetTime = new Date() * 1 + 3600000 * 720
+            if (!isNumber(settings.autoresetTime)) settings.autoresetTime = new Date() * 1 + 3600000 * 720
           } else
             db.data.settings[this.user.jid] = {
               anticall: true,
@@ -645,7 +643,7 @@ module.exports = {
         let _user = db.data && db.data.users && db.data.users[m.sender]
 
         const groupMetadata = (m.isGroup ? (conn.chats[m.chat] || {}).metadata : {}) || {}
-        //    const groupMetadata = (m.isGroup ? (conn.chats[m.chat].metadata || await conn.groupMetadata(m.chat)): {}) || {}
+        //const groupMetadata = (m.isGroup ? (conn.chats[m.chat].metadata || await conn.groupMetadata(m.chat)): {}) || {}
         const participants = (m.isGroup ? groupMetadata.participants : []) || []
         const user = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) === m.sender) : {}) || {} // User Data
         const bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == this.user.jid) : {}) || {} // Your Data
@@ -672,10 +670,8 @@ module.exports = {
           const str2Regex = str => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
           let _prefix = plugin.customPrefix ? plugin.customPrefix : conn.prefix ? conn.prefix : global.prefix
           let match = (_prefix instanceof RegExp ? // RegExp Mode?
-            [
-              [_prefix.exec(m.text), _prefix]
-            ] :
-            Array.isArray(_prefix) ? // Array?
+          [[_prefix.exec(m.text), _prefix]] :
+          Array.isArray(_prefix) ? // Array?
             _prefix.map(p => {
               let re = p instanceof RegExp ? // RegExp in Array?
                 p :
@@ -683,13 +679,8 @@ module.exports = {
               return [re.exec(m.text), re]
             }) :
             typeof _prefix === 'string' ? // String?
-            [
-              [new RegExp(str2Regex(_prefix)).exec(m.text), new RegExp(str2Regex(_prefix))]
-            ] : [
-              [
-                [], new RegExp
-              ]
-            ]
+              [[new RegExp(str2Regex(_prefix)).exec(m.text), new RegExp(str2Regex(_prefix))]] :
+              [[[], new RegExp]]
           ).find(p => p[1])
           if (typeof plugin.before === 'function')
             if (await plugin.before.call(this, m, {
@@ -734,27 +725,27 @@ module.exports = {
             if (m.chat in db.data.chats || m.sender in db.data.users) {
               let chat = db.data.chats[m.chat]
               let user = db.data.users[m.sender]
-              if (!['owner-unbanned.js'].includes(name) && chat && chat?.isBanned && !isOwner && !isAdmin) return // Kecuali ini, bisa digunakan
+              if (!['owner-unbanned.js'].includes(name) && chat && chat?.isBanned && !isOwner && !isAdmin) return //Except this can be used
               if (!['owner-unbanned.js'].includes(name) && user && user?.banned) return
             }
             if (plugin.rowner && plugin.owner && !(isROwner || isOwner)) { // Both Owner
-              dfail('owner', m, this)
+              m.reply(status.owner)
               continue
             }
             if (plugin.rowner && !isROwner) { // Real Owner
-              dfail('rowner', m, this)
+              m.reply(status.owner)
               continue
             }
             if (plugin.owner && !isOwner) { // Number Owner
-              dfail('owner', m, this)
+              m.reply(status.owner)
               continue
             }
             if (plugin.mods && !isMods) { // Moderator
-              dfail('mods', m, this)
+              m.reply(status.mod)
               continue
             }
             if (plugin.premium && !isPrems) { // Premium
-              dfail('premium', m, this)
+              m.reply(status.premium)
               continue
             }
             if (plugin.banned && !isBans) { // Banned
@@ -766,17 +757,17 @@ module.exports = {
               continue
             }
             if (plugin.group && !m.isGroup) { // Group Only
-              dfail('group', m, this)
+              m.reply(status.group)
               continue
             } else if (plugin.botAdmin && !isBotAdmin) { // You Admin
-              dfail('botAdmin', m, this)
+              m.reply(status.botAdmin)
               continue
             } else if (plugin.admin && !isAdmin) { // User Admin
-              dfail('admin', m, this)
+              m.reply(status.admin)
               continue
             }
             if (plugin.private && m.isGroup) { // Private Chat Only
-              dfail('private', m, this)
+              m.reply(status.private)
               continue
             }
             if (plugin.register == true && _user.registered == false) { // Butuh daftar?
@@ -796,11 +787,11 @@ module.exports = {
             if (xp > 200) m.reply('Ngecit -_-') // Hehehe
             else m.exp += xp
             if (!isPrems && plugin.limit && db.data.users[m.sender].limit < plugin.limit * 1) {
-              this.reply(m.chat, `Limit anda habis, silahkan beli melalui *${usedPrefix}buy*`, m)
+              this.reply(m.chat, `Your limit is exhausted, please buy by sending the command *${usedPrefix}buy*`, m)
               continue // Limit habis
             }
             if (plugin.level > _user.level) {
-              this.reply(m.chat, `diperlukan level ${plugin.level} untuk menggunakan perintah ini. Level kamu ${_user.level}`, m)
+              this.reply(m.chat, `level ${plugin.level} is required to use this feature, your current level is ${_user.level}`, m)
               continue // If the level has not been reached
             }
             let extra = {
@@ -954,22 +945,14 @@ module.exports = {
     },
     async delete(message) {
       try {
-        const {
-          fromMe,
-          id,
-          participant
-        } = message
+        const { fromMe, id, participant } = message
         if (fromMe) return
         let chats = Object.entries(conn.chats).find(([_, data]) => data.messages?.[id])
         if (!chats) return
         let msg = chats instanceof String ? JSON.parse(chats[1].messages[id]) : chats[1].messages[id]
         let chat = db.data.chats[msg.key.remoteJid] || {}
         if (chat.delete) return
-        await this.reply(msg.key.remoteJid, `
-Terdeteksi @${participant.split`@`[0]} telah menghapus pesan
-Untuk mematikan fitur ini, ketik
-*.enable delete*
-`.trim(), msg, {
+        await this.reply(msg.key.remoteJid, `Detected @${participant.split`@`[0]} has deleted the message\n\nto disable this feature send *.enable delete*`.trim(), msg, {
           mentions: [participant]
         })
         this.copyNForward(msg.key.remoteJid, msg).catch(e => console.log(e, msg))

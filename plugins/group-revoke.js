@@ -1,19 +1,22 @@
-let handler = async (m, { isAdmin, isOwner, conn, command }) => {
+let handler = async (m, { 
+  isAdmin, 
+  isOwner, 
+  conn, 
+  command 
+}) => {
   if (!(isAdmin || isOwner)) {
-    global.dfail('admin', m, conn)
+    m.reply(status.admin)
     throw false
   }
   conn.groupRevokeInvite(m.chat)
-  conn.reply(m.chat, `Sukses ${command} link grup, link telah di kirim ke chat pribadi`, m,)
+  conn.reply(m.chat, `Successful ${command} group link, link has been sent to private chat`, m,)
   await delay(1000)
   let linknya = await conn.groupInviteCode(m.chat)
   conn.reply(m.sender, 'https://chat.whatsapp.com/' + linknya, m)
 }
 handler.help = handler.command = ['revoke']
 handler.tags = ['group']
-handler.group = true
-handler.admin = true
-handler.botAdmin = true
+handler.group = handler.admin = handler.botAdmin = true
 module.exports = handler
 
 const delay = (time) => new Promise((res) => setTimeout(res, time))

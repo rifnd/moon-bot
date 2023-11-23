@@ -6,7 +6,7 @@ let handler = async (m, {
 }) => {
   let q = m.quoted ? m.quoted : m
   let mime = (q.msg || q).mimetype || ''
-  if (!mime) return m.reply(Func.texted('bold', `Kirim/reply foto dengan perintah ${usedPrefix + command}`))
+  if (!mime) return m.reply(Func.texted('bold', `Send/reply photos with commands ${usedPrefix + command}`))
   m.reply(status.wait)
   let old = new Date()
   let media = await q.download()

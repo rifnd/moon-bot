@@ -17,7 +17,7 @@ let handler = async (m, {
     ca += `  ∘  *Upload* : ` + json.data.uploadAt + '\n\n'
     ca += global.set.footer
     let xSize = Func.sizeLimit(json.data.filesize, global.max_upload)
-    if (xSize.oversize) return m.reply(`Ukuran file (${json.data.filesize}) terlalu besar, silahkan download sendiri lewat link ini : ${await (await Func.shortlink(json.data.link))}`)
+    if (xSize.oversize) return m.reply(`The file size (${json.data.filesize}) is too large, please download it yourself via this link : ${await (await Func.shortlink(json.data.link))}`)
     conn.sendMessageModify(m.chat, ca, m, {
       largeThumb: true,
       thumbnail: 'https://telegra.ph/file/98417f85e45f3cae84bee.jpg'

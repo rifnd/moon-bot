@@ -9,7 +9,7 @@ const yargs = require('yargs/yargs')
 const rl = Readline.createInterface(process.stdin, process.stdout)
 
 CFonts.say(`${package.name}`, {
-  font: 'simple3d',
+  font: 'tiny',
   align: 'center',
   colors: ['system']
 })

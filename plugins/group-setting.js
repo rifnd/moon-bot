@@ -1,14 +1,14 @@
-let handler = async (m, { conn, args, usedPrefix, command }) => {
+let handler = async (m, { 
+    conn, 
+    args, 
+    usedPrefix, 
+    command
+}) => {
     let isClose = { // Switch Case Like :v
         'open': 'not_announcement',
         'close': 'announcement',
     }[(args[0] || '')]
-    if (isClose === undefined)
-        throw `
-*Format salah! Contoh :*
-  *○ ${usedPrefix + command} close*
-  *○ ${usedPrefix + command} open*
-`.trim()
+    if (isClose === undefined) return m.reply(`Wrong format!!\n\nExample :\n${usedPrefix + command} close\n${usedPrefix + command} open`)
     await conn.groupSettingUpdate(m.chat, isClose)
 }
 handler.help = ['group']

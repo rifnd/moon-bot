@@ -21,7 +21,6 @@ let handler = async (m, {
     }
 }
 handler.help = handler.command = ['ai', 'ai-img']
-handler.tags = ['tools']
+handler.tags = ['internet']
 handler.limit = 1
-
 module.exports = handler

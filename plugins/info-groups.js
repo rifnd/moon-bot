@@ -1,5 +1,4 @@
 let handler = async (m, { conn, participants }) => {
-
   let now = new Date() * 1
   let groups = Object.entries(conn.chats).filter(([jid, chat]) => jid.endsWith('@g.us') && chat.isChats && !chat.metadata?.read_only && !chat.metadata?.announce).map(v => v[0])
   let txt = ''
@@ -9,7 +8,7 @@ let handler = async (m, { conn, participants }) => {
       welcome: false,
       antiLink: false,
       delete: true,
-    } : db.data.chats[jid].expired ? msToDate(db.data.chats[jid].expired - now) : '*Tidak Diatur Expired Group*'}
+    } : db.data.chats[jid].expired ? msToDate(db.data.chats[jid].expired - now) : '*NOT SET*'}
 ${db.data.chats[jid].isBanned ? '✅' : '❌'} _Group Banned_
 ${db.data.chats[jid].welcome ? '✅' : '❌'} _Auto Welcome_
 ${db.data.chats[jid].antiLink ? '✅' : '❌'} _Anti Link_\n\n`

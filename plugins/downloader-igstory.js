@@ -11,8 +11,8 @@ let handler = async (m, {
         if (!json.status) return m.reply(Func.jsonFormat(json))
         for (let v of json.data) {
             conn.sendMedia(m.chat, v.url, m, {
-              caption: `• *Fetching* : ${((new Date - old) * 1)} ms`,
-              mentions: [m.sender]
+                caption: `• *Fetching* : ${((new Date - old) * 1)} ms`,
+                mentions: [m.sender]
             })
         }
     } catch (e) {

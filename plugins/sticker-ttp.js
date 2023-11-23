@@ -5,7 +5,7 @@ let handler = async (m, {
   env
 }) => {
   if (!text) return conn.reply(m.chat, Func.example(usedPrefix, command, 'moon bot'), m)
-  if (text.length > 10) return m.reply(Func.texted('bold', '🚩 Max 10 kata.'))
+  if (text.length > 10) return m.reply(Func.texted('bold', '🚩 Max 10 letters'))
   try {
     m.react('🕒')
     let json = await Func.fetchJson(API('alya', '/api/ttp', { q: text }, 'apikey'))
