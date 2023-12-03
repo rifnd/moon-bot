@@ -22,6 +22,6 @@ let handler = async (m, {
   }
 }
 handler.help = handler.command = ['gta5style']
-handler.tags = ['tools']
+handler.tags = ['effect']
 handler.limit = 1
 module.exports = handler

@@ -15,6 +15,6 @@ let handler = async (m, {
   }
 }
 handler.help = handler.command = ['nsfwdiffusion']
-handler.tags = ['tools']
+handler.tags = ['internet']
 handler.limit = true
 module.exports = handler
