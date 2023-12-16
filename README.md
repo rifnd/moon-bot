@@ -109,7 +109,7 @@ connects to the mongodb database
 login using code, not scanning qr code
 
 
-[![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) | [![Nando35](https://github.com/moonxxl.png?size=100)](https://github.com/moonxxl)
+[![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) | [![Nando35](https://github.com/rifnd.png?size=100)](https://github.com/moonxxl)
 ----|----
-[Nurutomo](https://github.com/Nurutomo) | [Nando](https://github.com/moonxxl)
+[Nurutomo](https://github.com/Nurutomo) | [Nando](https://github.com/rifnd)
  Creator | Recoder
