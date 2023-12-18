@@ -1,29 +1,29 @@
 // Owner
 global.owner = [
-  ['6281252848955'],
-  ['6281252848955', 'Owner', true]
+  ['601153923650'],
+  ['60173702960', 'Owner', true]
 ]
 // Moderator
-global.mods = ['6281252848955']
+global.mods = ['60173702960']
 // Web Api
 global.APIs = {
   alya: 'https://api.alyachan.pro'
 }
 // APikey register https://api.alyachan.pro
 global.APIKeys = {
-  'https://api.alyachan.pro': 'yourkey'
+  'https://api.alyachan.pro': 'lRXd2M'
 }
 // Option
 global.set = {
-  link: 'https://chat.whatsapp.com/IaXnDzbbhNfBfTv0nN7bJI',
-  thumbnail: 'https://telegra.ph/file/749c6b7544efeff028487.jpg',
+  link: 'https://chat.whatsapp.com/Bs1zeVot4om6G5B9onY2cR',
+  thumbnail: 'https://telegra.ph/file/c98cb81bef9d5f0ed73a2.jpg',
   wm: `© moon-bot v${require('./package.json').version}`,
   footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ ᴍᴏᴏɴ',
   packname: 'Sticker By',
   author: 'moon-bot'
 }
 // login use code
-global.pairingNumber = 6283862074769 // fill in your bot number here
+global.pairingNumber = 60173702960 // fill in your bot number here
 // if you use replit
 global.replit_url = ''
 // other
