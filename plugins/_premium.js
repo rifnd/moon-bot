@@ -10,8 +10,8 @@ handler.before = async (m, {
     if (new Date() * 1 >= global.db.data.users[m.sender].premiumTime) {
       conn.reply(m.chat, 'Your premium has expired, if you are interested in upgrading your premium again, please contact the owner.', m).then(() => {
         db.data.users[m.sender].premium = false
-        const data = global.owner.filter(([id, isCreator]) => id && isCreator)
-        this.sendContact(m.chat, data.map(([id, name]) => [id, name]), m).then(() => { })
+        db.data.users[m.sender].premiumTime = 0
+        this.sendContact(m.chat, [{ name: 'Owner', number: global.owner, about: 'Owner & Creator' }], m, { org: 'Moon Support', website: 'https://api.alyachan.pro', email: 'contact@moonx.my.id' })
       })
     }
   }

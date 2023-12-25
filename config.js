@@ -1,40 +1,38 @@
-// Owner
-global.owner = [
-  ['6281252848955'],
-  ['6281252848955', 'Owner', true]
-]
-// Moderator
-global.mods = ['6281252848955']
-// Web Api
+/** enter owner number */
+global.owner = ['6281252848955']
+
+/** Apikey https://api.alyachan.pro/pricing */
 global.APIs = {
   alya: 'https://api.alyachan.pro'
 }
-// APikey register https://api.alyachan.pro
 global.APIKeys = {
-  'https://api.alyachan.pro': 'yourkey'
+  'https://api.alyachan.pro': 'Yourkey'
 }
-// Option
+
+/** option setting */
 global.set = {
-  link: 'https://chat.whatsapp.com/IaXnDzbbhNfBfTv0nN7bJI',
-  thumbnail: 'https://telegra.ph/file/749c6b7544efeff028487.jpg',
   wm: `© moon-bot v${require('./package.json').version}`,
   footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ ᴍᴏᴏɴ',
   packname: 'Sticker By',
   author: 'moon-bot'
 }
-// login use code
-global.pairingNumber = 6283862074769 // fill in your bot number here
-// if you use replit
+/** enter your bot number to login using the code */
+global.pairingNumber = 6283862074769
+
+/** enter your replit link, so it's active 24/7 */
 global.replit_url = ''
-// other
+
+/** other */
 global.multiplier = 1000 // The bigger it gets the harder it is to level up
 global.max_upload = 70 // Maximum limit to send files
 global.intervalmsg = 1800 // To avoid spam on first login
 global.ram_usage = 2100000000 // Maximum 2GB ram, do the math yourself
-// Function & Scrape
+
+/** function and scraper to make it more practical */
 global.Func = new (require('./lib/functions'))
-global.scrap = require('./lib/scrape')
-// Message
+global.scrap = new (require('./lib/scrape'))
+
+/** status message */
 global.status = {
   wait: 'Processing. . .',
   invalid: 'Invalid URL!',
@@ -51,7 +49,8 @@ global.status = {
   game: 'The game feature has not been activated.',
   rpg: 'The RPG feature has not been activated.'
 }
-// Emoticon RPG
+
+/** rpg emoticon */
 global.rpg = {
   emoticon(string) {
     string = string.toLowerCase()
@@ -85,6 +84,8 @@ global.rpg = {
     else return emot[results[0][0]]
   },
 }
+
+/** reload file */
 const fs = require('fs')
 const chalk = require('chalk')
 let file = require.resolve(__filename)

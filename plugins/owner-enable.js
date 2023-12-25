@@ -1,142 +1,129 @@
-let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isROwner }) => {
+let handler = async (m, {
+  conn, 
+  usedPrefix, 
+  command, 
+  args, 
+  isOwner, 
+  isAdmin, 
+  isROwner,
+  users,
+  chat,
+  setting
+}) => {
   let isEnable = /true|enable|(turn)?on|1/i.test(command)
-  let chat = global.db.data.chats[m.chat]
-  let user = global.db.data.users[m.sender]
-  let settings = global.db.data.settings[conn.user.jid]
   let type = (args[0] || '').toLowerCase()
   let isAll = false
   let isUser = false
   switch(type) {
+    
     case 'welcome':
-      if(!m.isGroup) {
-        if(!isOwner) {
-          global.dfail('group', m, conn)
+      if (!m.isGroup) {
+        if (!isOwner) {
+          m.reply(status.group)
           throw false
         }
-      } else if(!isAdmin) {
-        global.dfail('admin', m, conn)
+      } else if (!isAdmin) {
+        m.reply(status.admin)
         throw false
       }
       chat.welcome = isEnable
-      break
+    break
+
     case 'detect':
-      if(!m.isGroup) {
-        if(!isOwner) {
-          global.dfail('group', m, conn)
+      if (!m.isGroup) {
+        if (!isOwner) {
+          m.reply(status.group)
           throw false
         }
-      } else if(!isAdmin) {
-        global.dfail('admin', m, conn)
+      } else if (!isAdmin) {
+        m.reply(status.admin)
         throw false
       }
       chat.detect = isEnable
-      break
-    case 'delete':
-      if(m.isGroup) {
-        if(!(isAdmin || isOwner)) {
-          global.dfail('admin', m, conn)
-          throw false
-        }
-      }
-      chat.delete = isEnable
-      break
+    break
+
     case 'antidelete':
-      if(m.isGroup) {
-        if(!(isAdmin || isOwner)) {
-          global.dfail('admin', m, conn)
+      if (!m.isGroup) {
+        if (!isOwner) {
+          m.reply(status.group)
           throw false
         }
+      } else if (!isAdmin) {
+        m.reply(status.admin)
+        throw false
       }
-      chat.delete = !isEnable
-      break
-    case 'autodelvn':
-      if(m.isGroup) {
-        if(!(isAdmin || isOwner)) {
-          global.dfail('admin', m, conn)
-          throw false
-        }
-      }
-      chat.autodelvn = isEnable
-      break
-    case 'document':
-      chat.useDocument = isEnable
-      break
+      chat.antidelete = isEnable
+    break
+
     case 'public':
       isAll = true
-      if(!isROwner) {
-        global.dfail('rowner', m, conn)
+      if (!isROwner) {
+        m.reply(status.owner)
         throw false
       }
       global.opts['self'] = !isEnable
-      break
+    break
+
     case 'antilink':
-      if(m.isGroup) {
-        if(!(isAdmin || isOwner)) {
-          global.dfail('admin', m, conn)
+      if (m.isGroup) {
+        if (!(isAdmin || isOwner)) {
+          m.reply(status.admin)
           throw false
         }
       }
-      chat.antiLink = isEnable
-      break
+      chat.antilink = isEnable
+    break
+
     case 'antivirtex':
-      if(m.isGroup) {
-        if(!(isAdmin || isOwner)) {
-          global.dfail('admin', m, conn)
+      if (m.isGroup) {
+        if (!(isAdmin || isOwner)) {
+          m.reply(status.admin)
           throw false
         }
       }
       chat.antivirtex = isEnable
-      break
+    break
+
     case 'autodownload':
-    case 'download':
-      if(m.isGroup) {
-        if(!(isAdmin || isOwner)) {
-          global.dfail('admin', m, conn)
+      if (m.isGroup) {
+        if (!isROwner) {
+          m.reply(status.owner)
           throw false
         }
       }
-      chat.download = isEnable
-      break
+      setting.autodownload = isEnable
+    break
+
     case 'antisticker':
       if(m.isGroup) {
         if(!(isAdmin || isOwner)) {
-          global.dfail('admin', m, conn)
+          m.reply(status.admin)
           throw false
         }
       }
-      chat.antiSticker = isEnable
-      break
+      chat.antisticker = isEnable
+    break
+
     case 'autosticker':
       if(m.isGroup) {
         if(!(isAdmin || isOwner)) {
-          global.dfail('admin', m, conn)
+          m.reply(status.admin)
           throw false
         }
       }
-      chat.stiker = isEnable
-      break
-    case 'toxic':
-      if(m.isGroup) {
-        if(!(isAdmin || isOwner)) {
-          global.dfail('admin', m, conn)
-          throw false
-        }
-      }
-      chat.antiToxic = !isEnable
-      break
+      chat.autostiker = isEnable
+    break
+
     case 'antitoxic':
       if(m.isGroup) {
         if(!(isAdmin || isOwner)) {
-          global.dfail('admin', m, conn)
+          m.reply(status.admin)
           throw false
         }
       }
-      chat.antiToxic = isEnable
-      break
-    case 'autolevelup':
-      isUser = true
-      user.autolevelup = isEnable
-      break
+      chat.antitoxic = !isEnable
+    break
+
     case 'mycontact':
     case 'mycontacts':
     case 'whitelistcontact':
@@ -144,92 +131,99 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
     case 'whitelistmycontact':
     case 'whitelistmycontacts':
       if(!isOwner) {
-        global.dfail('owner', m, conn)
+        m.reply(status.owner)
         throw false
       }
       conn.callWhitelistMode = isEnable
       break
+
     case 'restrict':
       isAll = true
       if(!isROwner) {
-        global.dfail('rowner', m, conn)
+        m.reply(status.owner)
         throw false
       }
       global.opts['restrict'] = isEnable
-      break
+    break
+
     case 'nyimak':
       isAll = true
       if(!isROwner) {
-        global.dfail('rowner', m, conn)
+        m.reply(status.owner)
         throw false
       }
       global.opts['nyimak'] = isEnable
-      break
+    break
+
     case 'autoread':
       isAll = true
       if(!isROwner) {
-        global.dfail('rowner', m, conn)
+        m.reply(status.owner)
         throw false
       }
-      global.opts['autoread'] = isEnable
-      settings.autoread = isEnable
-      break
+      //global.opts['autoread'] = isEnable
+      setting.autoread = isEnable
+    break
+
     case 'pconly':
     case 'privateonly':
       isAll = true
       if(!isROwner) {
-        global.dfail('rowner', m, conn)
+        m.reply(status.owner)
         throw false
       }
       global.opts['pconly'] = isEnable
-      break
+    break
+
     case 'gconly':
     case 'grouponly':
       isAll = true
       if(!isROwner) {
-        global.dfail('rowner', m, conn)
+        m.reply(status.owner)
         throw false
       }
       global.opts['gconly'] = isEnable
-      settings.gconly = isEnable
-      break
+      setting.grouponly = isEnable
+    break
+
     case 'swonly':
     case 'statusonly':
       isAll = true
       if(!isROwner) {
-        global.dfail('rowner', m, conn)
+        m.reply(status.owner)
         throw false
       }
       global.opts['swonly'] = isEnable
-      break
+    break
+
     case 'game':
       isAll = true
       if(!isOwner) {
-        global.dfail('owner', m, conn)
+        m.reply(status.owner)
         throw false
       }
-      settings.game = isEnable
+      setting.game = isEnable
       break
     case 'rpg':
       isAll = true
       if(!isOwner) {
-        global.dfail('owner', m, conn)
+        m.reply(status.owner)
         throw false
       }
-      settings.rpg = isEnable
+      setting.rpg = isEnable
       break
     case 'backup':
       isAll = true
       if(!isOwner) {
-        global.dfail('owner', m, conn)
+        m.reply(status.owner)
         throw false
       }
-      settings.backup = isEnable
+      setting.backup = isEnable
       break
     case 'viewonce':
       if(m.isGroup) {
         if(!(isAdmin || isOwner)) {
-          global.dfail('admin', m, conn)
+          m.reply(status.admin)
           throw false
         }
       }
@@ -237,15 +231,14 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
       break
     default:
       if(!/[01]/.test(command)) return m.reply(`
-List option : ${isOwner ? '\n\n∘ anticall\n∘ autoread\n∘ gconly\n∘ pconly\n∘ autoreset\n∘ game\n∘ rpg\n∘ backup\n∘ antispam\n∘ public' : ''}
+List option : ${isOwner ? '\n\n∘ anticall\n∘ autoread\n∘ gconly\n∘ pconly\n∘ game\n∘ rpg\n∘ backup\n∘ public' : ''}
 ∘ welcome
-∘ delete 
-∘ download
-∘ document
+∘ antidelete 
+∘ autodownload
 ∘ antidelete
 ∘ antitoxic
 ∘ antilink
-∘ detect 
+∘ detect
 ∘ viewonce
 
 Contoh :

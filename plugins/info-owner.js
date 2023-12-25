@@ -1,8 +1,15 @@
 let handler = async (m, {
   conn
 }) => {
-  const data = global.owner.filter(([id, isCreator]) => id && isCreator)
-  conn.sendContact(m.chat, data.map(([id, name]) => [id, name]), m)
+  conn.sendContact(m.chat, [{
+    name: 'Owner',
+    number: global.owner,
+    about: 'Owner & Creator'
+  }], m, {
+    org: 'Moon Support',
+    website: 'https://api.alyachan.pro',
+    email: 'contact@moonx.my.id'
+ })
 }
 handler.help = ['owner']
 handler.tags = ['info']

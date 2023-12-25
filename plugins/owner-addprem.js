@@ -13,8 +13,8 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
   // var jumlahHari = 1000 * text
   var now = new Date() * 1
   db.data.users[hl[0]].premium = true
-  if (now < db.data.users[hl[0]].premiumDate) db.data.users[hl[0]].premiumDate += jumlahHari
-  else db.data.users[hl[0]].premiumDate = now + jumlahHari
+  if (now < db.data.users[hl[0]].premiumTime) db.data.users[hl[0]].premiumTime += jumlahHari
+  else db.data.users[hl[0]].premiumTime = now + jumlahHari
   conn.reply(m.chat, `Berhasil menambahkan akses premium kepada @${hl[0].split('@')[0]} selama ${hl[1]} hari.`, m, { contextInfo: { mentionedJid: [hl[0]] } })
   conn.reply(hl[0], `@${hl[0].split('@')[0]} premium selama ${hl[1]} Hari`, m, { contextInfo: { mentionedJid: [hl[0]] } })
 
