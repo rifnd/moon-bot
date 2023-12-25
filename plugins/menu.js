@@ -205,6 +205,7 @@ let levelling = require('../lib/levelling')
 let fs = require('fs')
 let path = require('path')
 let moment = require('moment-timezone')
+
 const defaultMenu = {
   before: ``.trimStart(),
   header: '',
@@ -212,10 +213,16 @@ const defaultMenu = {
   footer: '',
   after: ``,
 }
-let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
+let handler = async (m, { 
+  conn, 
+  usedPrefix: _p, 
+  args, 
+  command, 
+  setting
+}) => {
   let tags
   let teks = `${args[0]}`.toLowerCase()
-  let arrayMenu = ['anonymous', 'downloader', 'effect', 'fun', 'game', 'group', 'info', 'internet', 'maker', 'owner', 'rpg', 'sticker', 'tools', 'xp', 'voice']
+  let arrayMenu = ['anonymous', 'downloader', 'effect', 'fun', 'game', 'group', 'info', 'internet', 'maker', 'owner', 'sticker', 'tools', 'xp', 'voice']
   if (!arrayMenu.includes(teks)) teks = '404'
   if (teks == 'anonymous') tags = {
     anonymous: 'ANONYMOUS'
@@ -246,9 +253,6 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
   }
   if (teks == 'owner') tags = {
     owner: 'OWNER'
-  }
-  if (teks == 'rpg') tags = {
-    sticker: 'STICKER'
   }
   if (teks == 'sticker') tags = {
     sticker: 'STICKER'
@@ -318,7 +322,7 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
       capt += `I am an automatic system (WhatsApp Bot), which can help you to complete small jobs such as downloading videos or images etc. just via WhatsApp.\n\n`
       capt += `∘  *User* : ${rtotalreg} of ${totalreg}\n`
       capt += `∘  *Rest Api* : https://api.alyachan.pro\n`
-      capt += `∘  *Source* : https://github.com/Nando35/moon-bot\n\n`
+      capt += `∘  *Source* : https://github.com/rifnd/moon-bot\n\n`
       capt += `If you find a bug or want a premium upgrade, please contact the owner.\n\n`
       capt += `┌  ∘  ${_p + command} anonymous\n`
       capt += `│  ∘  ${_p + command} downloader\n`
@@ -330,7 +334,6 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
       capt += `│  ∘  ${_p + command} internet\n`
       capt += `│  ∘  ${_p + command} maker\n`
       capt += `│  ∘  ${_p + command} owner\n`
-      capt += `│  ∘  ${_p + command} rpg\n`
       capt += `│  ∘  ${_p + command} sticker\n`
       capt += `│  ∘  ${_p + command} tools\n`
       capt += `│  ∘  ${_p + command} xp\n`
@@ -338,7 +341,7 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
       capt += global.set.footer
       return conn.sendMessageModify(m.chat, capt.trim(), m, {
         largeThumb: true,
-        url: global.set.link
+        url: setting.link
       })
     }
     let groups = {}
@@ -375,8 +378,7 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
     ].join('\n')
     text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
     let replace = {
-      '%': '%',
-      p: _p,
+      '%': '%', p: _p,
       uptime,
       muptime,
       me: conn.user.name,
@@ -409,16 +411,7 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
   }
 }
 handler.help = ['menu', 'help', '?']
-handler.tags = ['main']
 handler.command = /^(menu|help|\?)$/i
-handler.owner = false
-handler.mods = false
-handler.premium = false
-handler.group = false
-handler.private = false
-handler.admin = false
-handler.botAdmin = false
-handler.fail = null
 handler.exp = 3
 module.exports = handler
 
@@ -434,18 +427,18 @@ function clockString(ms) {
 
 function ucapan() {
   const time = moment.tz('Asia/Jakarta').format('HH')
-  res = "Don't forget to sleep :)"
+  res = 'Don\'t forget to sleep :)'
   if (time >= 4) {
-    res = "Good Morning"
+    res = 'Good Morning'
   }
   if (time > 10) {
-    res = "Good Afternoon"
+    res = 'Good Afternoon'
   }
   if (time >= 15) {
-    res = "Good Evening"
+    res = 'Good Evening'
   }
   if (time >= 18) {
-    res = "Good Night"
+    res = 'Good Night'
   }
   return res
 }

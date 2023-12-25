@@ -28,7 +28,7 @@ let handler = async (m, {
     } catch (e) {} finally {
       let pme = `乂  *U S E R - I N F O*\n\n`
       pme += `  ∘  *Name* : ${conn.getName(user)} ${target.registered ? '(' + target.name + ') ': ''}\n`
-      pme += `  ∘  *Partner* : ${target.pasangan ? `@${target.pasangan.split`@`[0]}` : '×'}\n`
+      pme += `  ∘  *Partner* : ${target.partner ? `@${target.partner.split`@`[0]}` : '×'}\n`
       pme += `  ∘  *Exp* : ${Func.formatNumber(target.exp)} (${target.exp - min} / ${xp})\n`
       pme += `  ∘  *Level* : ${target.level}\n`
       pme += `  ∘  *Role* : ${target.role}\n`

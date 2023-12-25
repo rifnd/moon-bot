@@ -1,28 +1,24 @@
-const uploadImage = require('../lib/uploadImage')
-let handler = async (m, { conn, text }) => {
-  let q = m.quoted ? m.quoted : m
-  let mime = (q.msg || q).mimetype || ''
-  if (!mime)
-    return conn.reply(
-      m.chat,
-      `Balas gambar yang berisi teks dengan perintah *${usedPrefix}ocr*`,
-      m,
-    )
-  if (!/image\/(jpe?g|png)/.test(mime))
-    return m.reply(Func.texted('bold', 'Media tidak didukung'))
-  let img = await q.download()
-  let url = await uploadImage(img)
-  let hasil = await Func.fetchJson(
-    API('alya', '/api/ocr', { image: url }, 'apikey'),
-  )
-  for (let i of hasil.data.ParsedResults) {
-    m.reply(i.ParsedText)
+let handler = async (m, {
+  usedPrefix,
+  command,
+  args
+}) => {
+  try {
+    let q = m.quoted ? m.quoted : m
+    let mime = (q.msg || q).mimetype || ''
+    if (!/image\/(jpe?g|png)/.test(mime)) return m.reply(`Send or reply to images containing text with commands ${usedPrefix + command}`)
+    let media = await q.download()
+    let url = await scrap.uploader(media)
+    m.react('🕒')
+    let json = await Func.fetchJson(API('alya', '/api/ocr', { image: url.data.url }, 'apikey'))
+    if (!json.status) return m.reply(Func.jsonFormat(json))
+    m.reply(json.data.text)
+  } catch (e) {
+    console.log(e)
+    return m.reply(Func.jsonFormat(e))
   }
 }
-
-handler.help = ['ocr']
+handler.help = handler.command = ['ocr']
 handler.tags = ['tools']
-handler.command = ['ocr']
-handler.limit = true
-
+handler.limit = 1
 module.exports = handler

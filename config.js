@@ -47,7 +47,8 @@ global.status = {
   private: 'This command is private chat only.',
   register: 'Please register first to use this command.',
   game: 'The game feature has not been activated.',
-  rpg: 'The RPG feature has not been activated.'
+  rpg: 'The RPG feature has not been activated.',
+  restrict: 'This feature is disabled'
 }
 
 /** rpg emoticon */

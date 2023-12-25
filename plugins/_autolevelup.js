@@ -57,8 +57,9 @@ function enumGetKey(a) {
 let levelling = require('../lib/levelling')
 module.exports = {
   before(m) {
+    let setting = global.db.data.settings[this.user.jid]
     let user = global.db.data.users[m.sender]
-    if (!user.autolevelup) return !0
+    if (!setting.autolevelup) return !0
     let before = user.level * 1
     while (levelling.canLevelUp(user.level, user.exp, global.multiplier)) user.level++
     if (before !== user.level) {

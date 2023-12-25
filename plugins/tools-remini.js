@@ -9,7 +9,7 @@ let handler = async (m, {
     if (!/image\/(jpe?g|png)/.test(mime)) return m.reply(`Kirim atau balas gambar dengan perintah ${usedPrefix + command}`)
     let media = await q.download()
     let url = await scrap.uploader(media)
-    m.reply(status.wait)
+    m.react('🕒')
     let json = await Func.fetchJson(API('alya', '/api/enhance', {
       image: url.data.url
     }, 'apikey'))
