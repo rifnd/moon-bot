@@ -18,7 +18,7 @@ let handler = async (m, {
     var b = await conn.groupMetadata(res)
     var d = b.participants.map(v => v.id)
     var member = d.toString()
-    var e = await d.filter(v => v.endsWith(anubot + '@s.whatsapp.net'))
+    var e = await d.filter(v => v.endsWith(global.owner + '@s.whatsapp.net'))
     var jumlahHari = 86400000 * args[1]
     var now = new Date() * 1
     if (now < db.data.chats[res].expired) db.data.chats[res].expired += jumlahHari

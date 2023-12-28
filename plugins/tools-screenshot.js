@@ -28,6 +28,6 @@ let handler = async(m, {
   }
 }
 handler.help = handler.command = ['screenshot', 'ss', 'ssweb']
-handler.tags = ['tool']
+handler.tags = ['tools']
 handler.limit = true
 module.exports = handler
