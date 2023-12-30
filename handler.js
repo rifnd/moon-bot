@@ -240,9 +240,6 @@ module.exports = {
           //m.reply(status.restrict)
           continue
         }
-
-        /** autoread */
-        if (setting.autoread) await this.readMessages([m.key])
         
         const str2Regex = str => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
         let _prefix = plugin.customPrefix ? plugin.customPrefix : conn.prefix ? conn.prefix : global.prefix
@@ -486,6 +483,8 @@ module.exports = {
         console.log(m, m.quoted, e)
       }
     }
+    /** autoread */
+    if (setting.autoread) await this.readMessages([m.key])
   },
   
   async participantsUpdate({ id, participants, action }) {
