@@ -484,7 +484,7 @@ module.exports = {
       }
     }
     /** autoread */
-    if (setting.autoread) await this.readMessages([m.key])
+    if (db.data.settings[this.user.jid].autoread) await this.readMessages([m.key])
   },
   
   async participantsUpdate({ id, participants, action }) {
