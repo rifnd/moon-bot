@@ -8,13 +8,7 @@
 
 ### Set in config.js
 ```Javascript
-global.owner = [
-    ['6281252848955'],
-    ['6281252848955', 'owner', true]
-]
-
-global.mods = ['0']
-global.prems = ['6285815700861', '6281252848955']
+global.owner = ['6281252848955']
 
 global.APIs = {
   alya: 'https://api.alyachan.pro'
