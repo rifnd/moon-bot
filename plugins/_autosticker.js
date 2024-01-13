@@ -11,14 +11,14 @@ handler.all = async function (m) {
     if (/image/.test(mime)) {
       let img = await q.download()
       if (!img) return
-      stiker = await sticker(img, false, packname, author)
+      stiker = await sticker(img, false, global.set.packname, global.set.author)
     } else if (/video/.test(mime)) {
       if ((q.msg || q).seconds > 11) return await this.reply(m.chat, 'Maximum duration of 10 seconds!', m)
       let img = await q.download()
       if (!img) return
-      stiker = await sticker(img, false, packname, author)
+      stiker = await sticker(img, false, global.set.packname, global.set.author)
     } else if (m.text.split(/\n| /i)[0]) {
-      if (isUrl(m.text)) stiker = await sticker(false, m.text.split(/\n| /i)[0], packname, author)
+      if (isUrl(m.text)) stiker = await sticker(false, m.text.split(/\n| /i)[0], global.set.packname, global.set.author)
       else return
     }
     if (stiker) {

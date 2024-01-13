@@ -12,9 +12,9 @@ handler.all = async function (m) {
                 year: 'numeric',
             })
             await global.db.write()
-            this.reply(global.owner[0] + '@s.whatsapp.net', `Database: ${date}`, null)
+            this.reply(global.owner + '@s.whatsapp.net', `Database: ${date}`, null)
             let data = fs.readFileSync('./database.json')
-            await this.sendMessage(owner[0] + '@s.whatsapp.net', {
+            await this.sendMessage(global.owner + '@s.whatsapp.net', {
                 document: data,
                 mimetype: 'application/json',
                 fileName: 'database.json',
