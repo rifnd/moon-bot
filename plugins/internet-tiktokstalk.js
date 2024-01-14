@@ -1,4 +1,5 @@
 let handler = async (m, {
+  conn,
   usedPrefix,
   command,
   text
@@ -8,23 +9,25 @@ let handler = async (m, {
     m.react('🕐')
     const json = await Func.fetchJson(API('alya', '/api/ttstalk', { user: text }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
-    let tek = `乂  *T I K T O K - S T A L K*\n\n`
-    tek += `  ∘  *Username* : ${json.data.users.username}\n`
-    tek += `  ∘  *Nickname* : ${json.data.users.nickname}\n`
-    tek += `  ∘  *Verified* : ${json.data.users.verified}\n`
-    tek += `  ∘  *Region* : ${json.data.users.region}\n`
-    tek += `  ∘  *Followers* : ${json.data.stats.followerCount}\n`
-    tek += `  ∘  *Followed* : ${json.data.stats.followingCount}\n`
-    tek += `  ∘  *Like* : ${json.data.stats.heartCount}\n`
-    tek += `  ∘  *Video* : ${json.data.stats.videoCount}\n\n`
+    let tek = `乂  *T I K T O K S T A L K*\n\n`
+    tek += `  ∘  *Username* : ${json.data.uniqueid}\n`
+    tek += `  ∘  *Nickname* : ${json.data.nickname}\n`
+    tek += `  ∘  *Country* : ${json.data.country}\n`
+    tek += `  ∘  *Followers* : ${Func.formatNumber(json.data.follower)}\n`
+    tek += `  ∘  *Followed* : ${Func.formatNumber(json.data.following)}\n`
+    tek += `  ∘  *Like* : ${Func.formatNumber(json.data.hearcount)}\n`
+    tek += `  ∘  *Video* : ${Func.formatNumber(json.data.videocount)}\n\n`
     tek += global.set.footer
-    conn.sendFile(m.chat, json.data.users.avatar, '', tek, m)
+	conn.sendMessageModify(m.chat, tek, m, {
+		largeThumb: true,
+		thumbnail: json.data.thumbnail
+	})
   } catch (e) {
     console.log(e)
     m.reply(Func.jsonFormat(e))
   }
 }
-handler.help = ['tiktokstalk']
+handler.help = ['ttstalk'].map(v => v + ' *username*')
 handler.tags = ['internet']
 handler.command = ['ttstalk', 'tiktokstalk']
 handler.limit = true

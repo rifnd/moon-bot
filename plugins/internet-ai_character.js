@@ -4,6 +4,7 @@ let handler = async (m, {
   text
 }) => {
   try {
+    db.data.chara = db.data.chara || ''
     if (command == 'cai') {
       if (!text) return m.reply(Func.example(usedPrefix, command, 'Halo perkenalkan dirimu'))
       m.react('🕒')
@@ -30,6 +31,7 @@ let handler = async (m, {
       }
       if (!json.status) return m.reply(Func.jsonFormat(json))
       if (json.data.name && json.data.character_id) {
+        db.data.chara = json.data.character_id
         conn.reply(m.chat, Func.texted('bold', `✅ Done, Successfully created character ${json.data.name} character_id : ${json.data.character_id}`), m)
       } else {
         conn.reply(m.chat, Func.texted('bold', `Failed to fetch the data character, try again in 5 seconds.`), m)
