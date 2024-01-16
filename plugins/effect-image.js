@@ -1,27 +1,23 @@
-const uploadFile = require('../lib/uploadFile')
-const uploadImage = require('../lib/uploadImage')
 let handler = async (m, {
+  conn,
   usedPrefix,
   command
 }) => {
   let q = m.quoted ? m.quoted : m
   let mime = (q.msg || q).mimetype || ''
-  if (!mime) return m.reply(Func.texted('bold', `Send/reply photos with commands ${usedPrefix + command}`))
-  m.reply(status.wait)
-  let old = new Date()
+  if (!/image\/(jpe?g|png)/.test(mime)) return m.reply(Func.texted('bold', `Reply or send photo use this command`))
+  m.react('🕒')
   let media = await q.download()
-  let isTele = /image\/(png|jpe?g|gif)/.test(mime)
-  let link = await (isTele ? uploadImage : uploadFile)(media)
+  let anu = await scrap.uploader(media)
   try {
-    const json = await Func.fetchJson(API('alya', '/api/' + command.toLowerCase(), { url: link }, 'apikey'))
-    if (!json.status) return m.reply(Func.jsonFormat(json))
-    conn.sendFile(m.chat, json.data.url, 'Effect.jpg', `• *Process* : ${((new Date - old) * 1)} ms`, m)
+    const json = await Func.fetchJson(API('alya', '/api/effect', { url: anu.data.url, style: command.toLowerCase() }, 'apikey'))
+    conn.sendFile(m.chat, json.data.url, '', global.set.wm, m)
   } catch (e) {
     console.log(e)
     return m.reply(Func.jsonFormat(e))
   }
 }
-handler.help = handler.command = ['jail', 'blur', 'invert', 'sepia', 'wasted', 'wanted', 'grayscale', '300years', 'afusion', 'approved', 'badge', 'badslap', 'beautiful', 'blurple', 'brazzers', 'burn', 'circle', 'crush', 'deepfry', 'dictator']
+handler.help = handler.command = ['paretro', 'retrolga', 'plumy', 'hdr', 'sepia', 'duotone', 'blackwhite', 'sketch', 'sketchril', 'oils', 'esragan', 'watercolor', 'galaxy', 'freplace', 'rainbow', 'solarize', 'pinkbir']
 handler.tags = ['effect']
 handler.limit = 1
 module.exports = handler

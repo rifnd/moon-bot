@@ -18,16 +18,16 @@ let handler = async (m, {
     tek += `  ∘  *Like* : ${Func.formatNumber(json.data.hearcount)}\n`
     tek += `  ∘  *Video* : ${Func.formatNumber(json.data.videocount)}\n\n`
     tek += global.set.footer
-	conn.sendMessageModify(m.chat, tek, m, {
-		largeThumb: true,
-		thumbnail: json.data.thumbnail
-	})
+    conn.sendMessageModify(m.chat, tek, m, {
+      largeThumb: true,
+      thumbnail: json.data.thumbnail
+    })
   } catch (e) {
     console.log(e)
     m.reply(Func.jsonFormat(e))
   }
 }
-handler.help = ['ttstalk'].map(v => v + ' *username*')
+handler.help = ['ttstalk'].map(v => v + ' ')
 handler.tags = ['internet']
 handler.command = ['ttstalk', 'tiktokstalk']
 handler.limit = true
