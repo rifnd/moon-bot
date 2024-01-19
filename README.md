@@ -86,8 +86,7 @@ $ pm2 start index.js && pm2 save && pm2 logs
 + ```node . --pairing``` : For those of you who login using a code, use this command in the terminal
 + ```node . --db 'mongodb uri'``` : If you want to connect the database to mongodb use this command
 
-
-[![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) | [![Rifnd](https://github.com/rifnd.png?size=100)](https://github.com/moonxxl) | [![Neoxr](https://github.com/neoxr.png?size=100)](https://github.com/neoxr) | [![Alya](https://github.com/alya-tok.png?size=100)](https://github.com/alya-tok)
-----|----
-[Nurutomo](https://github.com/Nurutomo) | [Nando](https://github.com/rifnd) | [Neoxr](https://github.com/neoxr) | [Alya](https://github.com/alya-tok)
- Creator | Orang Orangan | Orang Baik | Si Cantik
+### Thanks To
++ ```Nurutomo(https://github.com/Nurutomo)```
++ ```Neoxr(https://github.com/neoxr)```
++ ```Alya(https://github.com/alya-tok)```
