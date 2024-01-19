@@ -87,6 +87,6 @@ $ pm2 start index.js && pm2 save && pm2 logs
 + ```node . --db 'mongodb uri'``` : If you want to connect the database to mongodb use this command
 
 ### Thanks To
-+ ```Nurutomo(https://github.com/Nurutomo)```
-+ ```Neoxr(https://github.com/neoxr)```
-+ ```Alya(https://github.com/alya-tok)```
+> [Nurutomo](https://github.com/Nurutomo)
+> [Neoxr](https://github.com/neoxr)
+> [Alya](https://github.com/alya-tok)
