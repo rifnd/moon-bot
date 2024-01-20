@@ -178,7 +178,7 @@ let handler = async (m, {
       '%': '%', p: _p, uptime, muptime, me: conn.user.name, npmname: package.name, npmdesc: package.description, version: package.version, exp: exp - min, maxexp: xp, totalexp: exp, xp4levelup: max - exp <= 0 ? `Siap untuk *${_p}levelup*` : `${max - exp} XP lagi untuk levelup`, github: package.homepage ? package.homepage.url || package.homepage : '[unknown github url]', level, limit, name, weton, week, date, dateIslamic, time, totalreg, rtotalreg, role, readmore: readMore
     }
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
-    await m.reply(Func.Styles(text))
+    await m.reply(text.trim())
   } catch (e) {
     conn.reply(m.chat, 'Sorry the menu is in error', m)
     throw e

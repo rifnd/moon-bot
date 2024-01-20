@@ -17,7 +17,7 @@ global.set = {
   author: 'moon-bot'
 }
 /** enter your bot number to login using the code */
-global.pairingNumber = 6283862074769
+global.pairingNumber = 6283867587556
 
 /** enter your replit link, so it's active 24/7 */
 global.replit_url = ''
