@@ -12,7 +12,7 @@ let handler = async (m, {
       try {
         let img = await q.download()
         let res = await scrap.uploader(img)
-        let respon = await Func.fetchJson(API('alya', '/api/func-chat', { system: text, image: res.data.url }, 'apikey'))
+        let respon = await Func.fetchJson(API('alya', '/api/func-chat', { model: 'bard', system: text, image: res.data.url }, 'apikey'))
         if (!respon.status) return m.reply(Func.jsonFormat(respon))
         m.reply(respon.data.content)
       } catch (i) {
