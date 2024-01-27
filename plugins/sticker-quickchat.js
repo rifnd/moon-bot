@@ -34,7 +34,7 @@ let handler = async (m, {
         "replyMessage": {}
       }]
     }
-    const response = axios.post('https://quote-api.rippanteq7.repl.co/generate', json, {
+    const response = axios.post('https://quote-api.neoxr.eu/generate', json, {
       headers: { 'Content-Type': 'application/json' }
     }).then(res => {
       const buffer = Buffer.from(res.data.result.image, 'base64')
