@@ -7,9 +7,10 @@ handler.all = async function (m) {
     } else if ((user.money * 1) < 0) {
         user.money = 0
     }
-    if ((user.health * 1) > 100000) {
-        user.health = 100000
-    } else if ((user.health * 1) < 0) {
+    if (user.health > 200) {
+        user.health = 200
+    }
+    if (user.health < 0) {
         user.health = 0
     }
     if ((user.exp * 1) > 999999999999999999999999999) {

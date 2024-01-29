@@ -19,10 +19,13 @@ let handler = async (m, {
 }) => {
   let tags
   let teks = `${args[0]}`.toLowerCase()
-  let arrayMenu = ['anonymous', 'downloader', 'effect', 'fun', 'game', 'group', 'info', 'internet', 'maker', 'owner', 'sticker', 'tools', 'xp', 'voice']
+  let arrayMenu = ['anonymous', 'database', 'downloader', 'effect', 'fun', 'game', 'group', 'info', 'internet', 'maker', 'owner', 'sticker', 'tools', 'xp', 'voice']
   if (!arrayMenu.includes(teks)) teks = '404'
   if (teks == 'anonymous') tags = {
     anonymous: 'ANONYMOUS'
+  }
+  if (teks == 'database') tags = {
+    database: 'DATABASE'
   }
   if (teks == 'downloader') tags = {
     downloader: 'DOWNLOADER'
@@ -122,6 +125,7 @@ let handler = async (m, {
       capt += `∘  *Source* : https://github.com/rifnd/moon-bot\n\n`
       capt += `If you find a bug or want a premium upgrade, please contact the owner.\n\n`
       capt += `┌  ∘  ${_p + command} anonymous\n`
+      capt += `│  ∘  ${_p + command} database\n`
       capt += `│  ∘  ${_p + command} downloader\n`
       capt += `│  ∘  ${_p + command} effect\n`
       capt += `│  ∘  ${_p + command} fun\n`

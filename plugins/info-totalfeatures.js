@@ -6,7 +6,7 @@ let handler = async (m, {
   let totalf = Object.values(global.plugins).filter((v) => v.help && v.tags).length
   conn.reply(m.chat, `total current features : ${totalf}`, m)
 }
-handler.help = handler.commands = ['totalfeatures']
+handler.help = ['totalfeatures']
 handler.tags = ['info']
-handler.limit = true
+handler.command = /^(total(fitur|feature)?)$/i
 module.exports = handler
