@@ -120,7 +120,6 @@ let handler = async (m, {
     if (teks == '404') {
       let capt = `${ucapan()} @${m.sender.replace(/@.+/g, '')}\n`
       capt += `I am an automatic system (WhatsApp Bot), which can help you to complete small jobs such as downloading videos or images etc. just via WhatsApp.\n\n`
-      capt += `∘  *User* : ${rtotalreg} of ${totalreg}\n`
       capt += `∘  *Rest Api* : https://api.alyachan.pro\n`
       capt += `∘  *Source* : https://github.com/rifnd/moon-bot\n\n`
       capt += `If you find a bug or want a premium upgrade, please contact the owner.\n\n`

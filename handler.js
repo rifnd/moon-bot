@@ -550,12 +550,10 @@ module.exports = {
       console.error(e)
     }
   }
-},
+}
 
-/**
-* anti call
-*/
-conn.ws.on('CB:call', async function callUpdatePushToDb(json) {
+/** anti call */
+/*conn.ws.on('CB:call', async function callUpdatePushToDb(json) {
   let call = json.tag
   let callerId = json.attrs.from
   console.log({
@@ -577,7 +575,7 @@ conn.ws.on('CB:call', async function callUpdatePushToDb(json) {
     mentions: [callerId]
   })
   Func.delay(10000) // supaya tidak spam
-})
+})*/
 
 let fs = require('fs')
 let chalk = require('chalk')

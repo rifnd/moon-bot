@@ -47,6 +47,6 @@ let handler = async (m, {
 }
 handler.help = ['qc']
 handler.tags = ['sticker']
-handler.command = ['qc', 'quickchat']
+handler.command = /^(qc|quickchat)$/i
 handler.limit = true
 module.exports = handler
