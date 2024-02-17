@@ -9,12 +9,15 @@ let handler = async (m, {
   let res = await scrap.uploader(await m.quoted.download())  
   let out = await Func.fetchJson(API('alya', '/api/webp-convert', {
     url: res.data.url,
-    action: 'webp-to-png'
+    action: 'webp-to-mp4'
   }, 'apikey'))
   if (!out.status) return m.reply(Func.jsonFormat(out))
-  conn.sendFile(m.chat, out.data.url, '', global.set.wm, m)
+  conn.sendFile(m.chat, out.data.url, '', global.set.wm, m, false, {
+    mimetype: 'video/gif',
+    thumbnail: Buffer.alloc(0)
+  })
 }
-handler.help = ['toimg']
+handler.help = ['tomp4']
 handler.tags = ['tools']
-handler.command = ['toimg']
+handler.command = ['togif', 'tovideo']
 module.exports = handler

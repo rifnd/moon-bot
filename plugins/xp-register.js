@@ -31,8 +31,7 @@ let handler = async function (m, {
   
 + 100 limit
 + 20.000 exp
-+ 10.000 money
-`
++ 10.000 money`
   m.reply(teks)
 }
 handler.help = ['register'].map((v) => v + '')

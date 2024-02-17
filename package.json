@@ -1,14 +1,14 @@
 {
   "name": "moon-bot",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Simple whatsapp bot",
   "main": "index.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
-    "start": "node . --autoread",
-    "mode": "node . --autoread --gconly"
+    "start": "node index.js",
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
   "keywords": [
     "whatsapp-bot"
   ],
-  "author": "Nando35",
+  "author": "rifnd",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/rifnd/moon-bot/issues"
