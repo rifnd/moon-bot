@@ -1,14 +1,12 @@
 /** enter owner number */
 global.owner = ['6281252848955']
-
-/** Apikey https://api.alyachan.pro/pricing */
+/** https://api.alyachan.pro/pricing */
 global.APIs = {
-  alya: 'https://api.alyachan.pro'
+  alya: 'https://api.alyachan.dev'
 }
 global.APIKeys = {
   'https://api.alyachan.pro': 'yourkey'
 }
-
 /** option setting */
 global.set = {
   wm: `© moon-bot v${require('./package.json').version}`,
@@ -18,20 +16,17 @@ global.set = {
 }
 /** enter your bot number to login using the code */
 global.pairingNumber = 6283867587556
-
 /** enter your replit link, so it's active 24/7 */
 global.replit_url = ''
-
-/** other */
-global.multiplier = 1000 // The bigger it gets the harder it is to level up
-global.max_upload = 70 // Maximum limit to send files
-global.intervalmsg = 1800 // To avoid spam on first login
-global.ram_usage = 2100000000 // Maximum 2GB ram, do the math yourself
-
+/** the bigger it gets the harder it is to level up */
+global.multiplier = 1000
+/** maximum limit to send files */
+global.max_upload = 70
+/** maximum 2GB ram, do the math yourself */
+global.ram_usage = 2100000000
 /** function and scraper to make it more practical */
 global.Func = new (require('./lib/functions'))
 global.scrap = new (require('./lib/scrape'))
-
 /** status message */
 global.status = {
   wait: 'Processing. . .',
@@ -50,7 +45,6 @@ global.status = {
   rpg: 'The RPG feature has not been activated.',
   restrict: 'This feature is disabled'
 }
-
 /** rpg emoticon */
 global.rpg = {
   emoticon(string) {
@@ -85,7 +79,6 @@ global.rpg = {
     else return emot[results[0][0]]
   },
 }
-
 /** reload file */
 const fs = require('fs')
 const chalk = require('chalk')

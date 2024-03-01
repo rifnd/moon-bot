@@ -1,10 +1,10 @@
 let handler = async (m, {
-  conn, 
-  usedPrefix, 
-  command, 
-  args, 
-  isOwner, 
-  isAdmin, 
+  conn,
+  usedPrefix,
+  command,
+  args,
+  isOwner,
+  isAdmin,
   isROwner,
   users,
   chat,
@@ -14,8 +14,8 @@ let handler = async (m, {
   let type = (args[0] || '').toLowerCase()
   let isAll = false
   let isUser = false
-  switch(type) {
-    
+  switch (type) {
+
     case 'welcome':
       if (!m.isGroup) {
         if (!isOwner) {
@@ -27,7 +27,7 @@ let handler = async (m, {
         throw false
       }
       chat.welcome = isEnable
-    break
+      break
 
     case 'detect':
       if (!m.isGroup) {
@@ -40,9 +40,9 @@ let handler = async (m, {
         throw false
       }
       chat.detect = isEnable
-    break
+      break
 
-    case 'antidelete':
+    case 'delete':
       if (!m.isGroup) {
         if (!isOwner) {
           m.reply(status.group)
@@ -52,8 +52,8 @@ let handler = async (m, {
         m.reply(status.admin)
         throw false
       }
-      chat.antidelete = isEnable
-    break
+      chat.delete = isEnable
+      break
 
     case 'public':
       isAll = true
@@ -62,7 +62,7 @@ let handler = async (m, {
         throw false
       }
       global.opts['self'] = !isEnable
-    break
+      break
 
     case 'antilink':
       if (m.isGroup) {
@@ -72,7 +72,7 @@ let handler = async (m, {
         }
       }
       chat.antilink = isEnable
-    break
+      break
 
     case 'antivirtex':
       if (m.isGroup) {
@@ -82,7 +82,7 @@ let handler = async (m, {
         }
       }
       chat.antivirtex = isEnable
-    break
+      break
 
     case 'autodownload':
       if (m.isGroup) {
@@ -92,113 +92,99 @@ let handler = async (m, {
         }
       }
       setting.autodownload = isEnable
-    break
+      break
 
     case 'antisticker':
-      if(m.isGroup) {
-        if(!(isAdmin || isOwner)) {
+      if (m.isGroup) {
+        if (!(isAdmin || isOwner)) {
           m.reply(status.admin)
           throw false
         }
       }
       chat.antisticker = isEnable
-    break
+      break
 
     case 'autosticker':
-      if(m.isGroup) {
-        if(!(isAdmin || isOwner)) {
+      if (m.isGroup) {
+        if (!(isAdmin || isOwner)) {
           m.reply(status.admin)
           throw false
         }
       }
       chat.autostiker = isEnable
-    break
+      break
 
     case 'antitoxic':
-      if(m.isGroup) {
-        if(!(isAdmin || isOwner)) {
+      if (m.isGroup) {
+        if (!(isAdmin || isOwner)) {
           m.reply(status.admin)
           throw false
         }
       }
       chat.antitoxic = !isEnable
-    break
-
-    case 'mycontact':
-    case 'mycontacts':
-    case 'whitelistcontact':
-    case 'whitelistcontacts':
-    case 'whitelistmycontact':
-    case 'whitelistmycontacts':
-      if(!isOwner) {
-        m.reply(status.owner)
-        throw false
-      }
-      conn.callWhitelistMode = isEnable
       break
 
     case 'restrict':
       isAll = true
-      if(!isROwner) {
+      if (!isROwner) {
         m.reply(status.owner)
         throw false
       }
       global.opts['restrict'] = isEnable
-    break
+      break
 
     case 'nyimak':
       isAll = true
-      if(!isROwner) {
+      if (!isROwner) {
         m.reply(status.owner)
         throw false
       }
       global.opts['nyimak'] = isEnable
-    break
+      break
 
     case 'autoread':
       isAll = true
-      if(!isROwner) {
+      if (!isROwner) {
         m.reply(status.owner)
         throw false
       }
       //global.opts['autoread'] = isEnable
       setting.autoread = isEnable
-    break
+      break
 
     case 'pconly':
     case 'privateonly':
       isAll = true
-      if(!isROwner) {
+      if (!isROwner) {
         m.reply(status.owner)
         throw false
       }
       global.opts['pconly'] = isEnable
-    break
+      break
 
     case 'gconly':
     case 'grouponly':
       isAll = true
-      if(!isROwner) {
+      if (!isROwner) {
         m.reply(status.owner)
         throw false
       }
       global.opts['gconly'] = isEnable
-      setting.grouponly = isEnable
-    break
+      break
 
     case 'swonly':
     case 'statusonly':
       isAll = true
-      if(!isROwner) {
+      if (!isROwner) {
         m.reply(status.owner)
         throw false
       }
       global.opts['swonly'] = isEnable
-    break
+      break
 
     case 'game':
       isAll = true
-      if(!isOwner) {
+      if (!isOwner) {
         m.reply(status.owner)
         throw false
       }
@@ -206,7 +192,7 @@ let handler = async (m, {
       break
     case 'rpg':
       isAll = true
-      if(!isOwner) {
+      if (!isOwner) {
         m.reply(status.owner)
         throw false
       }
@@ -214,15 +200,15 @@ let handler = async (m, {
       break
     case 'backup':
       isAll = true
-      if(!isOwner) {
+      if (!isOwner) {
         m.reply(status.owner)
         throw false
       }
       setting.backup = isEnable
       break
     case 'viewonce':
-      if(m.isGroup) {
-        if(!(isAdmin || isOwner)) {
+      if (m.isGroup) {
+        if (!(isAdmin || isOwner)) {
           m.reply(status.admin)
           throw false
         }
@@ -230,7 +216,7 @@ let handler = async (m, {
       chat.viewonce = isEnable
       break
     default:
-      if(!/[01]/.test(command)) return m.reply(`
+      if (!/[01]/.test(command)) return m.reply(`
 List option : ${isOwner ? '\n\n∘ anticall\n∘ autoread\n∘ gconly\n∘ pconly\n∘ game\n∘ rpg\n∘ backup\n∘ public' : ''}
 ∘ welcome
 ∘ antidelete 

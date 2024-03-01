@@ -1,6 +1,6 @@
 {
   "name": "moon-bot",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Simple whatsapp bot",
   "main": "index.js",
   "directories": {
@@ -37,13 +37,11 @@
     "lodash": "^4.17.21",
     "lowdb": "^2.1.0",
     "moment-timezone": "^0.5.43",
-    "mongoose": "^7.5.0",
+    "mongoose": "^6.3.3",
     "node-fetch": "^2.6.7",
     "node-webpmux": "^3.1.7",
-    "pino": "^7.11.0",
     "qrcode": "^1.5.0",
     "qrcode-terminal": "^0.12.0",
-    "request": "^2.88.2",
     "similarity": "^1.2.1",
     "syntax-error": "1.4.0",
     "url-regex-safe": "^3.0.0",
