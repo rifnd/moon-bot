@@ -5,23 +5,20 @@ let handler = async (m, {
   isAdmin,
   args
 }) => {
-  if (!(isAdmin || isOwner)) {
-    m.reply(status.admin)
-    throw false
+  try {
+    let input = text ? text : m.quoted ? m.quoted.sender : m.mentionedJid.length > 0 ? m.mentioneJid[0] : false
+    if (!input) return conn.reply(m.chat, Func.texted('bold', `Mention or reply chat target.`), m)
+    let p = await conn.onWhatsApp(input.trim())
+    if (p.length == 0) return conn.reply(m.chat, Func.texted('bold', `Invalid number.`), m)
+    let jid = conn.decodeJid(p[0].jid)
+    let number = jid.replace(/@.+/, '')
+    let member = participants.find(u => u.id == jid)
+    if (!member) return conn.reply(m.chat, Func.texted('bold', `@${number} already left or does not exist in this group.`), m)
+    conn.groupParticipantsUpdate(m.chat, [jid], 'remove').then(res => m.reply(Func.jsonFormat(res)))
+  } catch (e) {
+    console.log(e)
+    return m.reply(Func.jsonFormat(e))
   }
-  let ownerGroup = m.chat.split`-`[0] + '@s.whatsapp.net'
-  if (m.quoted) {
-    if (m.quoted.sender === ownerGroup || m.quoted.sender === conn.user.jid)
-      return
-    let usr = m.quoted.sender
-    await conn.groupParticipantsUpdate(m.chat, [usr], 'remove')
-    return
-  }
-  if (!m.mentionedJid[0]) return m.reply(Func.texted('italic', 'Balas/Tag orang yang ingin di kick.'))
-  let users = m.mentionedJid.filter((u) => !(u == ownerGroup || u.includes(conn.user.jid)))
-  for (let user of users)
-    if (user.endsWith('@s.whatsapp.net'))
-      await conn.groupParticipantsUpdate(m.chat, [user], 'remove')
 }
 handler.help = handler.command = ['kick']
 handler.tags = ['group']

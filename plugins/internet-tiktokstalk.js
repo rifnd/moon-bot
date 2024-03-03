@@ -12,16 +12,12 @@ let handler = async (m, {
     let tek = `乂  *T I K T O K S T A L K*\n\n`
     tek += `  ∘  *Username* : ${json.data.uniqueid}\n`
     tek += `  ∘  *Nickname* : ${json.data.nickname}\n`
-    tek += `  ∘  *Country* : ${json.data.country}\n`
     tek += `  ∘  *Followers* : ${Func.formatNumber(json.data.follower)}\n`
     tek += `  ∘  *Followed* : ${Func.formatNumber(json.data.following)}\n`
     tek += `  ∘  *Like* : ${Func.formatNumber(json.data.hearcount)}\n`
     tek += `  ∘  *Video* : ${Func.formatNumber(json.data.videocount)}\n\n`
     tek += global.set.footer
-    conn.sendMessageModify(m.chat, tek, m, {
-      largeThumb: true,
-      thumbnail: json.data.thumbnail
-    })
+    conn.sendFile(m.chat, json.data.thumbnail, 'tts.jpg', tek, m)
   } catch (e) {
     console.log(e)
     m.reply(Func.jsonFormat(e))

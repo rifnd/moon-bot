@@ -13,12 +13,12 @@ let handler = async (m, {
     tek += `  ∘  *Name* : ` + json.data.full_name + '\n'
     tek += `  ∘  *ID* : ` + json.data.id + '\n'
     tek += `  ∘  *Private* : ` + json.data.is_private + '\n'
-    tek += `  ∘  *Followers* : ` + json.data.edge_followed_by.count + '\n'
-    tek += `  ∘  *Followed* : ` + json.data.edge_follow.count + '\n'
+    tek += `  ∘  *Follower* : ` + Func.formatNumber(json.data.count_followers) + '\n'
+    tek += `  ∘  *Followed* : ` + Func.formatNumber(json.data.count_following) + '\n'
     tek += `  ∘  *Url* : https://instagram.com/` + json.data.username + '\n'
     tek += `  ∘  *Bio* : ` + json.data.biography + '\n\n'
     tek += global.set.footer
-    conn.sendFile(m.chat, json.data.profile_pic_url, '', tek, m)
+    conn.sendFile(m.chat, json.data.profile_full_HD, '', tek, m)
   } catch (e) {
     console.log(e)
     m.reply(Func.jsonFormat(e))
