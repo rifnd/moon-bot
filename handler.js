@@ -652,7 +652,7 @@ module.exports = {
       if (typeof m.text !== 'string') m.text = ''
 
       if (m.isGroup && !m.fromMe && users && users.afk > -1) {
-        this.reply(m.chat, `Kamu kembali online setelah offline selama : ${Func.texted('bold', Func.toTime(new Date - users.afk))}\n\n• ${Func.texted('bold', 'Reason')}: ${users.afkReason ? users.afkReason : '-'}`, m)
+        this.reply(m.chat, `You're back online after being offline for : ${Func.texted('bold', Func.toTime(new Date - users.afk))}\n\n• ${Func.texted('bold', 'Reason')}: ${users.afkReason ? users.afkReason : '-'}`, m)
         users.afk = -1
         users.afkReason = ''
       }
