@@ -48,7 +48,7 @@ let handler = async (m, {
     throw e
   }
 }
-handler.help = handler.command = ['bass', 'blown', 'deep', 'earrape', 'fast', 'fat', 'nightcore', 'reverse', 'robot', 'slow', 'smooth', 'tupai', 'vibra'].map(v => v + '')
+handler.help = handler.command = ['bass', 'blown', 'deep', 'earrape', 'fast', 'fat', 'nightcore', 'reverse', 'robot', 'slow', 'smooth', 'tupai', 'vibra']
 handler.tags = ['voice']
 handler.limit = true
 module.exports = handler

@@ -1,25 +1,25 @@
 let handler = async (m, {
-    usedPrefix,
-    command,
-    args
+	usedPrefix,
+	command,
+	args
 }) => {
-    if (!args[0]) return m.reply(Func.example(usedPrefix, command, 'https://www.instagram.com/p/CvhKFLaLWXJ/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA=='))
-    if (!args[0].match(/(https:\/\/www.instagram.com)/gi)) return m.reply(status.invalid)
-    let old = new Date()
-    m.react('🕐')
-    try {
-        const json = await Func.fetchJson(API('alya', '/api/ig', { url: args[0] }, 'apikey'))
-        if (!json.status) return m.reply(Func.jsonFormat(json))
-        for (let v of json.data) {
-            conn.sendMedia(m.chat, v.url, m, {
-                caption: `• *Fetching* : ${((new Date - old) * 1)} ms`,
-                mentions: [m.sender]
-            })
-        }
-    } catch (e) {
-        console.log(e)
-        return m.reply(status.error)
-    }
+	if (!args[0]) return m.reply(Func.example(usedPrefix, command, 'https://www.instagram.com/p/CvhKFLaLWXJ/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA=='))
+	if (!args[0].match(/(https:\/\/www.instagram.com)/gi)) return m.reply(status.invalid)
+	let old = new Date()
+	m.react('🕐')
+	try {
+		const json = await Func.fetchJson(API('alya', '/api/ig', { url: args[0] }, 'apikey'))
+		if (!json.status) return m.reply(Func.jsonFormat(json))
+		for (let v of json.data) {
+			conn.sendMedia(m.chat, v.url, m, {
+				caption: `• *Fetching* : ${((new Date - old) * 1)} ms`,
+				mentions: [m.sender]
+			})
+		}
+	} catch (e) {
+		console.log(e)
+		return m.reply(status.error)
+	}
 }
 handler.help = ['instagram']
 handler.tags = ['downloader']
