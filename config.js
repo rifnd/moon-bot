@@ -5,7 +5,7 @@ global.APIs = {
   alya: 'https://api.alyachan.dev'
 }
 global.APIKeys = {
-  'https://api.alyachan.pro': 'yourkey'
+  'https://api.alyachan.dev': 'yourkey'
 }
 /** option setting */
 global.set = {
