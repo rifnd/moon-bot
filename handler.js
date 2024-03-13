@@ -800,11 +800,11 @@ module.exports = {
           if (xp > 200) m.reply('Ngecit -_-') // Hehehe
           else m.exp += xp
           if (!isPrems && plugin.limit && db.data.users[m.sender].limit < plugin.limit * 1) {
-            this.reply(m.chat, `Limit kamu habis, silahkan beli melalui *${usedPrefix}buy*`, m)
+            this.reply(m.chat, `Your limit is exhausted, please purchase via *${usedPrefix}buy*`, m)
             continue // Limit habis
           }
           if (plugin.level > _user.level) {
-            this.reply(m.chat, `diperlukan level ${plugin.level} untuk menggunakan perintah ini. Level kamu ${_user.level}`, m)
+            this.reply(m.chat, `level ${plugin.level} is required to use this command. Your level ${_user.level}`, m)
             continue // If the level has not been reached
           }
           let extra = {
@@ -819,9 +819,9 @@ module.exports = {
             console.error(e)
             if (e) {
               let text = util.format(e)
-              for (let key of Object.values(env.APIKeys))
+              for (let key of Object.values(global.APIKeys))
               text = text.replace(new RegExp(key, 'g'), '#HIDDEN#')
-              conn.reply(env.owner + '@s.whatsapp.net', `*Plugin:* ${m.plugin}\n*Sender:* ${m.sender}\n*Chat:* ${m.chat}\n*Command:* ${usedPrefix}${command} ${args.join(' ')}\n\n\`\`\`${text}\`\`\``.trim(), m)
+              conn.reply(global.owner + '@s.whatsapp.net', `*Plugin:* ${m.plugin}\n*Sender:* ${m.sender}\n*Chat:* ${m.chat}\n*Command:* ${usedPrefix}${command} ${args.join(' ')}\n\n\`\`\`${text}\`\`\``.trim(), m)
               m.reply(text)
             }
           } finally {
@@ -927,19 +927,17 @@ module.exports = {
         break
     }
   },
-  async delete(message) {
+  async delete({ remoteJid, fromMe, id, participant }) {
     try {
-      const { fromMe, id, participant } = message
       if (fromMe) return
       let chats = Object.entries(conn.chats).find(([_, data]) => data.messages?.[id])
       if (!chats) return
       let msg = chats instanceof String ? JSON.parse(chats[1].messages[id]) : chats[1].messages[id]
       let chat = db.data.chats[msg.key.remoteJid] || {}
       if (chat.delete) return
-      await this.reply(msg.key.remoteJid, `
-Terdeteksi @${participant.split`@`[0]} telah menghapus pesan
-Untuk mematikan fitur ini, ketik
-*.off antidelete*
+      await this.reply(msg.key.remoteJid, `detected @${participant.split`@`[0]} has deleted the message
+To turn off this feature, send
+*.on delete*
 `.trim(), msg, {
         mentions: [participant]
       })
@@ -956,7 +954,7 @@ conn.ws.on('CB:call', async function callUpdatePushToDb(json) {
   let users = db.data.users
   let user = users[callerId] || {}
   if (!db.data.settings[conn.user.jid].anticall) return
-  await conn.reply(env.owner + '@s.whatsapp.net', `*NOTIF CALLER BOT!*\n\n@${callerId.split`@`[0]} telah menelpon *${conn.user.name}*\n\n ${callerId.split`@`[0]}\n`, null, { mentions: [callerId] })
+  await conn.reply(global.owner + '@s.whatsapp.net', `*NOTIF CALLER BOT!*\n\n@${callerId.split`@`[0]} telah menelpon *${conn.user.name}*\n\n ${callerId.split`@`[0]}\n`, null, { mentions: [callerId] })
   conn.delay(10000) // supaya tidak spam
 })
 
