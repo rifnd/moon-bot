@@ -7,8 +7,9 @@ module.exports = {
       let afkTime = user.afk
       if (!afkTime || afkTime < 0) continue
       let reason = user.afkReason || ''
-      m.reply(`Don't tag him, he's AFK ${reason ? 'with reason ' + reason : 'no reason'} During ${Func.toTime(new Date - afkTime)}`.trim())
+      if (!m.fromMe) {
+        m.reply(`Don't tag him, he's AFK ${reason ? 'with reason ' + reason : 'no reason'} During ${Func.toTime(new Date - afkTime)}`.trim())
+      }
     }
-    return true
-  },
+  }
 }

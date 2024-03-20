@@ -13,9 +13,9 @@ let handler = async (m, {
   try {
     let q = m.quoted ? m.quoted : m
     let mime = (q.msg || q).mimetype || ''
-    if (!/audio/.test(mime)) throw `Balas vn/audio yang ingin diubah dengan caption *${usedPrefix + command}*`
+    if (!/audio/.test(mime)) return m.reply(`Balas vn/audio yang ingin diubah dengan caption *${usedPrefix + command}*`)
     let audio = await q.download()
-    if (!audio) throw 'Can\'t download audio!'
+    if (!audio) return m.reply('Can\'t download audio!')
     let set
     if(/bass/.test(command)) set = '-af equalizer=f=94:width_type=o:width=2:g=30'
     if (/blown/.test(command)) set = '-af acrusher=.1:1:64:0:log'
@@ -45,7 +45,8 @@ let handler = async (m, {
       await fs.promises.unlink(filename)
     })
   } catch (e) {
-    throw e
+    console.log(e)
+    return m.reply(Func.jsonFormat(e))
   }
 }
 handler.help = handler.command = ['bass', 'blown', 'deep', 'earrape', 'fast', 'fat', 'nightcore', 'reverse', 'robot', 'slow', 'smooth', 'tupai', 'vibra']

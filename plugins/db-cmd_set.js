@@ -5,12 +5,12 @@ let handler = async (m, {
   command
 }) => {
   db.data.sticker = db.data.sticker || {}
-  if (!m.quoted) throw `Balas stiker dengan perintah *${usedPrefix + command}*`
-  if (!m.quoted.fileSha256) throw 'SHA256 Hash Missing'
-  if (!text) throw `Penggunaan:\n${usedPrefix + command} <teks>\n\nContoh:\n${usedPrefix + command} tes`
+  if (!m.quoted) return m.reply(`Balas stiker dengan perintah *${usedPrefix + command}*`)
+  if (!m.quoted.fileSha256) return m.reply('SHA256 Hash Missing')
+  if (!text) return m.reply(`Penggunaan:\n${usedPrefix + command} <teks>\n\nContoh:\n${usedPrefix + command} tes`)
   let sticker = db.data.sticker
   let hash = m.quoted.fileSha256.toString('base64')
-  if (sticker[hash] && sticker[hash].locked) throw 'Kamu tidak memiliki izin untuk mengubah perintah stiker ini'
+  if (sticker[hash] && sticker[hash].locked) return m.reply('Kamu tidak memiliki izin untuk mengubah perintah stiker ini')
   sticker[hash] = {
     text,
     mentionedJid: m.mentionedJid,

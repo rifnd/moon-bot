@@ -6,7 +6,7 @@ let handler = async (m, {
   if (!m.quoted.fileSha256) return m.reply('SHA256 Hash Tidak Ditemukan')
   let sticker = global.db.data.sticker
   let hash = m.quoted.fileSha256.toString('hex')
-  if (!(hash in sticker)) throw 'Hash tidak ditemukan dalam database'
+  if (!(hash in sticker)) return m.reply('Hash tidak ditemukan dalam database')
   if (command === 'lockcmd') {
     sticker[hash].locked = true
     conn.reply(m.chat, 'Perintah stiker berhasil dikunci!', m)

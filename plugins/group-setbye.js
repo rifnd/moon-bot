@@ -8,7 +8,6 @@ let handler = async (m, {
   env
 }) => {
   if (text) {
-    if (!(isAdmin || isOwner)) return m.reply(status.admin)
     db.data.chats[m.chat].sBye = text
     m.reply('Bye berhasil diatur\n@user (Mention)')
   } else throw `Penggunaan:\n${usedPrefix + command} <teks>\n\ncontoh:\n${usedPrefix + command} byebye @user`

@@ -4,10 +4,6 @@ let handler = async (m, {
   conn, 
   command 
 }) => {
-  if (!(isAdmin || isOwner)) {
-    m.reply(status.admin)
-    throw false
-  }
   conn.groupRevokeInvite(m.chat)
   conn.reply(m.chat, `Successful ${command} group link, link has been sent to private chat`, m,)
   await delay(1000)

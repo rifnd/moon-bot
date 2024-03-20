@@ -8,7 +8,6 @@ let handler = async (m, {
   env
 }) => {
   if (text) {
-    if (!(isAdmin || isOwner)) return m.reply(status.admin)
     db.data.chats[m.chat].sWelcome = text
     m.reply('Welcome berhasil diatur\n@user (Mention)\n@subject (Judul Grup)\n@desc (Deskripsi Grup)')
   } else throw `Penggunaan:\n${usedPrefix + command} <teks>\n\nContoh:\n${usedPrefix + command} selamat datang @user digrup @subject\n\n@desc`
