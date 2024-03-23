@@ -3,9 +3,9 @@ let handler = async (m, {
   usedPrefix,
   command
 }) => {
-  if (!m.quoted) throw `balas stiker dengan caption *${usedPrefix + command}*`
+  if (!m.quoted) return m.reply(`reply to stickers with commands *"${usedPrefix + command}"*`)
   let mime = m.quoted.mimetype || ''
-  if (!/webp/.test(mime)) throw `balas stiker gif dengan caption *${usedPrefix + command}*`
+  if (!/webp/.test(mime)) return m.reply(`Stickers only!`)
   let res = await scrap.uploader(await m.quoted.download())  
   let out = await Func.fetchJson(API('alya', '/api/webp-convert', {
     url: res.data.url,

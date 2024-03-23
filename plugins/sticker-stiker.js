@@ -4,8 +4,9 @@ let handler = async (m, {
   args,
   text
 }) => {
-  let q = m.quoted ? m.quoted : m 
-  if (!q) return m.reply(`Kirim atau balas media dengan perintah ${usedPrefix + command}\n\nMaksimal durasi video 10 detik.`)
+  let q = m.quoted ? m.quoted : m
+  if (!q) return m.reply(`Send or reply to media with commands "${usedPrefix + command}"`)
+  if ((q.msg || q).seconds > 11) return m.reply('Max 10 second')
   let mime = (q.msg || q).mimetype || ''
   try {
     if (/webp/.test(mime)) {
@@ -22,11 +23,10 @@ let handler = async (m, {
       packname: global.set.packname,
       author: global.set.author
     })
-    else return m.reply(`Kirim atau balas media dengan perintah ${usedPrefix + command}\n\nMaksimal durasi video 10 detik.`)
+    else return m.reply(`Send or reply to media with commands "${usedPrefix + command}"`)
   }
 }
 handler.help = ['sticker']
 handler.tags = ['sticker']
 handler.command = ['s', 'stiker', 'sticker']
-
 module.exports = handler

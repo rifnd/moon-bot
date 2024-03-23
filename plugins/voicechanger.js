@@ -13,7 +13,7 @@ let handler = async (m, {
   try {
     let q = m.quoted ? m.quoted : m
     let mime = (q.msg || q).mimetype || ''
-    if (!/audio/.test(mime)) return m.reply(`Balas vn/audio yang ingin diubah dengan caption *${usedPrefix + command}*`)
+    if (!/audio/.test(mime)) return m.reply(`Reply to the vn/audio you want to change with the command "*${usedPrefix + command}"*`)
     let audio = await q.download()
     if (!audio) return m.reply('Can\'t download audio!')
     let set

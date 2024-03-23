@@ -5,7 +5,7 @@ let handler = async (m, {
 }) => {
   try {
     let input = text ? text : m.quoted ? m.quoted.sender : m.mentionedJid.length > 0 ? m.mentioneJid[0] : false
-    if (!input) return m.reply(`Masukan nomor atau reply target.`)
+    if (!input) return m.reply(`Enter the target number or tag!`)
     let p = await conn.onWhatsApp(input.trim())
     if (p.length == 0) return m.reply(Func.texted('bold', `Invalid number.`))
     let jid = conn.decodeJid(p[0].jid)

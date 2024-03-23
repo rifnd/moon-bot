@@ -6,7 +6,7 @@ let handler = async (m, {
   try {
     let q = m.quoted ? m.quoted : m
     let mime = (q.msg || q).mimetype || ''
-    if (!/image\/(jpe?g|png)/.test(mime)) return m.reply(`Kirim atau balas gambar dengan perintah ${usedPrefix + command}`)
+    if (!/image\/(jpe?g|png)/.test(mime)) return m.reply(`Send or reply to images with commands : *"${usedPrefix + command}"*`)
     let media = await q.download()
     let url = await scrap.uploader(media)
     m.react('🕒')

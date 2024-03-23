@@ -7,10 +7,10 @@ let handler = async (m, {
   let linkRegex = /chat.whatsapp.com\/([0-9A-Za-z]{20,24})/i
   let name = m.sender
   let [_, code] = text.match(linkRegex) || []
-  if (!args[0]) return m.reply(`Masukan link grup!`)
-  if (!code) return m.reply(`Link tidak valid!`)
-  if (!args[1]) return m.reply(`Masukan jumlah hari!`)
-  if (isNaN(args[1])) return m.reply(`Hanya format angka mewakili jumlah hari.`)
+  if (!args[0]) return m.reply(`Enter the group link!`)
+  if (!code) return m.reply(global.status.invalid)
+  if (!args[1]) return m.reply(`Enter the number of days!`)
+  if (isNaN(args[1])) return m.reply(`Only number format represents the number of days!`)
   m.reply(status.wait)
   await Func.delay(3000)
   try {
@@ -23,8 +23,8 @@ let handler = async (m, {
     var now = new Date() * 1
     if (now < db.data.chats[res].expired) db.data.chats[res].expired += jumlahHari
     else db.data.chats[res].expired = now + jumlahHari
-    if (e.length) await m.reply(`Sukses invite bot ke group\n\n${await conn.getName(res)}\n\nBot akan keluar secara otomatis setelah *${msToDate(global.db.data.chats[res].expired - now)}*`)
-    conn.reply(res, `Halo semuanya👋\n\nSaya adalah Moon, whatsapp bot yang siap membantu kamu mendapatkan data, informasi, mendownload media, dll hanya melalui whatsapp\n\nBot akan keluar otomatis setelah masa aktif habis\n*TimeOut* : *${msToDate(db.data.chats[res].expired - now)}*`, null, {
+    if (e.length) await m.reply(`Successfully invited the bot to the group\n\n${await conn.getName(res)}\n\nThe bot will exit automatically after *${msToDate(global.db.data.chats[res].expired - now)}*`)
+    conn.reply(res, `Hello everyone👋\n\nI am Moon, a whatsapp bot that is ready to help you get data, information, download media, etc. only through whatsapp\n\nBot will exit automatically after the active period expires\n*Timeout* : ${msToDate(db.data.chats[res].expired - now)}`, null, {
       mentions: [d]
     })
   } catch (e) {

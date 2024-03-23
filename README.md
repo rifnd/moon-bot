@@ -8,6 +8,8 @@
 - [x] WhatsApp 
 - [x] Apikey (buy at api.alyachan.dev/pricing)
 
+**Creator / Group** : [Nando](https://wa.me/6281252848955) / [Community](https://chat.whatsapp.com/G57unQZ7saFIq2rdpVw0Tu)
+
 ### Set in config.js
 ```Javascript
 /** enter owner number */
@@ -17,7 +19,7 @@ global.APIs = {
   alya: 'https://api.alyachan.dev'
 }
 global.APIKeys = {
-  'https://api.alyachan.pro': 'yourkey'
+  'https://api.alyachan.dev': 'yourkey'
 }
 /** option setting */
 global.set = {

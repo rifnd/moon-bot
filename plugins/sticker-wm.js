@@ -5,15 +5,15 @@ let handler = async (m, {
   conn,
   text
 }) => {
-  if (!m.quoted) return m.reply(`Balas stikernya!!`)
+  if (!m.quoted) return m.reply(`Reply sticker!`)
   let stiker = false
   try {
     let [packname, ...author] = text.split('|')
     author = (author || []).join('|')
     let mime = m.quoted.mimetype || ''
-    if (!/webp/.test(mime)) return m.reply(`Balas stikernya!!`)
+    if (!/webp/.test(mime)) return m.reply(`Reply sticker!`)
     let img = await m.quoted.download()
-    if (!img) return m.reply(`Balas stikernya!!`)
+    if (!img) return m.reply(`Reply sticker!`)
     stiker = await addExif(img, packname || '', author || '')
   } catch (e) {
     console.error(e)
@@ -28,5 +28,5 @@ let handler = async (m, {
 handler.help = ['swm']
 handler.tags = ['sticker']
 handler.command = ['swm', 'wm', 'stikerwm', 'stickerwm']
-
+handler.limit = true
 module.exports = handler

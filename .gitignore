@@ -26,6 +26,5 @@ session/
 tmp/
 database.json
 package-lock.json
-.replit
 yarn.lock
 goorm.manifest

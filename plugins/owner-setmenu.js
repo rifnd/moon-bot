@@ -7,8 +7,8 @@ let handler = async(m, {
 }) => {
   try {
     if (!args[0]) return m.reply(Func.example(usedPrefix, command, '2'))
-    if (!['1', '2'].includes(args[0])) return m.reply(`Style tidak tersedia`)
-    conn.reply(m.chat, `🚩 Berhasil menggunakan style *${args[0]}*.`, m).then(() => setting.style = parseInt(args[0]))
+    if (!['1', '2'].includes(args[0])) return m.reply(`Style not available!`)
+    conn.reply(m.chat, `🚩 Successfully use styles *${args[0]}*.`, m).then(() => setting.style = parseInt(args[0]))
   } catch (e) {
     console.log(e)
     return m.reply(Func.jsonFormat(e))

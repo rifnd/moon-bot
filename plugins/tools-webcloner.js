@@ -9,7 +9,7 @@ let handler = async (m, {
     if (!/^https?:\/\//.test(args[0])) return m.reply('Prefix the link with https://')
     m.react('🕒')
     const json = await Func.fetchJson(API('alya', '/api/web-cloner', { url: args[0] }, 'apikey'))
-    if (!json.status) return m.reply(Func.jsonFormat(e))
+    if (!json.status) return m.reply(Func.jsonFormat(json))
     conn.sendMessage(m.chat, {
       document: {
         url: json.data.url

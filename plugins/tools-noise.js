@@ -24,6 +24,7 @@ let handler = async (m, {
     }, { quoted: m })
   } catch (e) {
     console.log(e)
+    return m.reply(Func.jsonFormat(e))
   }
 }
 handler.help = handler.command = ['removenoise']
