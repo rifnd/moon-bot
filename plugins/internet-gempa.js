@@ -8,8 +8,8 @@ let handler = async (m, {
     if (!json.status) return m.reply(Func.jsonFormat(json))
     m.react('🕒')
     let teks = `乂  *G E M P A*\n\n`
-    teks += `  ◦  *Date* : ${json.data.tanggal}\n`
-    teks += `  ◦  *At* : ${json.data.jam}\n`
+    teks += `  ◦  *Date* : ${json.data.Tanggal}\n`
+    teks += `  ◦  *At* : ${json.data.Jam}\n`
     teks += `  ◦  *Magnitude* : ${json.data.Magnitude}\n`
     teks += `  ◦  *Coordinate* : ${json.data.Coordinates}\n`
     teks += `  ◦  *Latitude* : ${json.data.Lintang}\n`
