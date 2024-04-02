@@ -13,7 +13,7 @@ let handler = async (m, {
 		for (let v of json.data) {
 			conn.sendMedia(m.chat, v.url, m, {
 				caption: `• *Fetching* : ${((new Date - old) * 1)} ms`,
-				mentions: [m.sender]
+				fileName: v.type == 'video' ? Func.filename('mp4') : Func.filename('jpg')
 			})
 		}
 	} catch (e) {
