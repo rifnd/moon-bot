@@ -13,23 +13,20 @@ let handler = async (m, {
       let teks = `乂  *D O U Y I N*\n\n`
       teks += `  ∘  *Title* : ${json.title}\n`
       teks += `  ∘  *Duration* : ${json.duration}\n`
-      teks += `  ∘  *Media Type* : ${json.mediatype}\n`
-      teks += `  ∘  *Url* : ${json.url}\n`
-      let result = json.data.find(v => v.quality == 'hd')
-      if (result) {
-        conn.sendMessage(m.chat, { video: { url: result.url }, caption: `*Quality* : ${result.quality}`, mimetype: 'video/mp4' }, { quoted: m })
-      } else {
-        let result = json.data.find(v => v.quality == 'sd')
-        conn.sendMessage(m.chat, { video: { url: result.url }, caption: `*Quality* : ${result.quality}`, mimetype: 'video/mp4' }, { quoted: m })
-      }
+      teks += `  ∘  *Comment* : ${json.statistic.comment}\n`
+      teks += `  ∘  *Like* : ${json.statistic.likes}\n`
+      teks += `  ∘  *Download* : ${json.statistic.download}\n`
+      teks += `  ∘  *Share* : ${json.statistic.share}\n\n`
+      teks += global.set.footer
+      let result = json.data.find(v => v.quality == 'nowatermark')
+      conn.sendMessage(m.chat, { video: { url: result.url }, caption: teks, mimetype: 'video/mp4' }, { quoted: m })
     } else if (command == 'douyinwm') {
       m.react('🕐')
       let result = json.data.find(v => v.quality == 'watermark')
-      conn.sendMessage(m.chat, { video: { url: result.url }, caption: `*Quality* : ${result.quality}`, mimetype: 'video/mp4' }, { quoted: m })
+      conn.sendMessage(m.chat, { video: { url: result.url }, caption: teks, mimetype: 'video/mp4' }, { quoted: m })
     } else if (command == 'douyinmp3') {
       m.react('🕐')
-      let result = json.data.find(v => v.quality == '128kbps')
-      conn.sendMessage(m.chat, { audio: { url: result.url }, mimetype: 'audio/mpeg' }, { quoted: m })
+      conn.sendMessage(m.chat, { audio: { url: json.music_info.url }, mimetype: 'audio/mpeg' }, { quoted: m })
     }
   } catch (e) {
     console.log(e)
