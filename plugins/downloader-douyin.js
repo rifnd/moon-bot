@@ -1,4 +1,5 @@
 let handler = async (m, {
+  conn,
   usedPrefix,
   command,
   args
@@ -6,27 +7,23 @@ let handler = async (m, {
   try {
     if (!args[0]) return m.reply(Func.example(usedPrefix, command, 'https://v.douyin.com/ikq8axJ/'))
     if (!args[0].match(/(https:\/\/v.douyin.com)/g)) return m.reply(status.invalid)
+    m.react('🕐')
+    let old = new Date()
     const json = await Func.fetchJson(API('alya', '/api/douyin', { url: args[0] }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
     if (command == 'douyin') {
-      m.react('🕐')
-      let teks = `乂  *D O U Y I N*\n\n`
-      teks += `  ∘  *Title* : ${json.title}\n`
-      teks += `  ∘  *Duration* : ${json.duration}\n`
-      teks += `  ∘  *Comment* : ${json.statistic.comment}\n`
-      teks += `  ∘  *Like* : ${json.statistic.likes}\n`
-      teks += `  ∘  *Download* : ${json.statistic.download}\n`
-      teks += `  ∘  *Share* : ${json.statistic.share}\n\n`
-      teks += global.set.footer
       let result = json.data.find(v => v.quality == 'nowatermark')
-      conn.sendMessage(m.chat, { video: { url: result.url }, caption: teks, mimetype: 'video/mp4' }, { quoted: m })
+      if (!result) {
+        json.data.map(x => {
+          conn.sendFile(m.chat, x.url, '', `◦ *Fetching* : ${((new Date - old) * 1)} ms`, m)
+        })
+      } else {
+        conn.sendFile(m.chat, result.url, '', `◦ *Fetching* : ${((new Date - old) * 1)} ms`, m)
+      }
     } else if (command == 'douyinwm') {
-      m.react('🕐')
-      let result = json.data.find(v => v.quality == 'watermark')
-      conn.sendMessage(m.chat, { video: { url: result.url }, caption: teks, mimetype: 'video/mp4' }, { quoted: m })
+      conn.sendFile(m.chat, json.data.find(v => v.quality == 'watermark'), Func.filename('mp4'), `◦ *Fetching* : ${((new Date - old) * 1)} ms`, m)
     } else if (command == 'douyinmp3') {
-      m.react('🕐')
-      conn.sendMessage(m.chat, { audio: { url: json.music_info.url }, mimetype: 'audio/mpeg' }, { quoted: m })
+      conn.sendFile(m.chat, json.music_info.url, Func.filename('mp3'), ``, m)
     }
   } catch (e) {
     console.log(e)
