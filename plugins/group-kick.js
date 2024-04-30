@@ -1,5 +1,7 @@
 let handler = async (m, {
   teks,
+  text,
+  participants,
   conn,
   isOwner,
   isAdmin,
