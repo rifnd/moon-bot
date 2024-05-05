@@ -645,7 +645,7 @@ module.exports = {
         setting = global.db.data.settings[this.user.jid]
 
       if (opts['nyimak']) return
-      if (!m.fromMe && opts['self']) return
+      if (!m.fromMe && !isROwner && opts['self']) return
       if (opts['pconly'] && m.chat.endsWith('g.us')) return
       if (opts['gconly'] && !m.chat.endsWith('g.us')) return
       if (opts['swonly'] && m.chat !== 'status@broadcast') return
