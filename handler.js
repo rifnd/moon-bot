@@ -763,7 +763,18 @@ module.exports = {
             continue
           }
           if (plugin.premium && !isPrems) { // Premium
-            m.reply(global.status.premium)
+            const soad = [{
+              name: 'quick_reply',
+              buttonParamsJson: JSON.stringify({
+                display_text: 'Contact Owner',
+                id: `${usedPrefix}owner`
+              })
+            }]
+            this.sendAIMessage(m.chat, soad, m, {
+              content: global.status.premium,
+              footer: global.set.footer,
+            })
+            //m.reply(global.status.premium)
             continue
           }
           if (plugin.group && !m.isGroup) { // Group Only
@@ -800,7 +811,18 @@ module.exports = {
           if (xp > 200) m.reply('Ngecit -_-') // Hehehe
           else m.exp += xp
           if (!isPrems && plugin.limit && db.data.users[m.sender].limit < plugin.limit * 1) {
-            this.reply(m.chat, `Your limit is exhausted, please purchase via *${usedPrefix}buy*`, m)
+            const soad = [{
+              name: 'quick_reply',
+              buttonParamsJson: JSON.stringify({
+                display_text: 'Buy',
+                id: `${usedPrefix}buy 1`
+              })
+            }]
+            this.sendAIMessage(m.chat, soad, m, {
+              content: `Your limit is exhausted, please purchase via *${usedPrefix}buy*`,
+              footer: global.set.footer,
+            })
+            //this.reply(m.chat, `Your limit is exhausted, please purchase via *${usedPrefix}buy*`, m)
             continue // Limit habis
           }
           if (plugin.level > _user.level) {
