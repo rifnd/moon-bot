@@ -10,7 +10,7 @@ let handler = async (m, {
     if (!/image\/(jpe?g|png)/.test(mime)) return m.reply(`Send or reply to images with commands ${usedPrefix + command}`)
     let img = await q.download()
     if (!img) return m.reply(status.wrong)
-    let json = await scrap.uploaderV2(img)
+    let json = await scrap.uploadImage(img)
     if (!json.status) return m.reply(Func.jsonFormat(json))
     setting.cover = json.data.url
     m.reply('Cover successfully changed')
