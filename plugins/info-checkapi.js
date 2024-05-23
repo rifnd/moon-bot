@@ -4,7 +4,7 @@ let handler = async (m, {
   text
 }) => {
   try {
-    const json = await Func.fetchJson(API('alya', '/api/check-key', {}, 'apikey'))
+    const json = await Func.fetchJson(API('alya', '/v1/check-key', {}, 'apikey'))
     m.reply(Func.jsonFormat(json))
   } catch (e) {
     console.log(e)
