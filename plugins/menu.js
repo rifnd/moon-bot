@@ -435,7 +435,7 @@ If you find a bug or want a premium upgrade, please contact the owner.
               // description: Y,
               id:`${_p + command} database`
             }, {
-              title: 'Converter',
+              title: 'Downloader',
               // description: Y,
               id:`${_p + command} downloader`
             }, {

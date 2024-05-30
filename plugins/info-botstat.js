@@ -17,7 +17,6 @@ let handler = async (m, { conn }) => {
   cot += `乂  *S Y S T E M*\n\n`
   cot += `  ∘  ${setting.anticall ? '*[ √ ]*' : '*[ × ]*'}  Anti Call\n`
   cot += `  ∘  ${setting.autoread ? '*[ √ ]*' : '*[ × ]*'}  Auto Read\n`
-  cot += `  ∘  ${setting.autoreset ? '*[ √ ]*' : '*[ × ]*'}  Auto Reset\n`
   cot += `  ∘  ${setting.grouponly ? '*[ √ ]*' : '*[ × ]*'}  Group Mode\n`
   cot += `  ∘  ${setting.game ? '*[ √ ]*' : '*[ × ]*'}  Game Mode\n`
   cot += `  ∘  ${setting.rpg ? '*[ √ ]*' : '*[ × ]*'}  RPG Mode\n\n`
