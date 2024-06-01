@@ -9,20 +9,10 @@ let handler = async (m, {
   try {
     const json = await Func.fetchJson(API('alya', '/api/fb', { url: args[0] }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
-    let result = json.data.find((v) => v.quality == 'HD' && v.response == 200)
-    if (result) {
-      conn.sendMedia(m.chat, result.url, m, {
-        caption: '• Kualitas HD',
-        mentions: [m.sender],
-      })
-    } else {
-      let result = json.data.find((v) => v.quality == 'SD' && v.response == 200)
-      if (!result) return m.reply(status.fail)
-      conn.sendMedia(m.chat, result.url, m, {
-        caption: '• Kualitas SD',
-        mentions: [m.sender],
-      })
-    }
+    var result = json.data.find(v => v.quality == 'HD') || json.data.find(v => v.quality == 'SD')
+    await conn.sendMedia(m.chat, result.url, m, {
+      caption: `• Quality : ${result.quality}`
+    })
   } catch (e) {
     console.log(e)
     return m.reply(Func.jsonFormat(e))
