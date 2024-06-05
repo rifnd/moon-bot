@@ -68,7 +68,7 @@ let handler = async (m, {
   }
 }
 handler.help = ['apkmod'].map(v => v + ' ')
-handler.tags = ['internet']
+handler.tags = ['downloader']
 handler.command = /^(apkmod|apkmodget)$/i
 handler.limit = 1
 module.exports = handler
