@@ -22,7 +22,7 @@ let handler = async (m, {
         return conn.reply(m.chat, Func.jsonFormat(i), m)
       }
     } else if (text) {
-      const json = await Func.fetchJson(API('alya', '/api/bing', {
+      const json = await Func.fetchJson(API('alya', '/api/gpt4', {
         q: text
       }, 'apikey'))
       if (!json.status) return m.reply(Func.jsonFormat(json))
