@@ -103,6 +103,18 @@ $ npm install
 $ pm2 start index.js && pm2 save && pm2 logs
 ```
 
+## Heroku Buildpack
+
+```
+heroku/nodejs
+```
+```
+https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
+```
+```
+https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
+```
+
 ### Argument node . [--options]
 
 + ``` node . --pairing ``` : For those of you who login using a code, use this command in the terminal

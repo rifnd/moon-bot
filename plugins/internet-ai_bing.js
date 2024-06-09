@@ -1,4 +1,4 @@
-let handler = async (m, {
+/*let handler = async (m, {
   usedPrefix,
   command,
   text
@@ -36,4 +36,4 @@ let handler = async (m, {
 handler.help = handler.command = ['bing']
 handler.tags = ['internet']
 handler.limit = true
-module.exports = handler
+module.exports = handler*/

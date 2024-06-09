@@ -23,8 +23,8 @@ let handler = async (m, {
     var now = new Date() * 1
     if (now < db.data.chats[res].expired) db.data.chats[res].expired += jumlahHari
     else db.data.chats[res].expired = now + jumlahHari
-    if (e.length) await m.reply(`Successfully invited the bot to the group\n\n${await conn.getName(res)}\n\nThe bot will exit automatically after *${msToDate(global.db.data.chats[res].expired - now)}*`)
-    conn.reply(res, `Hello everyone👋\n\nI am Moon, a whatsapp bot that is ready to help you get data, information, download media, etc. only through whatsapp\n\nBot will exit automatically after the active period expires\n*Timeout* : ${msToDate(db.data.chats[res].expired - now)}`, null, {
+    if (e.length) return m.reply(`Successfully invited the bot to the group\n\n${await conn.getName(res)}\n\nThe bot will exit automatically after *${Func.toDate(global.db.data.chats[res].expired - now)}*`)
+    conn.reply(res, `Hello everyone👋\n\nI am Moon, a whatsapp bot that is ready to help you get data, information, download media, etc. only through whatsapp\n\nBot will exit automatically after the active period expires\n*Timeout* : ${Func.toDate(db.data.chats[res].expired - now)}`, null, {
       mentions: [d]
     })
   } catch (e) {

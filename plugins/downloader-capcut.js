@@ -18,7 +18,7 @@ let handler = async (m, {
         teks += global.set.footer
         conn.sendFile(m.chat, json.data.url, '', teks, m)
       }
-        break
+      break
       case 'capcutwm': {
         m.react('🕒')
         const json = await Func.fetchJson(API('alya', '/api/capcut', { url: args[0], type: 'watermark' }, 'apikey'))
@@ -30,6 +30,7 @@ let handler = async (m, {
         teks += global.set.footer
         conn.sendFile(m.chat, json.data.url, '', teks, m)
       }
+      break
     }
   } catch (e) {
     m.reply(Func.jsonFormat(e))
