@@ -15,9 +15,9 @@ let handler = async (m, {
         json.data.map((v, i) => {
           sections.push({
             rows: [{
-              title: `${v.title}`,
+              title: `${v.name}`,
               description: `[ Size : ${v.size} | Rating : ${v.rating} ]`,
-              id: `${usedPrefix}apkget ${v.url}`
+              id: `${usedPrefix}apkget ${v.path}`
             }]
           })
         })
@@ -39,17 +39,16 @@ let handler = async (m, {
       case 'apkget': {
         if (!text) return
         m.react('🕒')
-        var json = await Func.fetchJson(API('alya', '/api/apkget', { url: text }, 'apikey'))
+        var json = await Func.fetchJson(API('alya', '/api/apkget', { path: text }, 'apikey'))
         if (!json.status) return conn.reply(m.chat, Func.jsonFormat(json), m)
         let teks = `乂  *A P K*\n\n`
         teks += '  ◦  *Name* : ' + json.data.name + '\n'
         teks += '  ◦  *Size* : ' + json.data.size + '\n'
-        teks += '  ◦  *Rating* : ' + json.data.rating + '\n'
         teks += '  ◦  *Version* : ' + json.data.version + '\n'
-        teks += '  ◦  *Update* : ' + json.data.update + '\n\n'
+        teks += '  ◦  *Update* : ' + json.data.updated + '\n\n'
         teks += global.set.footer
         const chSize = Func.sizeLimit(json.data.size, global.max_upload)
-        if (chSize.oversize) return m.reply(`💀 Ukuran file ( ${json.data.size} ) terlalu besar, silahkan download sendiri lewat link ini :  ${await (await Func.shortlink(json.data.url)).data.url}`)
+        if (chSize.oversize) return m.reply(`💀 Ukuran file ( ${json.data.size} ) terlalu besar, silahkan download sendiri lewat link ini :  ${json.data.url}`)
         conn.sendMessageModify(m.chat, teks, m, {
           largeThumb: true,
           thumbnail: json.data.thumbnail
@@ -60,7 +59,7 @@ let handler = async (m, {
           })
         })
       }
-      break
+        break
     }
   } catch (e) {
     console.log(e)
