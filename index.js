@@ -40,10 +40,10 @@ function start(file) {
         p.process.kill()
         isRunning = false
         start.apply(this, arguments)
-        break
+      break
       case 'uptime':
         p.send(process.uptime())
-        break
+      break
     }
   })
   p.on('exit', (_, code) => {
