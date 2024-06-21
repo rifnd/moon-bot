@@ -949,7 +949,7 @@ module.exports = {
         break
     }
   },
-  async delete({ remoteJid, fromMe, id, participant }) {
+  async delete({ fromMe, id, participant }) {
     try {
       if (fromMe) return
       let chats = Object.entries(conn.chats).find(([_, data]) => data.messages?.[id])
