@@ -12,7 +12,7 @@ let handler = async (m, {
   let txt = stats.slice(0, 10).map(({ name, total, last }, idx) => {
     if (name.includes('-') && name.endsWith('.js')) name = name.split('-')[1].replace('.js', '')
     return `${idx + 1}. *Command* : ${name}\n   *Hit* : ${total}x\n   *Last Hit* : ${moment(last).format('DD/MM/YY HH:mm:ss')}`}).join`\n`
-    conn.sendMessageModify(m.chat, '乂  *H I T S T A T*\n\n' + txt + '\n\n' + global.set.footer, m, {
+    conn.sendMessageModify(m.chat, '–  *H I T S T A T*\n\n' + txt + '\n\n' + global.set.footer, m, {
       largeThumb: true
     })
 }

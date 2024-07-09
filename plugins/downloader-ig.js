@@ -8,7 +8,9 @@ let handler = async (m, {
 	let old = new Date()
 	m.react('🕐')
 	try {
-		const json = await Func.fetchJson(API('alya', '/api/ig', { url: args[0] }, 'apikey'))
+		const json = await Func.fetchJson(API('alya', '/api/ig', {
+			url: args[0]
+		}, 'apikey'))
 		if (!json.status) return m.reply(Func.jsonFormat(json))
 		for (let v of json.data) {
 			conn.sendMedia(m.chat, v.url, m, {

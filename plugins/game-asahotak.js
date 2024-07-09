@@ -1,41 +1,41 @@
-let fetch = require('node-fetch')
-
 let timeout = 180000
-let poin = 500
-let tiketcoin = 1
+let poin = Func.randomInt('1000', '50000')
 let handler = async (m, {
-  conn, usedPrefix
+  conn,
+  usedPrefix,
+  command
 }) => {
-  conn.asahotak = conn.asahotak ? conn.asahotak: {}
-  let id = m.chat
-  if (id in conn.asahotak) {
-    conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.asahotak[id][0])
-    throw false
+  if (command == 'asahotak') {
+    conn.asahotak = conn.asahotak ? conn.asahotak : {}
+    let id = m.chat
+    if (id in conn.asahotak) return conn.reply(m.chat, Func.texted('bold', '^ Soal ini belum dijawab.'), conn.asahotak[id][0])
+    let src = await Func.fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/asahotak.json')
+    let json = src[Math.floor(Math.random() * src.length)]
+    let capt = `– *Asah Otak*\n\n`
+    capt += `${json.soal}\n\n`
+    capt += `Timeout : ${timeout / 60 / 1000} menit\n`
+    capt += `Balas pesan ini untuk menjawab, kirim ${usedPrefix}ao untuk bantuan.`
+    conn.asahotak[id] = [
+      await conn.reply(m.chat, capt, m),
+      json,
+      poin,
+      setTimeout(() => {
+        if (conn.asahotak[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, conn.asahotak[id][0])
+        delete conn.asahotak[id]
+      }, timeout)
+    ]
+  } else if (command == 'ao') {
+    conn.asahotak = conn.asahotak ? conn.asahotak : {}
+    let id = m.chat
+    if (!(id in conn.asahotak)) throw false
+    let json = conn.asahotak[id][1]
+    let ans = json.jawaban
+    let clue = ans.replace(/[bcdfghjklmnpqrstvwxyz]/g, '_')
+    m.reply('```' + clue + '```')
   }
-  let src = await (await fetch('https://raw.githubusercontent.com/BochilTeam/database/master/games/asahotak.json')).json()
-  let json = src[Math.floor(Math.random() * src.length)]
-  let caption = `
-  ${json.soal}
-
-  Timeout *${(timeout / 1000).toFixed(2)} detik*
-  Ketik ${usedPrefix}ao untuk bantuan
-  Bonus: ${poin} XP
-  Tiketcoin: ${tiketcoin} TiketCoin
-  `.trim()
-  conn.asahotak[id] = [
-    await conn.reply(m.chat, caption, m),
-    json,
-    poin,
-    setTimeout(() => {
-      if (conn.asahotak[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, conn.asahotak[id][0])
-      delete conn.asahotak[id]
-    },
-      timeout)
-  ]
 }
-handler.help = handler.command = ['asahotak']
+handler.help = ['asahotak']
 handler.tags = ['game']
-handler.limit = true
-handler.game = true
-handler.group = true
+handler.command = ['asahotak', 'ao']
+handler.limit = handler.game = handler.group = true
 module.exports = handler

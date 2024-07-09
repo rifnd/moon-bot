@@ -23,7 +23,7 @@ let handler = async (m, {
     const listAdmin = groupAdmins.map((v, i) => `${i + 1}. @${v.id.split('@')[0]}`).join('\n')
     const owner = groupMetadata.owner || groupAdmins.find(p => p.admin === 'superadmin')?.id || m.chat.split`-`[0] + '@s.whatsapp.net'
     let now = new Date() * 1
-    let text = `乂  *G R O U P - I N F O*
+    let text = `–  *G R O U P - I N F O*
 
   ∘  *ID* : ${groupMetadata.id}
   ∘  *Nama* : ${groupMetadata.subject}
@@ -32,7 +32,7 @@ let handler = async (m, {
   ∘  *Created* : ${moment(meta.creation * 1000).format('DD/MM/YY HH:mm:ss')}
   ∘  *Owner* : @${owner.split`@`[0]}
 
-乂  *M O D E R A T I O N*
+–  *M O D E R A T I O N*
 
   ∘  ${Func.switcher(setting.welcome, '[ √ ]', '[ × ]')} Welcome Message
   ∘  ${Func.switcher(setting.detect, '[ √ ]', '[ × ]')} Auto Detect
@@ -43,7 +43,7 @@ let handler = async (m, {
   ∘  ${Func.switcher(setting.antitoxic, '[ √ ]', '[ × ]')} Anti Toxic
   ∘  ${Func.switcher(setting.delete, '[ √ ]', '[ × ]')} Delete
 
-乂  *G R O U P - S T A T U S*
+–  *G R O U P - S T A T U S*
 
   ∘  *Expired* : ${(setting.expired - now) > 1 ? Func.toDate(setting.expired - now) : '×'}
   ∘  *Banned* : ${Func.switcher(setting.isBanned, 'True', 'False')}

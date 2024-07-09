@@ -6,7 +6,9 @@ let handler = async (m, {
   try {
     if (!text) return m.reply(Func.example(usedPrefix, command, 'moon-bot'))
     conn.react(m.chat, '🕒', m.key)
-    const json = await Func.fetchJson(API('alya', '/api/gpt4', { q: text }, 'apikey'))
+    const json = await Func.fetchJson(API('alya', '/api/gpt4', {
+      q: text
+    }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
     m.reply(json.data.content)
   } catch (e) {

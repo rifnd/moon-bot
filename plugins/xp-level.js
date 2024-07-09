@@ -46,7 +46,7 @@ Main game untuk mendapatkan exp`, m)
         .setDiscriminator(discriminator)
       rank.build()
         .then(async data => {
-          await conn.sendFile(m.chat, data, '', `乂  *L E V E L - U P*\n\n${before} ➠ ${user.level}`, m)
+          await conn.sendFile(m.chat, data, '', `–  *L E V E L - U P*\n\n${before} ➠ ${user.level}`, m)
         })
     }
   }

@@ -10,7 +10,7 @@ let handler = async(m, {
     m.react('🕒')
     const json = await Func.fetchJson(API('alya', '/api/npm', { q: text }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
-    let teks = `乂 *N P M J S*\n\n`
+    let teks = `– *N P M J S*\n\n`
     json.data.map((v, i) => {
       teks += '*' + (i + 1) + '. ' + v.package.name + '*\n'
       teks += '  ◦  *Version* : ' + v.package.version + '\n'

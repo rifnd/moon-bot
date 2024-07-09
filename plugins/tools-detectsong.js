@@ -14,7 +14,7 @@ let handler = async (m, {
     const json = await Func.fetchJson(API('alya', '/api/detect-song', { url: link.data.url }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
     for (let i of json.data) {
-      let tek = `乂  *D E T E C T - S O N G*\n\n`
+      let tek = `–  *D E T E C T - S O N G*\n\n`
       tek += `  ∘  *Title* : ${i.title}\n`
       tek += `  ∘  *Artis* : ${i.artists[0].name}\n`
       tek += `  ∘  *Album* : ${i.album.name}\n`

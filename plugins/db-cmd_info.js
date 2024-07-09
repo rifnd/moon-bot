@@ -1,12 +1,12 @@
 module.exports = Object.assign(async function handler(m, {
-  conn,
-  text
+	conn,
+	text
 }) {
-  let hash = text
-  if (m.quoted && m.quoted.fileSha256) hash = m.quoted.fileSha256.toString('hex')
-  if (!hash) throw 'Hash not found'
-  let sticker = global.db.data.sticker[hash]
-  if (sticker) return m.reply(`
+	let hash = text
+	if (m.quoted && m.quoted.fileSha256) hash = m.quoted.fileSha256.toString('hex')
+	if (!hash) throw 'Hash not found'
+	let sticker = global.db.data.sticker[hash]
+	if (sticker) return m.reply(`
     *fileSha256:* ${hash}
     *Text:* ${sticker.text}
     *Time Create:* ${sticker.at}
@@ -17,11 +17,11 @@ module.exports = Object.assign(async function handler(m, {
     ${sticker.mentionedJid.length > 0 ? `*Cmd Mention:*
     ${sticker.mentionedJid.map((v, i) => `No. *${i + 1}*:\n*Mention Name:* ${conn.getName(v)}\n*Mention Number:* ${splitM(v)}\n*Mention Jid:* ${v}`).join('\n\n')}` : ''}
     `.trim())
-  else m.reply('Sticker Not in the database')
+	else m.reply('Sticker Not in the database')
 }, {
-  help: ['cmd'].map(v => 'info' + v + ''),
-  tags: ['database'],
-  command: ['infocmd']
+	help: ['cmd'].map(v => 'info' + v + ''),
+	tags: ['database'],
+	command: ['infocmd']
 })
 
 /**
@@ -30,5 +30,5 @@ module.exports = Object.assign(async function handler(m, {
  * @returns String
  */
 function splitM(jid) {
-  return jid.split('@')[0]
+	return jid.split('@')[0]
 }

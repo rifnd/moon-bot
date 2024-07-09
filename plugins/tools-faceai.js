@@ -11,7 +11,7 @@ let handler = async (m, {
     }
     let res = await scrap.uploader(await q.download())
     m.react('🕒')
-    var json = await Func.fetchJson(API('alya', '/api/face', {
+    var json = await Func.fetchJson(API('alya', '/api/face-detect', {
       image: res.data.url
     }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))

@@ -8,7 +8,7 @@ let handler = async (m, {
   try {
     if (command == 'google') {
       let json = await Func.fetchJson(API('alya', '/api/google', { q: text }, 'apikey'))
-      let teks = `乂  *G O O G L E*\n\n`
+      let teks = `–  *G O O G L E*\n\n`
       json.data.map((v, i) => {
         teks += `*` + (i + 1) + `.* ` + v.title + `\n`;
         teks += `  ∘  *Snippet* : ` + v.snippet + `\n`;
@@ -20,7 +20,7 @@ let handler = async (m, {
       let json = await Func.fetchJson(API('alya', '/api/googleimage', { q: text }, 'apikey'))
       for (let i = 0; i < 5; i++) {
         let random = Math.floor(json.data.length * Math.random())
-        let caption = `乂  *G O O G L E - I M A G E*\n\n`
+        let caption = `–  *G O O G L E - I M A G E*\n\n`
         caption += `  ◦  *Title* : ${json.data[random].origin.title}\n`
         caption += `  ◦  *Dimensions* : ${json.data[random].width} × ${json.data[random].height}\n\n`
         caption += global.footer

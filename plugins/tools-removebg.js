@@ -12,7 +12,7 @@ let handler = async (m, {
     let url = await scrap.uploader(media)
     let old = new Date()
     m.react('🕒')
-    const json = await Func.fetchJson(API('alya', '/api/removebg4', {
+    const json = await Func.fetchJson(API('alya', '/api/removebg', {
       image: url.data.url 
     }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))

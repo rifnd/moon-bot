@@ -9,7 +9,7 @@ let handler = async (m, {
 		m.react('🕒')
 		const json = await Func.fetchJson(API('alya', '/api/jadwalsholat', { q: text }, 'apikey'))
 		if (!json.status) return conn.reply(m.chat, Func.jsonFormat(json), m)
-		let teks = '乂  *J A D W A L S H A L A T*\n\n'
+		let teks = '–  *J A D W A L S H A L A T*\n\n'
 		teks += '  ◦  *Tanggal* : ' + json.data.tgl + '\n'
 		teks += '  ◦  *Imsyak* : ' + json.data.imsyak + '\n'
 		teks += '  ◦  *Subuh* : ' + json.data.subuh + '\n'

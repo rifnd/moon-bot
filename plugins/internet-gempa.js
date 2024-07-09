@@ -7,7 +7,7 @@ let handler = async (m, {
     const json = await Func.fetchJson(API('alya', '/api/gempa', {}, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
     m.react('🕒')
-    let teks = `乂  *G E M P A*\n\n`
+    let teks = `–  *G E M P A*\n\n`
     teks += `  ◦  *Date* : ${json.data.Tanggal}\n`
     teks += `  ◦  *At* : ${json.data.Jam}\n`
     teks += `  ◦  *Magnitude* : ${json.data.Magnitude}\n`

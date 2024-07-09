@@ -10,7 +10,7 @@ let handler = async (m, {
     let media = await q.download()
     let url = await scrap.uploader(media)
     m.react('🕒')
-    let json = await Func.fetchJson(API('alya', '/api/enhance', {
+    let json = await Func.fetchJson(API('alya', '/api/remini', {
       image: url.data.url
     }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))

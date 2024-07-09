@@ -1,19 +1,11 @@
 let handler = async (m, {
-  conn, args, usedPrefix
+  usedPrefix,
+  args
 }) => {
-  if (!db.data.settings[conn.user.jid].game) return m.reply(status.game)
-  conn.math = conn.math ? conn.math: {}
-  if (args.length < 1) throw `
-  Mode: ${Object.keys(modes).join(' | ')}
-
-  Contoh penggunaan: ${usedPrefix}math medium
-  `.trim()
+  conn.math = conn.math ? conn.math : {}
+  if (args.length < 1) return m.reply(`Mode: ${Object.keys(modes).join(' | ')}\nContoh penggunaan: ${usedPrefix}math medium`).trim()
   let mode = args[0].toLowerCase()
-  if (!(mode in modes)) throw `
-  Mode: ${Object.keys(modes).join(' | ')}
-
-  Contoh penggunaan: ${usedPrefix}math medium
-  `.trim()
+  if (!(mode in modes)) return m.reply(`Mode: ${Object.keys(modes).join(' | ')}\nContoh penggunaan: ${usedPrefix}math medium`).trim()
   let id = m.chat
   if (id in conn.math) return conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.math[id][0])
   let math = genMath(mode)
@@ -24,15 +16,12 @@ let handler = async (m, {
     setTimeout(() => {
       if (conn.math[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah ${math.result}`, conn.math[id][0])
       delete conn.math[id]
-    },
-      math.time)
+    }, math.time)
   ]
 }
 handler.help = handler.command = ['math']
 handler.tags = ['game']
-handler.game = true
-handler.limit = true
-handler.group = true
+handler.game = handler.limit = handler.group = true
 module.exports = handler
 
 let modes = {
@@ -59,10 +48,10 @@ function genMath(mode) {
   let b = randomInt(b1,
     b2)
   let op = pickRandom([...ops])
-  let result = (new Function(`return ${a} ${op.replace('/', '*')} ${b < 0 ? `(${b})`: b}`))()
+  let result = (new Function(`return ${a} ${op.replace('/', '*')} ${b < 0 ? `(${b})` : b}`))()
   if (op == '/') [a,
     result] = [result,
-    a]
+      a]
   return {
     str: `${a} ${operators[op]} ${b}`,
     mode,
@@ -75,7 +64,7 @@ function genMath(mode) {
 function randomInt(from, to) {
   if (from > to) [from,
     to] = [to,
-    from]
+      from]
   from = Math.floor(from)
   to = Math.floor(to)
   return Math.floor((to - from) * Math.random() + from)

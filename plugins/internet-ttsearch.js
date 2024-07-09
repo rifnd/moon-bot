@@ -10,7 +10,7 @@ let handler = async (m, {
     let json = await Func.fetchJson(API('alya', '/api/tiktok-post', { user: args[0] }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
     let ran = Math.floor(json.data.length * Math.random())
-    let cap = `乂  *T T S E A R C H*\n\n`
+    let cap = `–  *T T S E A R C H*\n\n`
     cap += `  ∘  *Author* : ${json.data[ran].author.nickname}\n`
     cap += `  ∘  *Views* : ${json.data[ran].play_count}\n`
     cap += `  ∘  *Like* : ${json.data[ran].digg_count}\n`

@@ -8,18 +8,18 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 let i = 0
 
 const runServer = async () => {
-  app.get('/', (req, res) => res.send('Server Active!'))
-  const server = http.createServer(app)
-  server.listen(PORT, () => console.log(chalk.yellowBright.bold('Connected to server --', PORT)))
-  while (true) {
-    i++
-    try {
-      // add your server link on config,json for run 24×7hours. If you are deploying on replit
-      let response = await axios(global.replit_url || 'https://google.com')
-      if (global.replit_url) console.log(chalk.yellowBright.bold('Server wake-up! --', response.status))
-      await sleep(30_000)
-    } catch { }
-  }
+   app.get('/', (req, res) => res.send('Server Active!'))
+   const server = http.createServer(app)
+   server.listen(PORT, () => console.log(chalk.yellowBright.bold('Connected to server --', PORT)))
+   while (true) {
+      i++
+      try {
+         // add your server link on config,json for run 24×7hours. If you are deploying on replit
+         let response = await axios(global.replit_url || 'https://google.com')
+         if (global.replit_url) console.log(chalk.yellowBright.bold('Server wake-up! --', response.status))
+         await sleep(30_000)
+      } catch { }
+   }
 }
 
 runServer().then(() => runServer())

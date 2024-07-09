@@ -19,5 +19,5 @@ let handler = async (m, {
 }
 handler.help = ['tomp4']
 handler.tags = ['tools']
-handler.command = ['togif', 'tovideo']
+handler.command = ['togif', 'tovideo', 'tomp4']
 module.exports = handler

@@ -10,7 +10,7 @@ let handler = async (m, {
         if (!json.status) return m.reply(Func.jsonFormat(json))
         for (let i = 0; i < 5; i++) {
             let ran = Math.floor(json.data.length * Math.random())
-            let tek = `乂  *S T O R Y - W A*\n\n`
+            let tek = `–  *S T O R Y - W A*\n\n`
             tek += `  ∘  *ID* : ${json.data[ran].id}\n`
             tek += `  ∘  *Title* : ${json.data[ran].title}\n`
             tek += `  ∘  *Download* : ${json.data[ran].download}\n\n`

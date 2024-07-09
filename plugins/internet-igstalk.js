@@ -8,7 +8,7 @@ let handler = async (m, {
     m.react('🕐')
     const json = await Func.fetchJson(API('alya', '/api/igstalk', { user: text }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
-    let tek = `乂  *I G - S T A L K*\n\n`
+    let tek = `–  *I G - S T A L K*\n\n`
     tek += `  ∘  *Username* : ` + json.data.username + '\n'
     tek += `  ∘  *Name* : ` + json.data.full_name + '\n'
     tek += `  ∘  *ID* : ` + json.data.id + '\n'

@@ -1,4 +1,7 @@
-let handler = async (m, { conn, text }) => {
+let handler = async (m, {
+	conn,
+	text
+}) => {
 	conn.game = conn.game ? conn.game : {}
 	try {
 		if (conn.game) {

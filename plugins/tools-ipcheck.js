@@ -8,7 +8,7 @@ let handler = async (m, {
     m.react('🕒')
     const json = await Func.fetchJson(API('alya', '/api/ip', { q: text }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
-    let cap = `乂  *I P C H E C K*\n\n`
+    let cap = `–  *I P C H E C K*\n\n`
     cap += `  ◦  *Country* : ` + json.data.country + `\n`
     cap += `  ◦  *Code* : ` + json.data.countryCode + `\n`
     cap += `  ◦  *Region* : ` + json.data.region + `\n`
