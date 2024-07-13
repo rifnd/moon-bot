@@ -15,7 +15,7 @@ let handler = async (m, {
     conn.sendMessageModify(m.chat, caption, m, {
       largeThumb: true
     })
-  } catch(e) {
+  } catch (e) {
     return m.reply(String(e))
   }
 }

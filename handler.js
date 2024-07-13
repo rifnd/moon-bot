@@ -636,7 +636,7 @@ module.exports = {
          let _user = db.data && db.data.users && db.data.users[m.sender]
 
          const groupMetadata = (m.isGroup ? (conn.chats[m.chat] || {}).metadata : {}) || {}
-         const participants = (m.isGroup ? groupMetadata.participants : []) || []
+         const participants = (m.isGroup ? groupMetadata ? groupMetadata.participants : [] : []) || []
          const user = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) === m.sender) : {}) || {}
          const bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == this.user.jid) : {}) || {}
          const isRAdmin = user && user.admin == 'superadmin' || false

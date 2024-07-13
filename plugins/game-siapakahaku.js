@@ -1,40 +1,36 @@
-let fetch = require('node-fetch')
-let timeout = 180000
-let poin = 500
-let tiketcoin = 1
+let timeout = 120000
+let poin = Func.randomInt('1000', '50000')
 let handler = async (m, {
-  conn, usedPrefix
+  usedPrefix,
+  command
 }) => {
-  conn.siapakahaku = conn.siapakahaku ? conn.siapakahaku: {}
+  conn.siapakahaku = conn.siapakahaku ? conn.siapakahaku : {}
   let id = m.chat
-  if (id in conn.siapakahaku) {
-    conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.siapakahaku[id][0])
-    throw false
+  if (command == 'siapakahaku') {
+    if (id in conn.siapakahaku) return conn.reply(m.chat, Func.texted('bold', '^ Soal ini belum dijawab.'), conn.siapakahaku[id][0])
+    let src = await Func.fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/siapakahaku.json')
+    let json = src[Math.floor(Math.random() * src.length)]
+    let capt = `– *Siapakah Aku?*\n\n`
+    capt += `${json.soal}\n\n`
+    capt += `Timeout : ${timeout / 60 / 1000} menit\n`
+    capt += `Balas pesan ini untuk menjawab, kirim ${usedPrefix}who untuk bantuan.`
+    conn.siapakahaku[id] = [
+      await conn.reply(m.chat, capt, m),
+      json,
+      poin,
+      setTimeout(() => {
+        if (conn.siapakahaku[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, conn.siapakahaku[id][0])
+        delete conn.siapakahaku[id]
+      }, timeout)
+    ]
+  } else if (command == 'who') {
+    if (!(id in conn.siapakahaku)) throw false
+    let clue = conn.siapakahaku[id][1].jawaban.replace(/[bcdfghjklmnpqrstvwxyz]/g, '_')
+    m.reply('```' + clue + '```')
   }
-  let src = await (await fetch('https://raw.githubusercontent.com/BochilTeam/database/master/games/siapakahaku.json')).json()
-  let json = src[Math.floor(Math.random() * src.length)]
-  let caption = `
-  Siapakah aku? ${json.soal}
-
-  Timeout *${(timeout / 1000).toFixed(2)} detik*
-  Ketik ${usedPrefix}who untuk bantuan
-  Bonus: ${poin} XP
-  TiketCoin: ${tiketcoin} Tiketcoin
-  `.trim()
-  conn.siapakahaku[id] = [
-    await conn.reply(m.chat, caption, m),
-    json,
-    poin,
-    setTimeout(() => {
-      if (conn.siapakahaku[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, conn.siapakahaku[id][0])
-      delete conn.siapakahaku[id]
-    },
-      timeout)
-  ]
 }
-handler.help = handler.command = ['siapakahaku']
+handler.help = ['siapakahaku']
 handler.tags = ['game']
-handler.limit = true
-handler.group = true
-handler.game = true
+handler.command = ['siapakahaku', 'who']
+handler.group = handler.limit = handler.game = true
 module.exports = handler

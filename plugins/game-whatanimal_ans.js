@@ -1,22 +1,26 @@
 const similarity = require('similarity')
 const threshold = 0.72
 let handler = m => m
-handler.before = async function (m) {
+handler.before = async function (m, {
+  conn,
+  users
+}) {
   let id = m.chat
-  if (!m.quoted || !m.quoted.fromMe || !m.quoted.isBaileys || !/.animalclue/i.test(m.quoted.text)) return !0
-  this.whatanimal = this.whatanimal ? this.whatanimal : {}
-  if (!(id in this.whatanimal)) return m.reply('The matter has ended.')
-  if (m.quoted.id == this.whatanimal[id][0].id) {
-    let json = JSON.parse(JSON.stringify(this.whatanimal[id][1]))
-    // m.reply(JSON.stringify(json, null, '\t'))
-    if (m.text.toLowerCase() == json.data.title.toLowerCase().trim()) {
-      global.db.data.users[m.sender].exp += this.whatanimal[id][2]
-      global.db.data.users[m.sender].tiketcoin += 1
-      m.reply(`*Correct!*\n+${this.whatanimal[id][2]} XP\n+1 Tiketcoin`)
-      clearTimeout(this.whatanimal[id][3])
-      delete this.whatanimal[id]
-    } else if (similarity(m.text.toLowerCase(), json.data.title.toLowerCase().trim()) >= threshold) m.reply(`*Approaching!*`)
-    else m.reply(`*Wrong!*`)
+  conn.whatanimal = conn.whatanimal ? conn.whatanimal : {}
+  if (m.quoted && /animalclue untuk bantuan/i.test(m.quoted.text) && !m.fromMe) {
+    if (!(id in conn.whatanimal) && /animalclue untuk bantuan/i.test(m.quoted.text)) return m.reply('Soal itu telah berakhir')
+    if (m.quoted.id == conn.whatanimal[id][0].id) {
+      if (['Timeout', ''].includes(m.text)) return !0
+      let json = JSON.parse(JSON.stringify(conn.whatanimal[id][1]))
+      if (m.text.toLowerCase() == json.data.title.toLowerCase().trim()) {
+        await m.reply(`*Benar*, *+ ${Func.formatNumber(conn.whatanimal[id][2])} Exp*`).then(() => {
+          users.exp += conn.whatanimal[id][2]
+          clearTimeout(conn.whatanimal[id][3])
+          delete conn.whatanimal[id]
+        })
+      } else if (similarity(m.text.toLowerCase(), json.data.title.toLowerCase().trim()) >= threshold) m.reply(`*Dikit Lagi!*`)
+      else m.reply(`*Salah!*`)
+    }
   }
   return !0
 }

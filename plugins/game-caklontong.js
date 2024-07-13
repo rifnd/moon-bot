@@ -5,9 +5,9 @@ let handler = async (m, {
   usedPrefix,
   command
 }) => {
+  conn.caklontong = conn.caklontong ? conn.caklontong : {}
+  let id = m.chat
   if (command == 'caklontong') {
-    conn.caklontong = conn.caklontong ? conn.caklontong : {}
-    let id = m.chat
     if (id in conn.caklontong) return conn.reply(m.chat, Func.texted('bold', '^ Soal ini belum dijawab.'), conn.caklontong[id][0])
     let src = await Func.fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/caklontong.json')
     let json = src[Math.floor(Math.random() * src.length)]
@@ -25,8 +25,6 @@ let handler = async (m, {
       }, timeout)
     ]
   } else if (command == 'calo') {
-    conn.caklontong = conn.caklontong ? conn.caklontong : {}
-    let id = m.chat
     if (!(id in conn.caklontong)) throw false
     let json = conn.caklontong[id][1]
     let ans = json.jawaban

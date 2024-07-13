@@ -12,9 +12,7 @@ let handler = async (m, {
       }, 'apikey'))
       if (!json.status) return m.reply(Func.jsonFormat(json))
       var result = json.data.find(v => v.quality == 'HD') || json.data.find(v => v.quality == 'SD')
-      await conn.sendMedia(m.chat, result.url, m, {
-         caption: `• Quality : ${result.quality}`
-      })
+      conn.sendFile(m.chat, result.url, '', `◦ *Quality* : ${result.quality}`, m)
    } catch (e) {
       console.log(e)
       return m.reply(Func.jsonFormat(e))

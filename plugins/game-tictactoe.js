@@ -68,7 +68,5 @@ ${arr.slice(6).join('')}
 handler.help = ['tictactoe']
 handler.tags = ['game']
 handler.command = ['tictactoe', 'ttc', 'ttt', 'xo']
-handler.limit = true
-handler.game = true
-handler.group = true
+handler.limit = handler.game = handler.group = true
 module.exports = handler

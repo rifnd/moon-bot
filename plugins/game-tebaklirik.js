@@ -1,43 +1,37 @@
-const fs = require('fs')
-const fetch = require('node-fetch')
-
-let timeout = 180000
-let poin = 500
+let timeout = 120000
+let poin = Func.randomInt('1000', '50000')
 let handler = async (m, {
-  conn, usedPrefix
+  conn,
+  usedPrefix,
+  command
 }) => {
-  conn.tebaklirik = conn.tebaklirik ? conn.tebaklirik: {}
+  conn.tebaklirik = conn.tebaklirik ? conn.tebaklirik : {}
   let id = m.chat
-  if (id in conn.tebaklirik) {
-    conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.tebaklirik[id][0])
-    throw false
+  if (command == 'tebaklirik') {
+    if (id in conn.tebaklirik) return conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.tebaklirik[id][0])
+    let res = await Func.fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebaklirik.json')
+    let json = res[Math.floor(Math.random() * res.length)]
+    let capt = `– *Tebak Lirik*\n\n`
+    capt += `${json.soal}\n\n`
+    capt += `Timeout : ${timeout / 60 / 1000} menit\n`
+    capt += `Balas pesan ini untuk menjawab, kirim ${usedPrefix}teli untuk bantuan`
+    conn.tebaklirik[id] = [
+      await conn.reply(m.chat, capt, m),
+      json,
+      poin,
+      setTimeout(() => {
+        if (conn.tebaklirik[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, conn.tebaklirik[id][0])
+        delete conn.tebaklirik[id]
+      }, timeout)
+    ]
+  } else if (command == 'teli') {
+    if (!(id in conn.tebaklirik)) throw false
+    let clue = conn.tebaklirik[id][1].jawaban.replace(/[AIUEOaiueo]/g, '_')
+    conn.reply(m.chat, '```' + clue + '```\nBalas soalnya, bukan pesan ini', conn.tebaklirik[id][0])
   }
-  let res = await fetch('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebaklirik.json')
-  if (!res.ok) throw await `${res.status} ${res.statusText}`
-  let data = await res.json()
-  let json = data[Math.floor(Math.random() * data.length)]
-  let caption = `
-  ${json.soal}
-
-  Timeout *${(timeout / 1000).toFixed(2)} detik*
-  Ketik ${usedPrefix}teli untuk bantuan
-  Bonus: ${poin} XP
-  TiketCoin: 1 Tiketcoin
-  `.trim()
-  conn.tebaklirik[id] = [
-    await conn.reply(m.chat, caption, m),
-    json,
-    poin,
-    setTimeout(() => {
-      if (conn.tebaklirik[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, conn.tebaklirik[id][0])
-      delete conn.tebaklirik[id]
-    },
-      timeout)
-  ]
 }
-handler.help = handler.command = ['tebaklirik']
+handler.help = ['tebaklirik']
 handler.tags = ['game']
-handler.limit = true
-handler.group = true
-handler.game = true
+handler.command = ['tebaklirik', 'teli']
+handler.limit = handler.group = handler.game = true
 module.exports = handler

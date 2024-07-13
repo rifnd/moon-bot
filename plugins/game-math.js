@@ -3,14 +3,14 @@ let handler = async (m, {
   args
 }) => {
   conn.math = conn.math ? conn.math : {}
-  if (args.length < 1) return m.reply(`Mode: ${Object.keys(modes).join(' | ')}\nContoh penggunaan: ${usedPrefix}math medium`).trim()
+  if (args.length < 1) return m.reply(`Mode: ${Object.keys(modes).join(' | ')}\nContoh penggunaan: ${usedPrefix}math medium`)
   let mode = args[0].toLowerCase()
-  if (!(mode in modes)) return m.reply(`Mode: ${Object.keys(modes).join(' | ')}\nContoh penggunaan: ${usedPrefix}math medium`).trim()
+  if (!(mode in modes)) return m.reply(`Mode: ${Object.keys(modes).join(' | ')}\nContoh penggunaan: ${usedPrefix}math medium`)
   let id = m.chat
   if (id in conn.math) return conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.math[id][0])
   let math = genMath(mode)
   conn.math[id] = [
-    await conn.reply(m.chat, `Berapa hasil dari *${math.str}*?\n\nTimeout: ${(math.time / 1000).toFixed(2)} detik\nBonus Jawaban Benar: ${math.bonus} XP, 1 Tiketcoin`, m),
+    await conn.reply(m.chat, `Berapa hasil dari *${math.str}*?\n\nTimeout: ${(math.time / 1000).toFixed(2)} detik`, m),
     math,
     4,
     setTimeout(() => {

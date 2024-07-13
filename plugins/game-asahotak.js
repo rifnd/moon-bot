@@ -1,13 +1,13 @@
-let timeout = 180000
+let timeout = 120000
 let poin = Func.randomInt('1000', '50000')
 let handler = async (m, {
   conn,
   usedPrefix,
   command
 }) => {
+  conn.asahotak = conn.asahotak ? conn.asahotak : {}
+  let id = m.chat
   if (command == 'asahotak') {
-    conn.asahotak = conn.asahotak ? conn.asahotak : {}
-    let id = m.chat
     if (id in conn.asahotak) return conn.reply(m.chat, Func.texted('bold', '^ Soal ini belum dijawab.'), conn.asahotak[id][0])
     let src = await Func.fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/asahotak.json')
     let json = src[Math.floor(Math.random() * src.length)]
@@ -25,12 +25,8 @@ let handler = async (m, {
       }, timeout)
     ]
   } else if (command == 'ao') {
-    conn.asahotak = conn.asahotak ? conn.asahotak : {}
-    let id = m.chat
     if (!(id in conn.asahotak)) throw false
-    let json = conn.asahotak[id][1]
-    let ans = json.jawaban
-    let clue = ans.replace(/[bcdfghjklmnpqrstvwxyz]/g, '_')
+    let clue = conn.asahotak[id][1].jawaban.replace(/[bcdfghjklmnpqrstvwxyz]/g, '_')
     m.reply('```' + clue + '```')
   }
 }

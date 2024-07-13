@@ -6,11 +6,12 @@ let handler = async (m, {
    try {
       let q = m.quoted ? m.quoted : m
       let mime = (q.msg || q).mimetype || ''
-      if (!/image\/(jpe?g|png)/.test(mime)) return m.reply(`Send or reply to images with commands ${usedPrefix + command}`)
+      if (!mime) return conn.reply(m.chat, Func.texted('bold', `🚩 Reply photo.`), m)
+      if (!/image\/(jpe?g|png)/.test(mime)) return conn.reply(m.chat, Func.texted('bold', `🚩 Only for photo.`), m)
       let media = await q.download()
       let url = await scrap.uploader(media)
       m.reply(status.wait)
-      let json = await Func.fetchJson(API('alya', '/api/ai-photo-editors', {
+      let json = await Func.fetchJson(API('alya', '/api/ai-photo-editor', {
          image: url.data.url,
          style: 'gta_5'
       }, 'apikey'))

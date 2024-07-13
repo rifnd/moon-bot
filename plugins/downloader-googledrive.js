@@ -14,8 +14,7 @@ let handler = async (m, {
       let xSize = Func.sizeLimit(json.data.size, global.max_upload)
       if (xSize.oversize) return m.reply(`The file size (${json.data.size}) is too large, please download it yourself via this link : ${await (await Func.shortlink(json.data.url))}`)
       conn.sendMedia(m.chat, json.data.url, m, {
-         fileName: json.data.filename,
-         mentions: [m.sender]
+         fileName: json.data.filename
       })
    } catch (e) {
       console.log(e)

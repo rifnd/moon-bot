@@ -1,29 +1,29 @@
 const moment = require('moment-timezone')
 moment.tz.setDefault('Asia/Jakarta')
 let handler = async (m, {
-  participants,
-  groupMetadata
+   participants,
+   groupMetadata
 }) => {
-  const getGroupAdmins = (participants) => {
-    admins = []
-    for (let i of participants) {
-      i.isAdmin ? admins.push(i.jid) : ''
-    }
-    return admins
-  }
-  let pp = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9mFzSckd12spppS8gAJ2KB2ER-ccZd4pBbw&usqp=CAU'
-  try {
-    pp = await conn.profilePictureUrl(m.chat, 'image')
-  } catch (e) {
-  } finally {
-    const setting = db.data.chats[m.chat]
-    const groupAdmins = participants.filter(p => p.admin)
-    const meta = await (await conn.groupMetadata(m.chat))
-    const admin = await conn.groupAdmin(m.chat)
-    const listAdmin = groupAdmins.map((v, i) => `${i + 1}. @${v.id.split('@')[0]}`).join('\n')
-    const owner = groupMetadata.owner || groupAdmins.find(p => p.admin === 'superadmin')?.id || m.chat.split`-`[0] + '@s.whatsapp.net'
-    let now = new Date() * 1
-    let text = `–  *G R O U P - I N F O*
+   const getGroupAdmins = (participants) => {
+      admins = []
+      for (let i of participants) {
+         i.isAdmin ? admins.push(i.jid) : ''
+      }
+      return admins
+   }
+   let pp = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9mFzSckd12spppS8gAJ2KB2ER-ccZd4pBbw&usqp=CAU'
+   try {
+      pp = await conn.profilePictureUrl(m.chat, 'image')
+   } catch (e) {
+   } finally {
+      const setting = db.data.chats[m.chat]
+      const groupAdmins = participants.filter(p => p.admin)
+      const meta = await (await conn.groupMetadata(m.chat))
+      const admin = await conn.groupAdmin(m.chat)
+      const listAdmin = groupAdmins.map((v, i) => `${i + 1}. @${v.id.split('@')[0]}`).join('\n')
+      const owner = groupMetadata.owner || groupAdmins.find(p => p.admin === 'superadmin')?.id || m.chat.split`-`[0] + '@s.whatsapp.net'
+      let now = new Date() * 1
+      let text = `–  *G R O U P - I N F O*
 
   ∘  *ID* : ${groupMetadata.id}
   ∘  *Nama* : ${groupMetadata.subject}
@@ -49,13 +49,13 @@ let handler = async (m, {
   ∘  *Banned* : ${Func.switcher(setting.isBanned, 'True', 'False')}
 
 ${global.set.footer}`.trim()
-    let ownernya = [`${m.chat.split`-`[0]}@s.whatsapp.net`]
-    let mentionedJid = groupAdmins.concat(ownernya)
-    conn.sendMessageModify(m.chat, text, m, {
-      largeThumb: true,
-      thumbnail: pp
-    })
-  }
+      let ownernya = [`${m.chat.split`-`[0]}@s.whatsapp.net`]
+      let mentionedJid = groupAdmins.concat(ownernya)
+      conn.sendMessageModify(m.chat, text, m, {
+         largeThumb: true,
+         thumbnail: pp
+      })
+   }
 }
 handler.help = ['infogc']
 handler.tags = ['group']

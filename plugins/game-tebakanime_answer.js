@@ -1,22 +1,26 @@
 const similarity = require('similarity')
 const threshold = 0.72
 let handler = m => m
-handler.before = async function (m) {
+handler.before = async function (m, {
+  conn,
+  users
+}) {
   let id = m.chat
-  if (!m.quoted || !m.quoted.fromMe || !m.quoted.isBaileys || !/.nime/i.test(m.quoted.text)) return !0
-  this.tebakanime = this.tebakanime ? this.tebakanime : {}
-  if (!(id in this.tebakanime)) return m.reply('The matter has ended.')
-  if (m.quoted.id == this.tebakanime[id][0].id) {
-    let json = JSON.parse(JSON.stringify(this.tebakanime[id][1]))
-    // m.reply(JSON.stringify(json, null, '\t'))
-    if (m.text.toLowerCase() == json.data.title.toLowerCase().trim()) {
-      global.db.data.users[m.sender].exp += this.tebakanime[id][2]
-      global.db.data.users[m.sender].tiketcoin += 1
-      m.reply(`*Correct!*\n+${this.tebakanime[id][2]} XP\n+1 Tiketcoin`)
-      clearTimeout(this.tebakanime[id][3])
-      delete this.tebakanime[id]
-    } else if (similarity(m.text.toLowerCase(), json.data.title.toLowerCase().trim()) >= threshold) m.reply(`*Approaching!*`)
-    else m.reply(`*Wrong!*`)
+  conn.tebakanime = conn.tebakanime ? conn.tebakanime : {}
+  if (m.quoted && /nime untuk bantuan/i.test(m.quoted.text) && !m.fromMe) {
+    if (!(id in conn.tebakanime) && /nime untuk bantuan/i.test(m.quoted.text)) return m.reply('Soal itu telah berakhir')
+    if (m.quoted.id == conn.tebakanime[id][0].id) {
+      if (['Timeout', ''].includes(m.text)) return !0
+      let json = JSON.parse(JSON.stringify(conn.tebakanime[id][1]))
+      if (m.text.toLowerCase() == json.data.title.toLowerCase().trim()) {
+        await m.reply(`*Benar*, *+ ${Func.formatNumber(conn.tebakanime[id][2])} Exp*`).then(() => {
+          users.exp += conn.tebakanime[id][2]
+          clearTimeout(conn.tebakanime[id][3])
+          delete conn.tebakanime[id]
+        })
+      } else if (similarity(m.text.toLowerCase(), json.data.title.toLowerCase().trim()) >= threshold) m.reply(`*Dikit Lagi!*`)
+      else m.reply(`*Salah!*`)
+    }
   }
   return !0
 }

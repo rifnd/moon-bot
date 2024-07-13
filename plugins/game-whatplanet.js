@@ -1,39 +1,39 @@
-let timeout = 180000
-let poin = 500
-let tiketcoin = 1
+let timeout = 120000
+let poin = Func.randomInt('1000', '50000')
 let handler = async (m, {
-  conn,
-  usedPrefix
+   conn,
+   usedPrefix,
+   command
 }) => {
-  conn.whatplanet = conn.whatplanet ? conn.whatplanet : {}
-  let id = m.chat
-  if (id in conn.whatplanet) {
-    conn.reply(m.chat, 'There are still unanswered questions in this chat', conn.whatplanet[id][0])
-    throw false
-  }
-  let src = await Func.fetchJson(API('alya', '/api/tebakplanet', {}, 'apikey'))
-  if (!src.status) return m.reply(Func.jsonFormat(src))
-  let caption = `What is the name of the planet in the picture above?
-
-Timeout *${(timeout / 1000).toFixed(2)} seconds*
-Send *${usedPrefix}planclue* for help
-Bonus: ${poin} XP, ${tiketcoin} Tiketcoin`.trim()
-  conn.whatplanet[id] = [
-    await conn.sendMessage(m.chat, {
-      image: {
-        url: src.data.image
-      },
-      caption: caption
-    }, { quoted: m }),
-    src,
-    poin,
-    setTimeout(() => {
-      if (conn.whatplanet[id]) conn.reply(m.chat, `Time's up!\nThe answer is *${src.data.title}*`, conn.whatplanet[id][0])
-      delete conn.whatplanet[id]
-    }, timeout)
-  ]
+   conn.whatplanet = conn.whatplanet ? conn.whatplanet : {}
+   let id = m.chat
+   if (command == 'whatplanet') {
+      if (id in conn.whatplanet) return conn.reply(m.chat, 'There are still unanswered questions in this chat', conn.whatplanet[id][0])
+      let json = await Func.fetchJson(API('alya', '/api/tebakplanet', {}, 'apikey'))
+      if (!json.status) return m.reply(Func.jsonFormat(json))
+      let capt = `– *What Planet*\n\n`
+      capt += `Apa nama planet pada gambar ini?\n\n`
+      capt += `Timeout : ${timeout / 60 / 1000} menit\n`
+      capt += `Balas pesan ini untuk menjawab, kirim ${usedPrefix}planclue untuk bantuan`
+      conn.whatplanet[id] = [
+         await conn.sendMessage(m.chat, {
+            image: { url: json.data.image }, caption: capt
+         }, { quoted: m }),
+         json,
+         poin,
+         setTimeout(() => {
+            if (conn.whatplanet[id]) conn.reply(m.chat, `Waktu Habis!\nJawabannya adalah *${json.data.title}*`, conn.whatplanet[id][0])
+            delete conn.whatplanet[id]
+         }, timeout)
+      ]
+   } else if (command == 'planclue') {
+      if (!(id in conn.whatplanet)) throw false
+      let clue = conn.whatplanet[id][1].data.title.replace(/[AIUEOaiueo]/g, '_')
+      conn.reply(m.chat, '```' + clue + '```', menubar)
+   }
 }
-handler.help = handler.command = ['whatplanet']
+handler.help = ['whatplanet']
 handler.tags = ['game']
+handler.command = ['whatplanet', 'planclue']
 handler.limit = handler.game = handler.group = true
 module.exports = handler

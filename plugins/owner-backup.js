@@ -8,5 +8,4 @@ handler.help = ['backup']
 handler.tags = ['owner']
 handler.command = ['backup']
 handler.owner = true
-
 module.exports = handler

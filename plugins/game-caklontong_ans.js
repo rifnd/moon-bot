@@ -6,15 +6,14 @@ handler.before = async function (m, {
    users
 }) {
    let id = m.chat
-   if (m.quoted && m.quoted.sender != conn.decodeJid(conn.user.jid)) return
-   if (m.quoted && /calo untuk bantuan/i.test(m.quoted.text)) {
-      if (!(id in conn.caklontong) && /calo untuk bantuan/i.test(m.quoted.text) && !m.quoted.sender) return m.reply('Soal itu telah berakhir')
+   conn.caklontong = conn.caklontong ? conn.caklontong : {}
+   if (m.quoted && /calo untuk bantuan/i.test(m.quoted.text) && !m.fromMe) {
+      if (!(id in conn.caklontong) && /calo untuk bantuan/i.test(m.quoted.text) && !m.fromMe) return m.reply('Soal itu telah berakhir')
       if (m.quoted.id == conn.caklontong[id][0].id) {
          if (['Timeout', ''].includes(m.text)) return !0
          let json = JSON.parse(JSON.stringify(conn.caklontong[id][1]))
          if (m.text.toLowerCase() == json.jawaban.toLowerCase().trim()) {
-            await m.reply('*Benar*').then(() => {
-               conn.reply(m.chat, `*+ ${Func.formatNumber(conn.caklontong[id][2])} exp*`, m)
+            await m.reply('*Benar*, *+ ${Func.formatNumber(conn.lengkapikalimat[id][2])} exp*').then(() => {
                users.exp += conn.caklontong[id][2]
                clearTimeout(conn.caklontong[id][3])
                delete conn.caklontong[id]

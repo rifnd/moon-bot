@@ -1,49 +1,39 @@
-let fetch = require('node-fetch')
-
-let timeout = 180000
-let poin = 1000
+let timeout = 120000
+let poin = Func.randomInt('1000', '50000')
 let handler = async (m, {
-  conn, usedPrefix
+  conn,
+  usedPrefix,
+  command
 }) => {
-  conn.tebaklagu = conn.tebaklagu ? conn.tebaklagu: {}
+  conn.tebaklagu = conn.tebaklagu ? conn.tebaklagu : {}
   let id = m.chat
-  if (id in conn.tebaklagu) {
-    conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.tebaklagu[id][0])
-    throw false
+  if (command == 'tebaklagu') {
+    if (id in conn.tebaklagu) conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.tebaklagu[id][0])
+    let json = await Func.fetchJson(API('alya', '/api/tebaklagu', {}, 'apikey'))
+    if (!json.status) return m.reply(Func.jsonFormat(json))
+    let audio = await conn.sendFile(m.chat, json.data.lagu, 'audio.mp3', '', m)
+    let capt = `– *Tebak Lagu*\n\n`
+    capt += `Apa judul lagu ini?\n\n`
+    capt += `Artis : ${json.data.artis}\n`
+    capt += `Timeout : ${timeout / 60 / 1000} menit\n`
+    capt += `Balas pesan ini untuk menjawab, kirim ${usedPrefix}tegu untuk bantuan`
+    conn.tebaklagu[id] = [
+      await conn.reply(m.chat, capt, audio),
+      json,
+      poin,
+      setTimeout(() => {
+        if (conn.tebaklagu[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.judul}*`, conn.tebaklagu[id][0])
+        delete conn.tebaklagu[id]
+      }, timeout)
+    ]
+  } else if (command == 'tegu') {
+    if (!(id in conn.tebaklagu)) throw false
+    let clue = conn.tebaklagu[id][1].data.judul.replace(/[bcdfghjklmnpqrstvwxyz]/g, '_')
+    m.reply('```' + clue + '```')
   }
-  // ubah isi 'id' kalo mau ganti playlist spotifynya
-
-  let src = await (await fetch('https://raw.githubusercontent.com/Aiinne/scrape/main/tebaklagu.json')).json()
-  let json = src[Math.floor(Math.random() * src.length)]
-  // if (!json.status) throw json
-  let caption = `
-  TEBAK JUDUL LAGU
-  Artis : ${json.artis}
-  Judul : _____
-  Timeout *${(timeout / 1000).toFixed(2)} detik*
-  Ketik *${usedPrefix}cek* untuk bantuan
-  Bonus: ${poin} XP
-  Tiketcoin: 1 Tiketcoin
-  *Balas pesan ini untuk menjawab!*`.trim()
-  conn.tebaklagu[id] = [
-    await m.reply(caption),
-    json,
-    poin,
-    setTimeout(() => {
-      if (conn.tebaklagu[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.judul}*`, conn.tebaklagu[id][0])
-      delete conn.tebaklagu[id]
-    },
-      timeout)
-  ]
-  await conn.sendFile(m.chat,
-    json.lagu,
-    'audio.mp3',
-    '',
-    m)
 }
-handler.help = handler.command = ['tebaklagu']
+handler.help = ['tebaklagu']
 handler.tags = ['game']
-handler.limit = true
-handler.group = true
-handler.game = true
+handler.command = ['tebaklagu', 'tegu']
+handler.limit = handler.group = handler.game = true
 module.exports = handler

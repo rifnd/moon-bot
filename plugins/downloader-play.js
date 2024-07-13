@@ -24,11 +24,10 @@ let handler = async (m, {
          thumbnail: json.thumbnail
       }).then(async () => {
          // document
-         conn.sendMessage(m.chat, { 
-           document: { url: json.data.url }, 
-           fileName: json.title + '.mp3', 
-           mimetype: 'audio/mpeg'
-         }, { quoted: m })
+         conn.sendMedia(m.chat, json.data.url, m, {
+            fileName: json.title + '.mp3',
+            mimetype: 'audio/mpeg'
+         })
          // audio
          /*conn.sendMessage(m.chat, { 
            audio: { url: json.data.url }, 

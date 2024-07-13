@@ -1,13 +1,13 @@
-let timeout = 180000
+let timeout = 120000
 let poin = Func.randomInt('1000', '50000')
 let handler = async (m, {
   conn,
   usedPrefix,
   command
 }) => {
+  conn.lengkapikalimat = conn.lengkapikalimat ? conn.lengkapikalimat : {}
+  let id = m.chat
   if (command == 'lengkapikalimat') {
-    conn.lengkapikalimat = conn.lengkapikalimat ? conn.lengkapikalimat : {}
-    let id = m.chat
     if (id in conn.lengkapikalimat) return conn.reply(m.chat, Func.texted('bold', '^ Soal ini belum dijawab.'), conn.lengkapikalimat[id][0])
     let src = await Func.fetchJson('https://raw.githubusercontent.com/qisyana/scrape/main/lengkapikalimat.json')
     let json = src[Math.floor(Math.random() * src.length)]
@@ -16,7 +16,7 @@ let handler = async (m, {
     capt += `Timeout : ${timeout / 60 / 1000} menit\n`
     capt += `Balas pesan ini untuk menjawab, kirim ${usedPrefix}leka untuk bantuan.`
     conn.lengkapikalimat[id] = [
-      await conn.reply(m.chat, caption, m),
+      await conn.reply(m.chat, capt, m),
       json,
       poin,
       setTimeout(() => {
@@ -26,12 +26,10 @@ let handler = async (m, {
     ]
   } else if (command == 'leka') {
     conn.lengkapikalimat = conn.lengkapikalimat ? conn.lengkapikalimat : {}
-    let id = m.chat
     if (!(id in conn.lengkapikalimat)) throw false
-    let json = conn.lengkapikalimat[id][1]
-    let ans = json.jawaban.trim()
-    let clue = ans.replace(/[AIUEOaiueo]/g, '_')
-    conn.reply(m.chat, '```' + clue + '```\nBalas soalnya, bukan pesan ini', conn.lengkapikalimat[id][0])
+    let clue = conn.lengkapikalimat[id][1].jawaban.trim().replace(/[AIUEOaiueo]/g, '_')
+    conn.reply(m.chat, '```' + clue + '```', m)
+    console.log(clue)
   }
 }
 handler.help = ['lengkapikalimat']

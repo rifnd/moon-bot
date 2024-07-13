@@ -6,7 +6,7 @@ let handler = async (m, {
    if (!text) return m.reply(Func.example(usedPrefix, command, 'Kucing nakal'))
    m.reply(status.wait)
    try {
-      let json = await Func.fetchJson(API('alya', '/api/dokterai', {
+      let json = await Func.fetchJson(API('alya', '/api/ai-dokter', {
          text: text
       }, 'apikey'))
       if (!json.status) return m.reply(Func.jsonFormat(json))

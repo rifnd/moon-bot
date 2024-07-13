@@ -6,11 +6,14 @@ let handler = async (m, {
     try {
       let q = m.quoted ? m.quoted : m
       let mime = (q.msg || q).mimetype || ''
-      if (!/image\/(jpe?g|png)/.test(mime)) return m.reply(`Kirim atau balas gambar dengan perintah ${usedPrefix + command}`)
+      if (!mime) return conn.reply(m.chat, Func.texted('bold', `🚩 Reply photo.`), m)
+      if (!/image\/(jpe?g|png)/.test(mime)) return conn.reply(m.chat, Func.texted('bold', `🚩 Only for photo.`), m)
       let media = await q.download()
       let url = await scrap.uploader(media)
       m.reply(status.wait)
-      let json = await Func.fetchJson(API('alya', '/api/tozombie', { image: url.data.url }, 'apikey'))
+      let json = await Func.fetchJson(API('alya', '/api/tozombie', {
+        image: url.data.url
+      }, 'apikey'))
       if (!json.status) return m.reply(Func.jsonFormat(json))
       conn.sendFile(m.chat, json.data.url, '', global.set.wm, m)
     } catch (e) {

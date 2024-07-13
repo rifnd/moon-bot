@@ -8,7 +8,7 @@ let handler = async (m, {
   try {
     const json = await Func.fetchJson(API('alya', '/api/brainly', { questions: text }, 'apikey'))
     if (!json.status) return m.reply(Func.jsonFormat(json))
-    let teks = `*BRAINLY*\n\n`
+    let teks = `–  *B R A I N L Y*\n\n`
     json.data.map((v, i) => {
       teks += `*${(i + 1)}*. ${v.question}\n`
       teks += `›  *Jawaban* : \n${v.answers}\n\n`
@@ -21,5 +21,5 @@ let handler = async (m, {
 }
 handler.help = handler.command = ['brainly']
 handler.tags = ['internet']
-handler.limit = 1
+handler.limit = 5
 module.exports = handler
