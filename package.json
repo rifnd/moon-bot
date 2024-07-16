@@ -24,7 +24,7 @@
    "homepage": "https://github.com/rifnd/moon-bot#readme",
    "dependencies": {
       "@adiwajshing/keyed-db": "^0.2.4",
-      "@whiskeysockets/baileys": "^6.7.5",
+      "@whiskeysockets/baileys": "github:whiskeysockets/baileys",
       "awesome-phonenumber": "^5.6.0",
       "axios": "^1.6.7",
       "bytes": "^3.1.2",
