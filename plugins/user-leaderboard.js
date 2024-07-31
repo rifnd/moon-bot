@@ -1,0 +1,65 @@
+module.exports = {
+   run: async (m, {
+      conn,
+      participants,
+      Func
+   }) => {
+      let users = Object.entries(global.db.data.users).map(([key, value]) => {
+         return { ...value, jid: key }
+      })
+      let sortedExp = users.map(toNumber('exp')).sort(sort('exp'))
+      let sortedLim = users.map(toNumber('limit')).sort(sort('limit'))
+      let sortedLevel = users.map(toNumber('level')).sort(sort('level'))
+      let sortedMoney = users.map(toNumber('money')).sort(sort('money'))
+      let usersExp = sortedExp.map(enumGetKey)
+      let usersLim = sortedLim.map(enumGetKey)
+      let usersLevel = sortedLevel.map(enumGetKey)
+      let usersMoney = sortedMoney.map(enumGetKey)
+      let len = args[0] && args[0].length > 0 ? Math.min(10, Math.max(parseInt(args[0]), 10)) : Math.min(10, sortedExp.length)
+      let text = `
+       • *XP Leaderboard Top ${len}* •
+       You: *${usersExp.indexOf(m.sender) + 1}* from *${usersExp.length}*
+       
+       ${sortedExp.slice(0, len).map(({ jid, exp }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *${exp} Exp*`).join`\n`}
+       
+       • *Limit Leaderboard Top ${len}* •
+       You: *${usersLim.indexOf(m.sender) + 1}* from *${usersLim.length}*
+       
+       ${sortedLim.slice(0, len).map(({ jid, limit }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *${limit} Limit*`).join`\n`}
+       
+       • *Level Leaderboard Top ${len}* •
+       You: *${usersLevel.indexOf(m.sender) + 1}* from *${usersLevel.length}*
+       
+       ${sortedLevel.slice(0, len).map(({ jid, level }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *Level ${level}*`).join`\n`}
+       
+       • *Money Leaderboard Top ${len}* •
+       You: *${usersMoney.indexOf(m.sender) + 1}* from *${usersMoney.length}*
+       
+       ${sortedMoney.slice(0, len).map(({ jid, money }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/` : '@'}${jid.split`@`[0]} *Money ${money}*`).join`\n`}
+       `.trim()
+      conn.reply(m.chat, text, m, {
+         contextInfo: {
+            mentionedJid: [...usersExp.slice(0, len), ...usersLim.slice(0, len), ...usersLevel.slice(0, len), ...usersMoney.slice(0, len)].filter(v => !participants.some(p => v === p.jid))
+         }
+      })
+   },
+   help: ['lb'],
+   tags: ['user'],
+   command: /^(leaderboard|lb)$/i
+}
+
+function sort(property, ascending = true) {
+   if (property) return (...args) => args[ascending & 1][property] - args[!ascending & 1][property]
+   else return (...args) => args[ascending & 1] - args[!ascending & 1]
+}
+
+function toNumber(property, _default = 0) {
+   if (property) return (a, i, b) => {
+      return { ...b[i], [property]: a[property] === undefined ? _default : a[property] }
+   }
+   else return a => a === undefined ? _default : a
+}
+
+function enumGetKey(a) {
+   return a.jid
+}
