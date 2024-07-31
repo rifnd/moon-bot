@@ -28,7 +28,7 @@ module.exports = {
          caption += `	◦  *Banned* : ${(new Date - user.ban_temporary < env.timer) ? Func.toTime(new Date(user.ban_temporary + env.timeout) - new Date()) + ' (' + ((env.timeout / 1000) / 60) + ' min)' : user.banned ? '√' : '×'}\n`
          caption += `	◦  *Use In Private* : ${(Object.keys(global.db.data.chats).includes(m.sender) ? '√' : '×')}\n`
          caption += `	◦  *Premium* : ${(user.premium ? '√' : '×')}\n`
-         caption += `	◦  *Expired* : ${user.expired == 0 ? '-' : Func.timeReverse(user.expired - new Date() * 1)}\n\n`
+         caption += `	◦  *Expired* : ${user.expired == 0 ? '-' : Func.timeReverse(user.expired - new Date() * 1)}\n`
          caption += `	◦  *Verified* : ${(user.registered ? '√' : '×')}\n\n`
          caption += global.footer
          conn.sendMessageModify(m.chat, caption, m, {

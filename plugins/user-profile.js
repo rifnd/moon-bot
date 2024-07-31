@@ -2,7 +2,6 @@ module.exports = {
    run: async (m, {
       conn,
       text,
-      usedPrefix,
       blockList,
       env,
       Func

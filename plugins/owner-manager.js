@@ -3,7 +3,7 @@ module.exports = {
       conn,
       usedPrefix,
       command,
-      args,
+      text,
       env,
       Func
    }) => {

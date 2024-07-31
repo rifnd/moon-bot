@@ -1,6 +1,7 @@
 module.exports = {
    run: async (m, {
-      conn
+      conn,
+      text
    }) => {
       let number = m.quoted ? (m.quoted.sender).split`@`[0] : (m.sender).split`@`[0]
       let chat = text ? text : 'hai'

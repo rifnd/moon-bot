@@ -1,7 +1,6 @@
 module.exports = {
    run: async (m, {
       conn,
-      usedPrefix,
       Func
    }) => {
       let user = global.db.data.users[m.sender]

@@ -1,6 +1,7 @@
 module.exports = {
    run: async (m, {
       conn,
+      args,
       participants,
       Func
    }) => {

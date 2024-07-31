@@ -1,4 +1,3 @@
-const decode = require('html-entities').decode
 module.exports = {
    run: async (m, {
       conn,

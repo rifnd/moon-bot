@@ -3,7 +3,7 @@ module.exports = {
       conn,
       usedPrefix,
       command,
-      text,
+      args,
       Func
    }) => {
       try {

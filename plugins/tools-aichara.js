@@ -2,6 +2,7 @@ module.exports = {
    run: async (m, {
       conn,
       usedPrefix,
+      text,
       Scraper,
       Func
    }) => {

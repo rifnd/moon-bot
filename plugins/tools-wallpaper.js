@@ -4,7 +4,6 @@ module.exports = {
       usedPrefix,
       command,
       text,
-      Scraper,
       Func
    }) => {
       try {

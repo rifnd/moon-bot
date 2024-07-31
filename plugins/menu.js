@@ -114,11 +114,14 @@ module.exports = {
             if (teks == 'miscs') tags = {
                'miscs': 'miscs'
             }
+            if (teks == 'tools') tags = {
+               'tools': 'tools'
+            }
             if (teks == 'user') tags = {
                'user': 'user'
             }
-            if (teks == 'tools') tags = {
-               'tools': 'tools'
+            if (teks == 'voice changer') tags = {
+               'voice': 'voice'
             }
 
             if (teks == '404') {
@@ -220,11 +223,14 @@ module.exports = {
             if (teks == 'miscs') tags = {
                'miscs': 'miscs'
             }
+            if (teks == 'tools') tags = {
+               'tools': 'tools'
+            }
             if (teks == 'user') tags = {
                'user': 'user'
             }
-            if (teks == 'tools') tags = {
-               'tools': 'tools'
+            if (teks == 'voice changer') tags = {
+               'voice': 'voice'
             }
 
             const label = {
