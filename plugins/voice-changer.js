@@ -51,7 +51,7 @@ module.exports = {
    },
    help: ['bass', 'blown', 'chipmunk', 'deep', 'earrape', 'fast', 'fat', 'nightcore', 'reverse', 'robot', 'slow', 'smooth'],
    use: 'reply audio',
-   tags: ['voice changer'],
+   tags: ['voice'],
    command: /^(bass|blown|chipmunk|deep|earrape|fast|fat|nightcore|reverse|robot|slow|smooth)$/i,
    limit: true
 }

@@ -8,7 +8,7 @@ module.exports = {
       Func
    }) => {
       if (!text) return m.reply(Func.example(usedPrefix, command, 'id Love You'))
-      m.react('🕑')
+      m.react('🕒')
       if (text && m.quoted && m.quoted.text) {
          let lang = text.slice(0, 2)
          try {

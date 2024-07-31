@@ -93,7 +93,7 @@ module.exports = {
 
             let tags
             let teks = `${args[0]}`.toLowerCase()
-            let arrayMenu = ['admin', 'converter', 'downloader', 'games', 'group', 'miscs', 'user', 'tools', 'voice changer']
+            let arrayMenu = ['admin', 'converter', 'downloader', 'games', 'group', 'miscs', 'user', 'tools', 'voice']
             if (!arrayMenu.includes(teks)) teks = '404'
 
             if (teks == 'admin') tags = {
@@ -120,7 +120,7 @@ module.exports = {
             if (teks == 'user') tags = {
                'user': 'user'
             }
-            if (teks == 'voice changer') tags = {
+            if (teks == 'voice') tags = {
                'voice': 'voice'
             }
 
@@ -202,7 +202,7 @@ module.exports = {
 
             let tags
             let teks = `${args[0]}`.toLowerCase()
-            let arrayMenu = ['admin', 'converter', 'downloader', 'games', 'group', 'miscs', 'user', 'tools', 'voice changer']
+            let arrayMenu = ['admin', 'converter', 'downloader', 'games', 'group', 'miscs', 'user', 'tools', 'voice']
             if (!arrayMenu.includes(teks)) teks = '404'
 
             if (teks == 'admin') tags = {
@@ -229,7 +229,7 @@ module.exports = {
             if (teks == 'user') tags = {
                'user': 'user'
             }
-            if (teks == 'voice changer') tags = {
+            if (teks == 'voice') tags = {
                'voice': 'voice'
             }
 

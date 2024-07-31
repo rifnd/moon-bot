@@ -1,3 +1,4 @@
+const os = require('os')
 module.exports = {
    run: async (m, {
       conn,
