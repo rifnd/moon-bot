@@ -233,7 +233,7 @@ module.exports = {
                   }]
                   conn.sendAIMessage(m.chat, soad, m, {
                      content: global.status.premium,
-                     footer: global.set.footer,
+                     footer: global.footer,
                   })
                   //m.reply(global.status.premium)
                   continue

@@ -8,9 +8,7 @@ module.exports = {
    }) => {
       try {
          let type = (args[0] || '').toLowerCase()
-         let cht = (args[0] || '').toLowerCase()
          let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
-         let mentionedJid = [who]
          if (/pay|cheat/i.test(command)) {
             const count = args[1] && args[1].length > 0 ? Math.max(parseInt(args[1]), 1) : !args[1] || args.length < 3 ? 1 : Math.min(1, count)
             switch (type) {

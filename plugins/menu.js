@@ -93,7 +93,7 @@ module.exports = {
 
             let tags
             let teks = `${args[0]}`.toLowerCase()
-            let arrayMenu = ['admin', 'converter', 'downloader', 'games', 'group', 'miscs', 'user', 'tools', 'voice']
+            let arrayMenu = ['admin', 'converter', 'downloader', 'game', 'group', 'miscs', 'user', 'tools', 'voice']
             if (!arrayMenu.includes(teks)) teks = '404'
 
             if (teks == 'admin') tags = {
@@ -105,8 +105,11 @@ module.exports = {
             if (teks == 'downloader') tags = {
                'downloader': 'downloader'
             }
-            if (teks == 'games') tags = {
-               'games': 'games'
+            if (teks == 'fun') tags = {
+               'fun': 'fun'
+            }
+            if (teks == 'game') tags = {
+               'game': 'game'
             }
             if (teks == 'group') tags = {
                'group': 'group'
@@ -202,7 +205,7 @@ module.exports = {
 
             let tags
             let teks = `${args[0]}`.toLowerCase()
-            let arrayMenu = ['admin', 'converter', 'downloader', 'games', 'group', 'miscs', 'user', 'tools', 'voice']
+            let arrayMenu = ['admin', 'converter', 'downloader', 'game', 'group', 'miscs', 'user', 'tools', 'voice']
             if (!arrayMenu.includes(teks)) teks = '404'
 
             if (teks == 'admin') tags = {
@@ -214,8 +217,11 @@ module.exports = {
             if (teks == 'downloader') tags = {
                'downloader': 'downloader'
             }
-            if (teks == 'games') tags = {
-               'games': 'games'
+            if (teks == 'fun') tags = {
+               'fun': 'fun'
+            }
+            if (teks == 'game') tags = {
+               'game': 'game'
             }
             if (teks == 'group') tags = {
                'group': 'group'
