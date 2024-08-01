@@ -93,7 +93,7 @@ module.exports = {
 
             let tags
             let teks = `${args[0]}`.toLowerCase()
-            let arrayMenu = ['admin', 'converter', 'downloader', 'game', 'group', 'miscs', 'user', 'tools', 'voice']
+            let arrayMenu = ['admin', 'converter', 'downloader', 'fun', 'game', 'group', 'miscs', 'user', 'tools', 'voice']
             if (!arrayMenu.includes(teks)) teks = '404'
 
             if (teks == 'admin') tags = {
@@ -205,7 +205,7 @@ module.exports = {
 
             let tags
             let teks = `${args[0]}`.toLowerCase()
-            let arrayMenu = ['admin', 'converter', 'downloader', 'game', 'group', 'miscs', 'user', 'tools', 'voice']
+            let arrayMenu = ['admin', 'converter', 'downloader', 'fun', 'game', 'group', 'miscs', 'user', 'tools', 'voice']
             if (!arrayMenu.includes(teks)) teks = '404'
 
             if (teks == 'admin') tags = {
