@@ -8,8 +8,9 @@ module.exports = {
    }) {
       let id = m.chat
       conn.siapakahaku = conn.siapakahaku ? conn.siapakahaku : {}
-      if (m.quoted && /who untuk bantuan/i.test(m.quoted.text) && !m.fromMe) {
-         if (!(id in conn.siapakahaku) && /who untuk bantuan/i.test(m.quoted.text) && !m.fromMe) return m.reply('Soal itu telah berakhir')
+      if (m.quoted && m.quoted.sender != conn.decodeJid(conn.user.jid)) return
+      if (m.quoted && /who untuk bantuan/i.test(m.quoted.text)) {
+         if (!(id in conn.siapakahaku) && /who untuk bantuan/i.test(m.quoted.text)) return m.reply('Soal itu telah berakhir')
          if (m.quoted.id == conn.siapakahaku[id][0].id) {
             if (['Timeout', ''].includes(m.text)) return !0
             let json = JSON.parse(JSON.stringify(conn.siapakahaku[id][1]))

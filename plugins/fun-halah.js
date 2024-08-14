@@ -14,6 +14,7 @@ module.exports = {
       }
    },
    help: [...'aiueo'].map(v => `h${v}l${v}h`),
+   use: 'text',
    tags: ['fun'],
    command: /^h([aiueo])l\1h/i
 }

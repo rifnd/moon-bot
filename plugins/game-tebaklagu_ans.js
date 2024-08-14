@@ -8,7 +8,8 @@ module.exports = {
    }) {
       let id = m.chat
       conn.tebaklagu = conn.tebaklagu ? conn.tebaklagu : {}
-      if (m.quoted && /tegu untuk bantuan/i.test(m.quoted.text) && !m.fromMe) {
+      if (m.quoted && m.quoted.sender != conn.decodeJid(conn.user.jid)) return
+      if (m.quoted && /tegu untuk bantuan/i.test(m.quoted.text)) {
          if (!(id in conn.tebaklagu) && /tegu untuk bantuan/i.test(m.quoted.text)) return m.reply('Soal itu telah berakhir')
          if (m.quoted.id == conn.tebaklagu[id][0].id) {
             if (['Timeout', ''].includes(m.text)) return !0

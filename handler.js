@@ -175,6 +175,7 @@ module.exports = {
             })) continue
 
             if (typeof plugin !== 'function') continue
+            if (m.sender === conn.user?.jid) return
             if ((usedPrefix = (match[0] || '')[0])) {
                let noPrefix = m.text.replace(usedPrefix, '')
                let [command, ...args] = noPrefix.trim().split` `.filter(v => v)
@@ -193,7 +194,8 @@ module.exports = {
                      typeof plugin.command === 'string' ? // String?
                         plugin.command === command :
                         false
-
+               
+               if (m.sender === conn.user?.jid) return
                if (!isAccept) continue
 
                users.hit += 1

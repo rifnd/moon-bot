@@ -8,7 +8,8 @@ module.exports = {
    }) {
       let id = m.chat
       conn.lengkapikalimat = conn.lengkapikalimat ? conn.lengkapikalimat : {}
-      if (m.quoted && /leka untuk bantuan/i.test(m.quoted.text) && !m.fromMe) {
+      if (m.quoted && m.quoted.sender != conn.decodeJid(conn.user.jid)) return
+      if (m.quoted && /leka untuk bantuan/i.test(m.quoted.text)) {
          if (!(id in conn.lengkapikalimat) && /leka untuk bantuan/i.test(m.quoted.text)) return m.reply('Soal itu telah berakhir')
          if (m.quoted.id == conn.lengkapikalimat[id][0].id) {
             if (['Timeout', ''].includes(m.text)) return !0

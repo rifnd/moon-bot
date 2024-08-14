@@ -54,35 +54,3 @@ module.exports = {
    command: /^(qc)$/i,
    limit: true
 }
-
-/*const json = {
-   "type": "quote",
-   "format": "png",
-   "backgroundColor": "#252525",
-   "width": 512,
-   "height": 768,
-   "scale": 2,
-   "messages": [{
-      "entities": [],
-      "avatar": true,
-      "from": {
-         "id": 1,
-         "name": 'nando',
-         "photo": {
-            "url": 'https://i.ibb.co/nsDv3ZJ/image.jpg'
-         }
-      },
-      "text": 'ntot',
-      "replyMessage": {}
-   }]
-}
-const res = await require('axios').post('https://s.moonx.my.id/generate', json, {
-   headers: {
-      'Content-Type': 'application/json'
-   }
-})
-const buffer = Buffer.from(res.data.result.image, 'base64')
-return conn.sendSticker(m.chat, buffer, m, {
-   packname: 'asu',
-   author: 'asu'
-})*/

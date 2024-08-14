@@ -15,7 +15,7 @@ module.exports = {
       var isAll = false
       var isUser = false
       var g = ['welcome', 'detect', 'antidelete', 'antilink', 'antivirtex', 'autosticker', 'antisticker', 'viewonce', 'filter']
-      var o = ['anticall', 'self', 'online', 'antispam', 'debug', 'groupmode', 'privatemode', 'game', 'rpg']
+      var o = ['anticall', 'chatbot', 'self', 'online', 'antispam', 'debug', 'groupmode', 'privatemode', 'game', 'rpg']
       switch (type) {
          /** group setting */
          case 'welcome': {
@@ -144,6 +144,15 @@ module.exports = {
                throw false
             }
             setting.anticall = isEnable
+         }
+         break
+         case 'chatbot': {
+            isAll = true
+            if (!isOwner) {
+               conn.reply(m.chat, global.status.owner, m)
+               throw false
+            }
+            setting.chatbot = isEnable
          }
          break
          case 'self': {

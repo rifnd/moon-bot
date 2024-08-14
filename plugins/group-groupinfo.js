@@ -29,7 +29,6 @@ module.exports = {
             caption += `	◦  ${Func.switcher(setting.filter, '[ √ ]', '[ × ]')} Filter\n`
             caption += `	◦  ${Func.switcher(setting.autosticker, '[ √ ]', '[ × ]')} Auto Sticker\n`
             caption += `	◦  ${Func.switcher(setting.detect, '[ √ ]', '[ × ]')} Detect\n`
-            caption += `	◦  ${Func.switcher(setting.localonly, '[ √ ]', '[ × ]')} Localonly\n`
             caption += `	◦  ${Func.switcher(setting.viewonce, '[ √ ]', '[ × ]')} Viewonce Forwarder\n`
             caption += `	◦  ${Func.switcher(setting.welcome, '[ √ ]', '[ × ]')} Welcome Message\n\n`
             caption += `乂  *G R O U P - S T A T U S*\n\n`
