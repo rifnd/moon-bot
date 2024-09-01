@@ -36,7 +36,7 @@ module.exports = {
                "replyMessage": {}
             }]
          }
-         const response = await axios.post('https://s.moonx.my.id/generate', json, {
+         const response = await axios.post('https://bot.lyo.su/quote/generate', json, {
             headers: {
                'Content-Type': 'application/json'
             }

@@ -233,7 +233,7 @@ module.exports = {
                         id: `${usedPrefix}owner`
                      })
                   }]
-                  conn.sendAIMessage(m.chat, soad, m, {
+                  conn.sendIAMessage(m.chat, soad, m, {
                      content: global.status.premium,
                      footer: global.footer,
                   })
@@ -281,7 +281,7 @@ module.exports = {
                         id: `${usedPrefix}buy 1`
                      })
                   }]
-                  conn.sendAIMessage(m.chat, soad, m, {
+                  conn.sendIAMessage(m.chat, soad, m, {
                      content: `Your limit is exhausted, please purchase via *${usedPrefix}buy*`,
                      footer: global.footer,
                   })
