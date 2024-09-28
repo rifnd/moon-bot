@@ -13,7 +13,7 @@ module.exports = {
          if (id in conn.tekateki) return conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.tekateki[id][0])
          let src = await Func.fetchJson('https://raw.githubusercontent.com/qisyana/scrape/main/tekateki.json')
          let json = src[Math.floor(Math.random() * src.length)]
-         let capt = `– *Teka Teki*\n\n`
+         let capt = `乂  *T E K A - T E K I*\n\n`
          capt += `${json.pertanyaan}\n\n`
          capt += `Timeout : ${timeout / 60 / 1000} menit\n`
          capt += `Balas pesan ini untuk menjawab, kirim ${usedPrefix}tekki untuk bantuan`
@@ -29,7 +29,7 @@ module.exports = {
       } else if (command == 'tekki') {
          if (!(id in conn.tekateki)) throw false
          let clue = conn.tekateki[id][1].jawaban.replace(/[AIUEOaiueo]/g, '_')
-         conn.reply(m.chat, '```' + clue + '```\nBalas soalnya, bukan pesan ini', conn.tekateki[id][0])
+         conn.reply(m.chat, '```' + clue + '```\nBalas soalnya, bukan pesan ini', m)
       }
    },
    help: ['tekateki'],

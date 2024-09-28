@@ -1,4 +1,7 @@
 module.exports = {
+   help: ['tebakgambar'],
+   tags: ['game'],
+   command: /^(tebakgambar|hint)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -34,9 +37,6 @@ module.exports = {
          conn.reply(m.chat, '```' + clue + '```\nBalas soalnya, bukan pesan ini', conn.tebakgambar[id][0])
       }
    },
-   help: ['tebakgambar'],
-   tags: ['game'],
-   command: /^(tebakgambar|hint)$/i,
    group: true,
    game: true,
    limit: true

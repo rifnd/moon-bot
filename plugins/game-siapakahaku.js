@@ -1,4 +1,7 @@
 module.exports = {
+   help: ['siapakahaku'],
+   tags: ['game'],
+   command: /^(siapakahaku|who)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -13,7 +16,7 @@ module.exports = {
          if (id in conn.siapakahaku) return conn.reply(m.chat, Func.texted('bold', '^ Soal ini belum dijawab.'), conn.siapakahaku[id][0])
          let src = await Func.fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/siapakahaku.json')
          let json = src[Math.floor(Math.random() * src.length)]
-         let capt = `– *Siapakah Aku?*\n\n`
+         let capt = `乂  *S I A P A K A H - A K U*\n\n`
          capt += `${json.soal}\n\n`
          capt += `Timeout : ${timeout / 60 / 1000} menit\n`
          capt += `Balas pesan ini untuk menjawab, kirim ${usedPrefix}who untuk bantuan.`
@@ -32,9 +35,6 @@ module.exports = {
          m.reply('```' + clue + '```')
       }
    },
-   help: ['siapakahaku'],
-   tags: ['game'],
-   command: /^(siapakahaku|who)$/i,
    group: true,
    game: true,
    limit: true

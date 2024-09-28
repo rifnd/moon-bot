@@ -1,4 +1,7 @@
 module.exports = {
+   help: ['lengkapikalimat'],
+   tags: ['game'],
+   command: /^(lengkapikalimat|leka)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -13,7 +16,7 @@ module.exports = {
          if (id in conn.lengkapikalimat) return conn.reply(m.chat, Func.texted('bold', '^ Soal ini belum dijawab.'), conn.lengkapikalimat[id][0])
          let src = await Func.fetchJson('https://raw.githubusercontent.com/qisyana/scrape/main/lengkapikalimat.json')
          let json = src[Math.floor(Math.random() * src.length)]
-         let capt = `– *Lengkapi Kalimat*\n\n`
+         let capt = `乂  *L E N G K A P I - K A L I M A T*\n\n`
          capt += `${json.pertanyaan}\n\n`
          capt += `Timeout : ${timeout / 60 / 1000} menit\n`
          capt += `Balas pesan ini untuk menjawab, kirim ${usedPrefix}leka untuk bantuan.`
@@ -34,9 +37,6 @@ module.exports = {
          console.log(clue)
       }
    },
-   help: ['lengkapikalimat'],
-   tags: ['game'],
-   command: /^(lengkapikalimat|leka)$/i,
    group: true,
    game: true,
    limit: true

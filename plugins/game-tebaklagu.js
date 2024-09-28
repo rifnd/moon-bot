@@ -1,4 +1,7 @@
 module.exports = {
+   help: ['tebaklagu'],
+   tags: ['game'],
+   command: /^(tebaklagu|tegu)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -34,9 +37,6 @@ module.exports = {
          m.reply('```' + clue + '```')
       }
    },
-   help: ['tebaklagu'],
-   tags: ['game'],
-   command: /^(tebaklagu|tegu)$/i,
    group: true,
    game: true,
    limit: true

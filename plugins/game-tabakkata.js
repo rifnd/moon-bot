@@ -1,4 +1,7 @@
 module.exports = {
+   help: ['tebakkata'],
+   tags: ['game'],
+   command: /^(tebakkata|teka)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -13,7 +16,7 @@ module.exports = {
          if (id in conn.tebakkata) return conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.tebakkata[id][0])
          let src = await Func.fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/tebakkata.json')
          let json = src[Math.floor(Math.random() * src.length)]
-         let capt = `– *Tebak Kata*\n\n`
+         let capt = `乂  *T E B A K - K A T A*\n\n`
          capt += `${json.soal}\n\n`
          capt += `Timeout : ${timeout / 60 / 1000} menit\n`
          capt += `Balas pesan ini untuk menjawab, kirim ${usedPrefix}teka untuk bantuan`
@@ -32,9 +35,6 @@ module.exports = {
          conn.reply(m.chat, '```' + clue + '```\nBalas soalnya, bukan pesan ini', conn.tebakkata[id][0])
       }
    },
-   help: ['tebakkata'],
-   tags: ['game'],
-   command: /^(tebakkata|teka)$/i,
    group: true,
    game: true,
    limit: true

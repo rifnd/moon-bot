@@ -1,4 +1,7 @@
 module.exports = {
+   help: ['susunkata'],
+   tags: ['game'],
+   command: /^(susunkata|suska)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -13,7 +16,7 @@ module.exports = {
          if (id in conn.susunkata) return conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.susunkata[id][0])
          let src = await Func.fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/susunkata.json')
          let json = src[Math.floor(Math.random() * src.length)]
-         let capt = `乂 *S U S U N K A T A*\n\n`
+         let capt = `乂  *S U S U N K A T A*\n\n`
          capt += `${json.soal}\n\n`
          capt += `Tipe : ${json.tipe}\n`
          capt += `Timeout : ${timeout / 60 / 1000} menit\n`
@@ -33,9 +36,6 @@ module.exports = {
          conn.reply(m.chat, '```' + clue + '```\nBalas soalnya, bukan pesan ini', conn.susunkata[id][0])
       }
    },
-   help: ['susunkata'],
-   tags: ['game'],
-   command: /^(susunkata|suska)$/i,
    group: true,
    game: true,
    limit: true
