@@ -98,6 +98,11 @@
       } catch { }
    }, 60 * 1000 * 10)
 
+   /** save database every 30 seconds */
+   setInterval(async () => {
+      if (global.db) await global.db.write()
+   }, 60_000)
+
    /** connection event */
    const imports = (path) => {
       path = require.resolve(path)
