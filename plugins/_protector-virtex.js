@@ -1,5 +1,6 @@
 let handler = (m) => m
 handler.before = async function(m, {
+   conn,
    groupSet,
    isBotAdmin,
    body,

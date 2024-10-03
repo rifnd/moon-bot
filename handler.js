@@ -1,26 +1,25 @@
-const { smsg, Functions: Func, Scraper, Print } = new (require('@moonr/func'))
-const env = require('./lib/system/config')
+const { Functions: Func, Scraper, Print } = new (require('@moonr/func'))
+const env = require('./config.json')
 const fs = require('fs')
 const isNumber = x => typeof x === 'number' && !isNaN(x)
 
 module.exports = {
-   async handler(chatUpdate) {
-      if (db.data == null) await loadDatabase()
-      conn.msgqueque = conn.msgqueque || []
+   async handler(conn, m, chatUpdate) {
+      if (global.db.data == null) await global.loadDatabase()
       if (!chatUpdate) return
       conn.pushMessage(chatUpdate.messages).catch(console.error)
-      let m = chatUpdate.messages[chatUpdate.messages.length - 1]
       if (!m) return
       if (m.message?.viewOnceMessageV2) m.message = m.message.viewOnceMessageV2.message
       if (m.message?.documentWithCaptionMessage) m.message = m.message.documentWithCaptionMessage.message
       if (m.message?.viewOnceMessageV2Extension) m.message = m.message.viewOnceMessageV2Extension.message
       try {
-         m = smsg(conn, m) || m
          if (!m) return
          m.exp = 0
          m.limit = false
          require('./lib/system/schema')(m, env)
          require('./lib/system/simple')
+         require('./lib/system/functions')
+         require('./lib/system/scraper')
 
          const users = global.db.data.users[m.sender]
          const groupSet = global.db.data.groups[m.chat]
@@ -34,7 +33,7 @@ module.exports = {
 
          const adminList = m.isGroup ? await conn.groupAdmin(m.chat) : [] || []
          const isAdmin = m.isGroup ? adminList.includes(m.sender) : false
-         const isBotAdmin = m.isGroup ? adminList.includes((conn.user.id.split`:` [0]) + '@s.whatsapp.net') : false
+         const isBotAdmin = m.isGroup ? adminList.includes((conn.user.id.split`:`[0]) + '@s.whatsapp.net') : false
          const blockList = typeof await (await conn.fetchBlocklist()) != 'undefined' ? await (await conn.fetchBlocklist()) : []
          const body = typeof m.text == 'string' ? m.text : false
 
@@ -108,7 +107,7 @@ module.exports = {
             }
          }
 
-         for (let name in global.plugins) {
+         for (let name in plugins) {
             //let plugin = global.plugins[name]
             let plugin
             if (typeof plugins[name].run === 'function') {
@@ -193,7 +192,7 @@ module.exports = {
                      typeof plugin.command === 'string' ? // String?
                         plugin.command === command :
                         false
-               
+
                if (!isAccept) continue
 
                users.hit += 1
@@ -386,26 +385,21 @@ module.exports = {
    },
    async participantsUpdate({ id, participants, action }) {
       if (global.db.data.setting.self) return
-      if (global.isInit) return
       let group = global.db.data.groups[id] || {}
+      let metadata = await this.groupMetadata(id)
       let text = ''
       switch (action) {
          case 'add':
          case 'remove':
-         case 'leave':
-         case 'invite':
-         case 'invite_v4':
             if (group.welcome) {
-               let groupMetadata = await conn.groupMetadata(id) || (conn.chats[id] || {}).metadata
                for (let user of participants) {
                   let pp = './src/image/default.png'
                   try {
-                     pp = await conn.profilePictureUrl(user, 'image')
+                     pp = await this.profilePictureUrl(user, 'image')
                   } catch (e) {
                   } finally {
-                     text = (action === 'add' ? (group.sWelcome || conn.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', await conn.getName(id)).replace('@desc', groupMetadata.desc.toString()) :
-                        (group.sBye || conn.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
-                     conn.sendMessageModify(id, text, null, {
+                     text = (action === 'add' ? (group.sWelcome || this.welcome || this.welcome || 'Welcome, @user!').replace('@subject', await this.getName(id)).replace('@desc', metadata.desc.toString()) : (group.sBye || this.bye || this.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
+                     this.sendMessageModify(id, text, null, {
                         largeThumb: true,
                         thumbnail: pp,
                         url: global.db.data.setting.link
@@ -413,46 +407,75 @@ module.exports = {
                   }
                }
             }
-         break
+            break
          case 'promote':
-            text = (group.sPromote || conn.spromote || conn.spromote || '@user ```is now Admin```')
+            text = ('@user ```is now Admin```')
          case 'demote':
-            if (!text) text = (group.sDemote || conn.sdemote || conn.sdemote || '@user ```is no longer Admin```')
+            if (!text) text = ('@user ```is no longer Admin```')
             text = text.replace('@user', '@' + participants[0].split('@')[0])
-            if (group.detect) conn.sendMessage(id, { text, mentions: conn.parseMention(text) })
-         break
+            if (group.detect) this.sendMessage(id, { text, mentions: this.parseMention(text) })
+            break
       }
    },
-   async delete({ fromMe, id, participant }) {
+   async groupsUpdate(groupsUpdate) {
+      if (global.db.data.setting.self) return
+      for (let groupUpdate of groupsUpdate) {
+         let id = groupUpdate.id
+         let group = global.db.data.groups[id] || {}, text = ''
+         if (!group.detect) continue
+         if (groupUpdate.desc) text = ('Group description has been changed to :\n\n@desc').replace('@desc', groupUpdate.desc)
+         if (groupUpdate.subject) text = ('Group title has been changed to : @subject').replace('@subject', groupUpdate.subject)
+         if (groupUpdate.icon) text = 'Group icon has been changed'
+         if (groupUpdate.inviteCode) text = ('Group link has been changed to :\n\nhttps://chat.whatsapp.com/@revoke').replace('@revoke', groupUpdate.inviteCode)
+         if (groupUpdate.announce === true) text = 'Group has been closed'
+         if (groupUpdate.announce === false) text = 'Group has been opened'
+         if (groupUpdate.restrict === true) text = 'All participants in the group can send messages'
+         if (groupUpdate.restrict === false) text = 'This group is restricted to admins only'
+         this.sendMessage(id, { text })
+      }
+   },
+   async deleteUpdate({ fromMe, id, participant }) {
       try {
          if (fromMe) return
-         let chats = Object.entries(conn.chats).find(([_, data]) => data.messages?.[id])
+         let chats = Object.entries(this.chats).find(([_, data]) => data.messages?.[id])
          if (!chats) return
          let msg = chats instanceof String ? JSON.parse(chats[1].messages[id]) : chats[1].messages[id]
          let group = global.db.data.groups[msg.key.remoteJid] || {}
-         if (!group.antidelete) return
-         await conn.reply(msg.key.remoteJid, `detected @${participant.split`@`[0]} has deleted the message
+         if (group.antidelete) return
+         await this.reply(msg.key.remoteJid, `detected @${participant.split`@`[0]} has deleted the message
 To turn off this feature, send
 *.off antidelete*
 `.trim(), msg, {
             mentions: [participant]
          })
-         conn.copyNForward(msg.key.remoteJid, msg).catch(e => console.log(e, msg))
+         this.copyNForward(msg.key.remoteJid, msg).catch(e => console.log(e, msg))
       } catch (e) {
          console.error(e)
       }
+   },
+   async caller(json) {
+      if (global.db.data.setting.anticall) {
+         for (let id of json) {
+            if (id.status === 'offer') {
+               await this.rejectCall(id.id, id.from)
+            }
+         }
+      }
+   },
+   async presenceUpdate(presenceUpdate) {
+      const id = presenceUpdate.id
+      const nouser = Object.keys(presenceUpdate.presences)
+      const status = presenceUpdate.presences[nouser]?.lastKnownPresence
+      const user = global.db.data?.users[nouser[0]]
+      if ((status === 'composing' || status === 'recording') && user?.afk && user.afk > -1) {
+         const username = nouser[0].split('@')[0]
+         const timeAfk = new Date() - user.afk
+         this.reply(id, `System detects activity from @${username} after being offline for : *${Func.toTime(timeAfk)}*\n\n➠ *Reason* : ${user.afkReason ? user.afkReason : '-'}`, null)
+         user.afk = -1
+         user.afkReason = ''
+      }
    }
-}
-conn.ws.on('CB:call', async function callUpdatePushToDb(json) {
-   let call = json.tag
-   let callerId = json.attrs.from
-   console.log({ call, callerId })
-   let users = db.data.users
-   let user = users[callerId] || {}
-   if (!db.data.setting.anticall) return
-   await conn.reply(global.owner + '@s.whatsapp.net', `*NOTIF CALLER BOT!*\n\n@${callerId.split`@`[0]} telah menelpon *${conn.user.name}*\n\n ${callerId.split`@`[0]}\n`, null, { mentions: [callerId] })
-   Func.delay(10000) // supaya tidak spam
-})
+} 
 
 let file = require.resolve(__filename)
 fs.watchFile(file, () => {
