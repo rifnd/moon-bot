@@ -126,7 +126,7 @@ module.exports = {
             if (plugin.disabled) continue
             if (typeof plugin.all === 'function') {
                try {
-                  await plugin.all.call(this, m, chatUpdate)
+                  await plugin.all.call(conn, m, chatUpdate)
                } catch (e) {
                   console.error(e)
                }
@@ -441,7 +441,7 @@ module.exports = {
          if (!chats) return
          let msg = chats instanceof String ? JSON.parse(chats[1].messages[id]) : chats[1].messages[id]
          let group = global.db.data.groups[msg.key.remoteJid] || {}
-         if (group.antidelete) return
+         if (!group.antidelete) return
          await this.reply(msg.key.remoteJid, `detected @${participant.split`@`[0]} has deleted the message
 To turn off this feature, send
 *.off antidelete*
@@ -454,7 +454,7 @@ To turn off this feature, send
       }
    },
    async caller(json) {
-      if (global.db.data.setting.anticall) {
+      if (!global.db.data.setting.anticall) {
          for (let id of json) {
             if (id.status === 'offer') {
                await this.rejectCall(id.id, id.from)

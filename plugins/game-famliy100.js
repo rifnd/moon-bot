@@ -5,11 +5,11 @@ module.exports = {
       command,
       Func
    }) => {
-      this.game = this.game ? this.game : {}
+      conn.game = conn.game ? conn.game : {}
       let winScore = Func.randomInt(1000, 50000)
       let id = 'family100_' + m.chat
-      if (id in this.game) {
-         this.reply(m.chat, 'Masih ada kuis yang belum terjawab di chat ini', this.game[id].msg)
+      if (id in conn.game) {
+         conn.reply(m.chat, 'Masih ada kuis yang belum terjawab di chat ini', conn.game[id].msg)
          throw false
       }
       let src = await Func.fetchJson('https://raw.githubusercontent.com/BochilTeam/database/master/games/family100.json')
@@ -21,8 +21,8 @@ Terdapat *${json.jawaban.length}* jawaban${json.jawaban.find(v => v.includes(' '
 (beberapa jawaban terdapat spasi)
 `: ''}
 
-+${winScore} Money tiap jawaban benar`.trim()
-      this.game[id] = {
++${Func.formatNumber(winScore)} Money tiap jawaban benar`.trim()
+      conn.game[id] = {
          id,
          msg: await m.reply(caption),
          ...json,

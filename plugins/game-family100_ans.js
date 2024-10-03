@@ -2,13 +2,14 @@ const similarity = require('similarity')
 const threshold = 0.72
 module.exports = {
    async before(m, {
+      conn,
       Func
    }) {
       try {
-         this.game = this.game ? this.game : {}
+         conn.game = conn.game ? conn.game : {}
          let id = 'family100_' + m.chat
-         if (!(id in this.game)) return !0
-         let room = this.game[id]
+         if (!(id in conn.game)) return !0
+         let room = conn.game[id]
          let text = m.text.toLowerCase().replace(/[^\w\s\-]+/, '')
          let isSurrender = /^((me)?nyerah|surr?ender)$/i.test(m.text)
          if (!isSurrender) {
@@ -24,26 +25,24 @@ module.exports = {
          }
          let isWin = room.terjawab.length === room.terjawab.filter(v => v).length
          let caption = `
-   *Soal:* ${room.soal}
+*Soal:* ${room.soal}
    
-   Terdapat *${room.jawaban.length}* jawaban${room.jawaban.find(v => v.includes(' ')) ? `
-   (beberapa jawaban terdapat spasi)
-   `: ''}
-   ${isWin ? `*SEMUA JAWABAN TERJAWAB*` : isSurrender ? '*MENYERAH!*' : ''}
-   ${Array.from(room.jawaban, (jawaban, index) => {
-            return isSurrender || room.terjawab[index] ? `(${index + 1}) ${jawaban} ${room.terjawab[index] ? '@' + room.terjawab[index].split('@')[0] : ''}`.trim() : false
-         }).filter(v => v).join('\n')}
+Terdapat *${room.jawaban.length}* jawaban${room.jawaban.find(v => v.includes(' ')) ? `
+(beberapa jawaban terdapat spasi)`: ''}
+${isWin ? `*SEMUA JAWABAN TERJAWAB*` : isSurrender ? '*MENYERAH!*' : ''}
+${Array.from(room.jawaban, (jawaban, index) => {
+   return isSurrender || room.terjawab[index] ? `(${index + 1}) ${jawaban} ${room.terjawab[index] ? '@' + room.terjawab[index].split('@')[0] : ''}`.trim() : false
+}).filter(v => v).join('\n')}
    
-   ${isSurrender ? '' : `+${room.winScore} Money tiap jawaban benar`}
-       `.trim()
+${isSurrender ? '' : `+${Func.formatNumber(room.winScore)} Money tiap jawaban benar`}`.trim()
          m.reply(caption, null, {
             contextInfo: {
-               mentionedJid: this.parseMention(caption)
+               mentionedJid: conn.parseMention(caption)
             }
          }).then(msg => {
-            return this.game[id].msg = msg
+            return conn.game[id].msg = msg
          }).catch(_ => _)
-         if (isWin || isSurrender) delete this.game[id]
+         if (isWin || isSurrender) delete conn.game[id]
       } catch (e) {
          console.log(e)
       }

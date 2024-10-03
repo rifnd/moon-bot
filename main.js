@@ -70,7 +70,7 @@
       try {
          const tmpFiles = readdirSync('./tmp')
          if (tmpFiles.length > 0) {
-            tmpFiles.filter(v => !v.endsWith('.file')).map(v => unlinkSync('./temp/' + v))
+            tmpFiles.filter(v => !v.endsWith('.file')).map(v => unlinkSync('./tmp/' + v))
          }
 
          /* this source from @jarspay */

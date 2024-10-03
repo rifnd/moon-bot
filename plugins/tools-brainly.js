@@ -1,4 +1,8 @@
 module.exports = {
+   help: ['brainly'],
+   use: 'query',
+   tags: ['tools'],
+   command: /^(brainly)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -7,9 +11,9 @@ module.exports = {
       Scraper,
       Func
    }) => {
-      if (!text) return m.reply(Func.example(usedPrefix, command, 'Penemu listrik'))
-      m.react('🕒')
       try {
+         if (!text) return m.reply(Func.example(usedPrefix, command, 'Penemu listrik'))
+         m.react('🕒')
          const json = await Api.get('api/brainly', {
             q: text, lang: 'id'
          })
@@ -20,13 +24,9 @@ module.exports = {
             teks += `›  *Answer* : \n${v.answers}\n\n`
          })
          m.reply(teks + global.footer)
-      } catch {
-         console.log(e)
+      } catch (e) {
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
-   help: ['brainly'],
-   use: 'query',
-   tags: ['tools'],
-   command: /^(brainly)$/i,
    limit: true,
 }
