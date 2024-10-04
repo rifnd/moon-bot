@@ -1,4 +1,8 @@
 module.exports = {
+   help: ['bc', 'bcgc'],
+   use: 'text or reply media',
+   tags: ['owner'],
+   command: /^(bc|bcgc)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -9,7 +13,7 @@ module.exports = {
       try {
          let q = m.quoted ? m.quoted : m
          let mime = (q.msg || q).mimetype || ''
-         let chatJid = Object.entries(global.db.data.data.chats).filter(([jid, _]) => jid.endsWith('.net')).map(([jid, _]) => jid)
+         let chatJid = Object.entries(global.db.data.chats).filter(([jid, _]) => jid.endsWith('.net')).map(([jid, _]) => jid)
          let groupList = async () => Object.entries(await conn.groupFetchAllParticipating()).slice(0).map(entry => entry[1])
          let groupJid = await (await groupList()).map(v => v.id)
          const id = command == 'bc' ? chatJid : groupJid
@@ -67,9 +71,5 @@ module.exports = {
          conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
-   help: ['bc', 'bcgc'],
-   use: 'text or reply media',
-   tags: ['owner'],
-   command: /^(bc|bcgc)$/i,
    owner: true
 }
