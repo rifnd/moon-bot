@@ -8,7 +8,7 @@ module.exports = {
       Func
    }) => {
       if (!text) return m.reply(Func.example(usedPrefix, command, 'Cow'))
-      m.react('🕐')
+      m.react('🕒')
       try {
          if (command == 'google') {
             let json = await Api.get('api/google', {
@@ -16,14 +16,14 @@ module.exports = {
             })
             let teks = `乂  *G O O G L E*\n\n`
             json.data.map((v, i) => {
-               teks += `*` + (i + 1) + `.* ` + v.title + `\n`;
-               teks += `  ∘  *Snippet* : ` + v.snippet + `\n`;
-               teks += `  ∘  *Link* : ` + v.url + `\n\n`;
+               teks += `*` + (i + 1) + `.* ` + v.title + `\n`
+               teks += `  ∘  *Snippet* : ` + v.snippet + `\n`
+               teks += `  ∘  *Link* : ` + v.url + `\n\n`
             })
             m.reply(teks)
          }
          if (command == 'gimage') {
-            let json = await Api.get('api/googleimage', {
+            let json = await Api.get('api/google-image', {
                q: text
             })
             for (let i = 0; i < 5; i++) {
