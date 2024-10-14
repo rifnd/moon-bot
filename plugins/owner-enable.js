@@ -1,4 +1,8 @@
 module.exports = {
+   help: ['en', 'dis'].map(v => v + 'able'),
+   use: 'option',
+   tags: ['admin', 'owner'],
+   command: /^(on|off|enable|disable)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -15,7 +19,7 @@ module.exports = {
       var isAll = false
       var isUser = false
       var g = ['welcome', 'detect', 'antidelete', 'antilink', 'antivirtex', 'autosticker', 'antisticker', 'viewonce', 'filter']
-      var o = ['anticall', 'chatbot', 'self', 'online', 'antispam', 'debug', 'groupmode', 'privatemode', 'game', 'rpg']
+      var o = ['anticall', 'chatbot', 'levelup', 'self', 'online', 'antispam', 'debug', 'groupmode', 'privatemode', 'game', 'rpg']
       switch (type) {
          /** group setting */
          case 'welcome': {
@@ -155,6 +159,15 @@ module.exports = {
             setting.chatbot = isEnable
          }
          break
+         case 'levelup': {
+            isAll = true
+            if (!isOwner) {
+               conn.reply(m.chat, global.status.owner, m)
+               throw false
+            }
+            setting.levelup = isEnable
+         }
+         break
          case 'self': {
             isAll = true
             if (!isOwner) {
@@ -232,9 +245,5 @@ module.exports = {
             if (!/[01]/.test(command)) return conn.reply(m.chat, opt, m)
       }
       conn.reply(m.chat, `*${type}* successfully *${isEnable ? 'enable' : 'disable'}* ${isAll ? 'for this bot' : isUser ? '' : 'for this group'}`.trim(), m)
-   },
-   help: ['en', 'dis'].map(v => v + 'able'),
-   use: 'option',
-   tags: ['admin', 'owner'],
-   command: /^(on|off|enable|disable)$/i
+   }
 }
