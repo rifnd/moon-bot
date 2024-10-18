@@ -3,14 +3,13 @@
    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
    require('events').EventEmitter.defaultMaxListeners = 500
    require('./lib/system/config')
-   const { MongoDB, lowdb, CloudDBAdapter, Connection, smsg } = new (require('@moonr/func'))
+   const { MongoDB, lowdb, CloudDBAdapter, Connection, Plugins } = new (require('@moonr/func'))
+   const { loadPlugins, watchPlugins } = Plugins
    const { join } = require('path')
-   const { watch, readFileSync, existsSync, mkdirSync, readdirSync, statSync, unlinkSync, openSync } = require('fs')
+   const { existsSync, mkdirSync, readdirSync, statSync, unlinkSync, openSync } = require('fs')
    const yargs = require('yargs/yargs')
    const { spawn } = require('child_process')
-   const syntaxerror = require('syntax-error')
    const _ = require('lodash')
-   const os = require('os')
    const env = require('./config.json')
    const { Low, JSONFile } = lowdb
 
@@ -146,46 +145,13 @@
       return true
    }
 
-   /** plugins */
-   let pluginFolder = join(__dirname, 'plugins')
-   let pluginFilter = filename => /\.js$/.test(filename)
-   global.plugins = {}
-   for (let filename of readdirSync(pluginFolder).filter(pluginFilter)) {
-      try {
-         global.plugins[filename] = require(join(pluginFolder, filename))
-      } catch (e) {
-         conn.logger.error(e)
-         delete global.plugins[filename]
-      }
-   }
-   let reload = (_ev, filename) => {
-      if (pluginFilter(filename)) {
-         let dir = join(pluginFolder, filename)
-         if (dir in require.cache) {
-            delete require.cache[dir]
-            if (existsSync(dir)) conn.logger.info(`re - require plugin '${filename}'`)
-            else {
-               conn.logger.warn(`deleted plugin '${filename}'`)
-               return delete global.plugins[filename]
-            }
-         } else conn.logger.info(`requiring new plugin '${filename}'`)
-         let err = syntaxerror(readFileSync(dir), filename)
-         if (err) conn.logger.error(`syntax error while loading '${filename}'\n${err}`)
-         else try {
-            global.plugins[filename] = require(dir)
-         } catch (e) {
-            conn.logger.error(e)
-         } finally {
-            global.plugins = Object.fromEntries(Object.entries(global.plugins).sort(([a], [b]) => a.localeCompare(b)))
-         }
-      }
-   }
-   Object.freeze(reload)
-   watch(join(__dirname, 'plugins'), reload)
-
+   /** Load all plugins when application starts */
+   loadPlugins(conn);
+   /** Watch the plugins folder for automatic reloading if anything changes */
+   watchPlugins(conn);
    /** reload handler */
    reloadHandler()
-
+   
    /** quick test */
    async function _quickTest() {
       let test = await Promise.all([

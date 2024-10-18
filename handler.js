@@ -1,4 +1,5 @@
-const { Functions: Func, Scraper, Print } = new (require('@moonr/func'))
+const { Functions: Func, Scraper, Print, Plugins } = new (require('@moonr/func'))
+const { plugins } = Plugins
 const env = require('./config.json')
 const fs = require('fs')
 const isNumber = x => typeof x === 'number' && !isNaN(x)
@@ -17,7 +18,7 @@ module.exports = {
          m.exp = 0
          m.limit = false
          require('./lib/system/schema')(m, env)
-         require('./lib/system/simple')
+         require('./lib/system/simple')(conn)
          require('./lib/system/functions')
          require('./lib/system/scraper')
 
@@ -108,14 +109,14 @@ module.exports = {
          }
 
          for (let name in plugins) {
-            //let plugin = global.plugins[name]
+            //let plugin = plugins[name]
             let plugin
             if (typeof plugins[name].run === 'function') {
                let ai = plugins[name]
                plugin = ai.run;
                for (let prop in ai) {
                   if (prop !== 'run') {
-                     plugin[prop] = ai[prop];
+                     plugin[prop] = ai[prop]
                   }
                }
             } else {
@@ -157,6 +158,7 @@ module.exports = {
                body,
                blockList,
                conn: conn,
+               plugins,
                participants,
                groupMetadata,
                isOwner,
@@ -300,6 +302,7 @@ module.exports = {
                   command,
                   text,
                   conn: conn,
+                  plugins,
                   participants,
                   groupMetadata,
                   isOwner,
@@ -434,8 +437,10 @@ module.exports = {
          this.sendMessage(id, { text })
       }
    },
-   async deleteUpdate({ fromMe, id, participant }) {
+   async deleteUpdate(update) {
       try {
+         if (!update || typeof update !== 'object') return
+         const { fromMe, id, participant } = update
          if (fromMe) return
          let chats = Object.entries(this.chats).find(([_, data]) => data.messages?.[id])
          if (!chats) return

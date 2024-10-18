@@ -1,5 +1,6 @@
 const fs = require('fs')
 module.exports = {
+   command: /^(menu|help)$/i,
    run: async (m, {
       conn,
       usedPrefix: _p,
@@ -8,6 +9,7 @@ module.exports = {
       args,
       env,
       setting,
+      plugins,
       Func
    }) => {
       try {
@@ -16,301 +18,509 @@ module.exports = {
          const local_size = fs.existsSync('./database.json') ? await Func.getSize(fs.statSync('./database.json').size) : ''
          const message = setting.msg.replace('+tag', `@${m.sender.replace(/@.+/g, '')}`).replace('+name', m.name).replace('+greeting', Func.greeting()).replace('+db', (/mongo/.test(env.databaseurl) ? 'MongoDB' : `Local : ${local_size}`))
          if (style === 1) {
-            let tags = {}
-            const defaultMenu = {
-               before: `${message}\n`.trimStart(),
-               header: '  乂  *%category*\n\n┌─',
-               body: '│  ◦  %cmd %isUse %isPremium',
-               footer: '└─\n',
-               after: `${global.footer}`,
-            }
-            let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => {
-               return {
-                  help: Array.isArray(plugin.tags) ? plugin.help : [plugin.help],
-                  tags: Array.isArray(plugin.tags) ? plugin.tags : [plugin.tags],
-                  use: plugin.use,
-                  prefix: 'customPrefix' in plugin,
-                  limit: plugin.limit,
-                  premium: plugin.premium,
-                  enabled: !plugin.disabled,
+            let filter = Object.entries(plugins).filter(([_, obj]) => obj.help)
+            let cmd = Object.fromEntries(filter)
+            let category = []
+
+            for (let name in cmd) {
+               let obj = cmd[name]
+               if (!obj) continue
+               if (!obj.tags || setting.hidden.includes(obj.tags[0])) continue
+               if (Object.keys(category).includes(obj.tags[0])) {
+                  category[obj.tags[0]].push(obj)
+               } else {
+                  category[obj.tags[0]] = []
+                  category[obj.tags[0]].push(obj)
                }
-            })
-            for (let plugin of help)
-               if (plugin && 'tags' in plugin)
-                  for (let tag of plugin.tags)
-                     if (!(tag in tags) && tag) tags[tag] = tag
-            conn.menu = conn.menu ? conn.menu : {}
-            let before = conn.menu.before || defaultMenu.before
-            let header = conn.menu.header || defaultMenu.header
-            let body = conn.menu.body || defaultMenu.body
-            let footer = conn.menu.footer || defaultMenu.footer
-            let after = conn.menu.after || (conn.user.jid == conn.user.jid ? '' : `Powered by https://wa.me/${conn.user.jid.split`@`[0]}`) + defaultMenu.after
-            let _text = [
-               before,
-               ...Object.keys(tags).map(tag => {
-                  return header.replace(/%category/g, tags[tag]) + '\n' + [
-                     ...help.filter(menu => menu.tags && menu.tags.includes(tag) && menu.help).map(menu => {
-                        return menu.help.map(help => {
-                           return body.replace(/%cmd/g, menu.prefix ? help : '%p' + help)
-                              .replace(/%isUse/g, menu.use ? '*' + menu.use + '*' : ' ')
-                              .replace(/%islimit/g, menu.limit ? 'Ⓛ' : '')
-                              .replace(/%isPremium/g, menu.premium ? 'Ⓟ' : '')
-                              .trim()
-                        }).join('\n')
-                     }), footer
-                  ].join('\n')
-               }), after
-            ].join('\n')
-            text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
-            let replace = {
-               '%': '%', p: _p, tag: `@${m.sender.replace(/@.+/g, '')}`, readmore: readMore
             }
-            text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => a.length - b.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
-            conn.sendMessageModify(m.chat, Func.Styles(text.trim()), m, {
+
+            const keys = Object.keys(category).sort()
+            let print = message
+            print += '\n' + String.fromCharCode(8206).repeat(4001)
+
+            for (let k of keys) {
+               print += '\n\n乂  *' + k.toUpperCase().split('').join(' ') + '*\n\n'
+               let cmd = Object.entries(plugins).filter(([_, v]) => v.help && v.tags && v.tags.includes(k))
+               let usage = Object.keys(Object.fromEntries(cmd))
+               if (usage.length == 0) continue
+
+               let commands = []
+               cmd.map(([_, v]) => {
+                  switch (v.help.constructor.name) {
+                     case 'Array':
+                        v.help.map(x => commands.push({
+                           usage: x,
+                           use: v.use ? Func.texted('bold', v.use) : ''
+                        }))
+                        break;
+                     case 'String':
+                        commands.push({
+                           usage: v.help,
+                           use: v.use ? Func.texted('bold', v.use) : ''
+                        })
+                  }
+               })
+               print += commands.sort((a, b) => a.usage.localeCompare(b.usage)).map(v => `	◦  ${_p + v.usage} ${v.use}`).join('\n')
+            }
+
+            conn.sendMessageModify(m.chat, print + '\n\n' + global.footer, m, {
+               ads: false,
                largeThumb: true,
+               thumbnail: setting.cover,
                url: setting.link
             })
          } else if (style === 2) {
-            const defaultMenu = {
-               before: ``.trimStart(),
-               header: '┌─',
-               body: '│  ◦  %cmd %isUse %isPremium',
-               footer: '└─\n',
-               after: ``,
-            }
+            let filter = Object.entries(plugins).filter(([_, obj]) => obj.help)
+            let cmd = Object.fromEntries(filter)
+            let category = {}
 
-            let help = Object.values(global.plugins).filter((plugin) => !plugin.disabled).map((plugin) => {
-               return {
-                  help: Array.isArray(plugin.tags) ? plugin.help : [plugin.help],
-                  tags: Array.isArray(plugin.tags) ? plugin.tags : [plugin.tags],
-                  use: plugin.use,
-                  prefix: 'customPrefix' in plugin,
-                  limit: plugin.limit,
-                  premium: plugin.premium,
-                  enabled: !plugin.disabled,
+            for (let name in cmd) {
+               let obj = cmd[name]
+               if (!obj) continue
+               if (!obj.tags || setting.hidden.includes(obj.tags[0])) continue
+               if (Object.keys(category).includes(obj.tags[0])) {
+                  category[obj.tags[0]].push(obj)
+               } else {
+                  category[obj.tags[0]] = [obj]
                }
+            }
+
+            const keys = Object.keys(category).sort()
+            let print = message
+            print += '\n' + String.fromCharCode(8206).repeat(4001)
+
+            for (let k of keys) {
+               print += '\n\n –  *' + k.toUpperCase().split('').map(v => v).join(' ') + '*\n\n'
+               let cmd = Object.entries(plugins).filter(([_, v]) => v.help && v.tags && v.tags.includes(k))
+               let usage = Object.keys(Object.fromEntries(cmd))
+               if (usage.length == 0) continue
+
+               let commands = []
+               cmd.map(([_, v]) => {
+                  if (v.help) {  // Memastikan v.help ada
+                     switch (v.help.constructor.name) {
+                        case 'Array':
+                           v.help.map(x => commands.push({
+                              usage: x,
+                              use: v.use ? Func.texted('bold', v.use) : ''
+                           }))
+                           break
+                        case 'String':
+                           commands.push({
+                              usage: v.help,
+                              use: v.use ? Func.texted('bold', v.use) : ''
+                           })
+                     }
+                  }
+               })
+               print += commands.sort((a, b) => a.usage.localeCompare(b.usage)).map((v, i) => {
+                  if (i == 0) {
+                     return `┌  ◦  ${_p + v.usage} ${v.use}`;
+                  } else if (i == commands.length - 1) {
+                     return `└  ◦  ${_p + v.usage} ${v.use}`;
+                  } else {
+                     return `│  ◦  ${_p + v.usage} ${v.use}`;
+                  }
+               }).join('\n')
+            }
+
+            conn.sendMessageModify(m.chat, print + '\n\n' + global.footer, m, {
+               ads: false,
+               largeThumb: true,
+               thumbnail: setting.cover,
+               url: setting.link
             })
-
-            let tags
-            let teks = `${args[0]}`.toLowerCase()
-            let arrayMenu = ['admin', 'converter', 'downloader', 'fun', 'game', 'group', 'miscs', 'user', 'tools', 'voice']
-            if (!arrayMenu.includes(teks)) teks = '404'
-
-            if (teks == 'admin') tags = {
-               'admin': 'admin'
-            }
-            if (teks == 'converter') tags = {
-               'converter': 'conveter'
-            }
-            if (teks == 'downloader') tags = {
-               'downloader': 'downloader'
-            }
-            if (teks == 'fun') tags = {
-               'fun': 'fun'
-            }
-            if (teks == 'game') tags = {
-               'game': 'game'
-            }
-            if (teks == 'group') tags = {
-               'group': 'group'
-            }
-            if (teks == 'miscs') tags = {
-               'miscs': 'miscs'
-            }
-            if (teks == 'tools') tags = {
-               'tools': 'tools'
-            }
-            if (teks == 'user') tags = {
-               'user': 'user'
-            }
-            if (teks == 'voice') tags = {
-               'voice': 'voice'
-            }
-
-            if (teks == '404') {
-               let caption = `${message}\n\n`
-               caption += arrayMenu.sort((a, b) => a.localeCompare(b)).map((v, i) => {
+         } else if (style === 3) {
+            if (text) {
+               let cmd = Object.entries(plugins).filter(([_, v]) => v.help && v.tags && v.tags.includes(text.trim().toLowerCase()) && !setting.hidden.includes(v.tags[0]))
+               let usage = Object.keys(Object.fromEntries(cmd))
+               if (usage.length == 0) return
+               let commands = []
+               cmd.forEach(([_, v]) => {
+                  switch (v.help.constructor.name) {
+                     case 'Array':
+                        v.help.forEach(x => commands.push({
+                           usage: x,
+                           use: v.use ? Func.texted('bold', v.use) : ''
+                        }))
+                        break
+                     case 'String':
+                        commands.push({
+                           usage: v.help,
+                           use: v.use ? Func.texted('bold', v.use) : ''
+                        })
+                  }
+               })
+               let print = commands.sort((a, b) => a.usage.localeCompare(b.usage)).map((v, i) => {
+                  if (i == 0) {
+                     return `┌  ◦  ${_p + v.usage} ${v.use}`
+                  } else if (i == commands.length - 1) {
+                     return `└  ◦  ${_p + v.usage} ${v.use}`
+                  } else {
+                     return `│  ◦  ${_p + v.usage} ${v.use}`
+                  }
+               }).join('\n')
+               m.reply(print)
+            } else {
+               let print = message
+               print += '\n' + String.fromCharCode(8206).repeat(4001) + '\n'
+               let filter = Object.entries(plugins).filter(([_, obj]) => obj.help)
+               let cmd = Object.fromEntries(filter)
+               let category = {}
+               for (let name in cmd) {
+                  let obj = cmd[name]
+                  if (!obj) continue
+                  if (!obj.tags || setting.hidden.includes(obj.tags[0])) continue
+                  if (Object.keys(category).includes(obj.tags[0])) {
+                     category[obj.tags[0]].push(obj)
+                  } else {
+                     category[obj.tags[0]] = [obj]
+                  }
+               }
+               const keys = Object.keys(category).sort()
+               print += keys.map((v, i) => {
                   if (i == 0) {
                      return `┌  ◦  ${_p + command} ${v}`
-                  } else if (i == arrayMenu.sort((a, b) => a.localeCompare(b)).length - 1) {
+                  } else if (i == keys.length - 1) {
                      return `└  ◦  ${_p + command} ${v}`
                   } else {
                      return `│  ◦  ${_p + command} ${v}`
                   }
                }).join('\n')
-               caption += '\n\n' + global.footer
-               return conn.sendMessageModify(m.chat, Func.Styles(caption.trim()), m, {
+               conn.sendMessageModify(m.chat, print + '\n\n' + global.footer, m, {
+                  ads: false,
                   largeThumb: true,
                   thumbnail: setting.cover,
                   url: setting.link
                })
             }
-
-            let groups = {}
-            for (let tag in tags) {
-               groups[tag] = []
-               for (let plugin of help)
-                  if (plugin.tags && plugin.tags.includes(tag))
-                     if (plugin.help) groups[tag].push(plugin)
-               //for (let tag of plugin.tags)
-               //if (!(tag in tags)) tags[tag] = tag
-            }
-
-            let before = conn.menu.before || defaultMenu.before
-            let header = conn.menu.header || defaultMenu.header
-            let body = conn.menu.body || defaultMenu.body
-            let footer = conn.menu.footer || defaultMenu.footer
-            let after = conn.menu.after || (conn.user.jid == conn.user.jid ? '' : `Powered by https://wa.me/${conn.user.jid.split`@`[0]}`) + defaultMenu.after
-            let _text = [
-               before,
-               ...Object.keys(tags).map(tag => {
-                  return header.replace(/%category/g, tags[tag]) + '\n' + [
-                     ...help.filter(menu => menu.tags && menu.tags.includes(tag) && menu.help).map(menu => {
-                        return menu.help.map(help => {
-                           return body.replace(/%cmd/g, menu.prefix ? help : '%p' + help)
-                              .replace(/%isUse/g, menu.use ? '*' + menu.use + '*' : ' ')
-                              .replace(/%islimit/g, menu.limit ? 'Ⓛ' : '')
-                              .replace(/%isPremium/g, menu.premium ? 'Ⓟ' : '').trim()
-                        }).join('\n')
-                     }), footer
-                  ].join('\n')
-               }), after
-            ].join('\n')
-            let text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
-            let replace = {
-               '%': '%', p: _p, readmore: readMore
-            }
-            text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
-            m.reply(Func.Styles(text.trim()))
-         } else if (style === 3) {
-            const defaultMenu = {
-               before: ``.trimStart(),
-               header: '┌─',
-               body: '│  ◦  %cmd %isUse %isPremium',
-               footer: '└─\n',
-               after: ``,
-            }
-
-            let help = Object.values(plugins).filter((plugin) => !plugin.disabled).map((plugin) => {
-               return {
-                  help: Array.isArray(plugin.tags) ? plugin.help : [plugin.help],
-                  tags: Array.isArray(plugin.tags) ? plugin.tags : [plugin.tags],
-                  use: plugin.use,
-                  prefix: 'customPrefix' in plugin,
-                  limit: plugin.limit,
-                  premium: plugin.premium,
-                  enabled: !plugin.disabled,
+         } else if (style === 4) {
+            if (text) {
+               let cmd = Object.entries(plugins).filter(([_, v]) => v.help && v.tags && v.tags.includes(text.trim().toLowerCase()) && !setting.hidden.includes(v.tags[0]))
+               let usage = Object.keys(Object.fromEntries(cmd))
+               if (usage.length == 0) return
+               let commands = [];
+               cmd.forEach(([_, v]) => {
+                  switch (v.help.constructor.name) {
+                     case 'Array':
+                        v.help.forEach(x => commands.push({
+                           usage: x,
+                           use: v.use ? Func.texted('bold', v.use) : ''
+                        }))
+                        break
+                     case 'String':
+                        commands.push({
+                           usage: v.help,
+                           use: v.use ? Func.texted('bold', v.use) : ''
+                        })
+                  }
+               })
+               let print = commands.sort((a, b) => a.usage.localeCompare(b.usage)).map((v, i) => {
+                  if (i == 0) {
+                     return `┌  ◦  ${_p + v.usage} ${v.use}`
+                  } else if (i == commands.length - 1) {
+                     return `└  ◦  ${_p + v.usage} ${v.use}`
+                  } else {
+                     return `│  ◦  ${_p + v.usage} ${v.use}`
+                  }
+               }).join('\n')
+               m.reply(print)
+            } else {
+               let print = message
+               let filter = Object.entries(plugins).filter(([_, obj]) => obj.help)
+               let cmd = Object.fromEntries(filter)
+               let category = {}
+               for (let name in cmd) {
+                  let obj = cmd[name]
+                  if (!obj) continue
+                  if (!obj.tags || setting.hidden.includes(obj.tags[0])) continue
+                  if (Object.keys(category).includes(obj.tags[0])) {
+                     category[obj.tags[0]].push(obj)
+                  } else {
+                     category[obj.tags[0]] = [obj]
+                  }
                }
-            })
-
-            let tags
-            let teks = `${args[0]}`.toLowerCase()
-            let arrayMenu = ['admin', 'converter', 'downloader', 'fun', 'game', 'group', 'miscs', 'user', 'tools', 'voice']
-            if (!arrayMenu.includes(teks)) teks = '404'
-
-            if (teks == 'admin') tags = {
-               'admin': 'admin'
-            }
-            if (teks == 'converter') tags = {
-               'converter': 'conveter'
-            }
-            if (teks == 'downloader') tags = {
-               'downloader': 'downloader'
-            }
-            if (teks == 'fun') tags = {
-               'fun': 'fun'
-            }
-            if (teks == 'game') tags = {
-               'game': 'game'
-            }
-            if (teks == 'group') tags = {
-               'group': 'group'
-            }
-            if (teks == 'miscs') tags = {
-               'miscs': 'miscs'
-            }
-            if (teks == 'tools') tags = {
-               'tools': 'tools'
-            }
-            if (teks == 'user') tags = {
-               'user': 'user'
-            }
-            if (teks == 'voice') tags = {
-               'voice': 'voice'
-            }
-
-            const label = {
-               highlight_label: 'Many Used'
-            }
-            let sections = []
-            arrayMenu.sort((a, b) => a.localeCompare(b)).map((v, i) => sections.push({
-               ...(/download|conver|util/.test(v) ? label : {}),
-               rows: [{
-                  title: Func.ucword(v),
-                  description: `There are commands`,
-                  id: `${_p + command} ${v}`
+               const keys = Object.keys(category).sort()
+               let sections = []
+               const label = {
+                  highlight_label: 'Many Used'
+               }
+               keys.sort((a, b) => a.localeCompare(b)).forEach((v, i) => sections.push({
+                  ...(/download|conver|util/.test(v) ? label : {}),
+                  rows: [{
+                     title: Func.ucword(v),
+                     description: `There are ${Func.arrayJoin(Object.entries(plugins).filter(([_, x]) => x.help && x.tags && x.tags.includes(v.trim().toLowerCase())).map(([_, x]) => x.help)).length} commands`,
+                     id: `${_p + command} ${v}`
+                  }]
+               }))
+               const buttons = [{
+                  name: 'single_select',
+                  buttonParamsJson: JSON.stringify({
+                     title: 'Tap Here!',
+                     sections
+                  })
                }]
-            }))
-            const buttons = [{
-               name: 'single_select',
-               buttonParamsJson: JSON.stringify({
-                  title: 'Tap Here!',
-                  sections
-               })
-            }]
-            if (teks == '404') {
-               return conn.sendIAMessage(m.chat, buttons, m, {
+               conn.sendIAMessage(m.chat, buttons, m, {
                   header: '',
-                  content: Func.Styles(message),
+                  content: print,
                   footer: global.footer,
-                  media: setting.cover
+                  media: global.db.setting.cover
                })
             }
-            let groups = {}
-            for (let tag in tags) {
-               groups[tag] = []
-               for (let plugin of help)
-                  if (plugin.tags && plugin.tags.includes(tag))
-                     if (plugin.help) groups[tag].push(plugin)
-               //for (let tag of plugin.tags)
-               //if (!(tag in tags)) tags[tag] = tag
+         } else if (style === 5) {
+            let filter = Object.entries(plugins).filter(([_, obj]) => obj.help)
+            let cmd = Object.fromEntries(filter)
+            let category = []
+
+            for (let name in cmd) {
+               let obj = cmd[name]
+               if (!obj) continue
+               if (!obj.tags || setting.hidden.includes(obj.tags[0])) continue
+               if (Object.keys(category).includes(obj.tags[0])) {
+                  category[obj.tags[0]].push(obj)
+               } else {
+                  category[obj.tags[0]] = []
+                  category[obj.tags[0]].push(obj)
+               }
             }
 
-            //conn.menu = conn.menu ? conn.menu: {}
-            let before = conn.menu.before || defaultMenu.before
-            let header = conn.menu.header || defaultMenu.header
-            let body = conn.menu.body || defaultMenu.body
-            let footer = conn.menu.footer || defaultMenu.footer
-            let after = conn.menu.after || (conn.user.jid == conn.user.jid ? '' : `Powered by httptps://wa.me/${conn.user.jid.split`@`[0]}`) + defaultMenu.after
-            let _text = [
-               before,
-               ...Object.keys(tags).map(tag => {
-                  return header.replace(/%category/g, tags[tag]) + '\n' + [
-                     ...help.filter(menu => menu.tags && menu.tags.includes(tag) && menu.help).map(menu => {
-                        return menu.help.map(help => {
-                           return body.replace(/%cmd/g, menu.prefix ? help : '%p' + help)
-                              .replace(/%isUse/g, menu.use ? '*' + menu.use + '*' : ' ')
-                              .replace(/%islimit/g, menu.limit ? 'Ⓛ' : '')
-                              .replace(/%isPremium/g, menu.premium ? 'Ⓟ' : '').trim()
-                        }).join('\n')
-                     }), footer
-                  ].join('\n')
-               }), after
-            ].join('\n')
-            let text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
-            let replace = {
-               '%': '%', p: _p, readmore: readMore
+            const keys = Object.keys(category).sort()
+            let print = message
+            print += '\n' + String.fromCharCode(8206).repeat(4001)
+
+            for (let k of keys) {
+               print += '\n\n乂  *' + k.toUpperCase().split('').join(' ') + '*\n\n'
+               let cmd = Object.entries(plugins).filter(([_, v]) => v.help && v.tags && v.tags.includes(k))
+               let usage = Object.keys(Object.fromEntries(cmd))
+               if (usage.length == 0) continue
+
+               let commands = []
+               cmd.map(([_, v]) => {
+                  switch (v.help.constructor.name) {
+                     case 'Array':
+                        v.help.map(x => commands.push({
+                           usage: x,
+                           use: v.use ? Func.texted('bold', v.use) : ''
+                        }))
+                        break;
+                     case 'String':
+                        commands.push({
+                           usage: v.help,
+                           use: v.use ? Func.texted('bold', v.use) : ''
+                        })
+                  }
+               })
+               print += commands.sort((a, b) => a.usage.localeCompare(b.usage)).map(v => `	◦  ${_p + v.usage} ${v.use}`).join('\n')
             }
-            text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
-            return m.reply(Func.Styles(text.trim()))
+
+            conn.sendMessageModify(m.chat, Func.Styles(print) + '\n\n' + global.footer, m, {
+               ads: false,
+               largeThumb: true,
+               thumbnail: setting.cover,
+               url: setting.link
+            })
+         } else if (style === 6) {
+            let filter = Object.entries(plugins).filter(([_, obj]) => obj.help)
+            let cmd = Object.fromEntries(filter)
+            let category = {}
+
+            for (let name in cmd) {
+               let obj = cmd[name]
+               if (!obj) continue
+               if (!obj.tags || setting.hidden.includes(obj.tags[0])) continue
+               if (Object.keys(category).includes(obj.tags[0])) {
+                  category[obj.tags[0]].push(obj)
+               } else {
+                  category[obj.tags[0]] = [obj]
+               }
+            }
+
+            const keys = Object.keys(category).sort()
+            let print = message
+            print += '\n' + String.fromCharCode(8206).repeat(4001)
+
+            for (let k of keys) {
+               print += '\n\n –  *' + k.toUpperCase().split('').map(v => v).join(' ') + '*\n\n'
+               let cmd = Object.entries(plugins).filter(([_, v]) => v.help && v.tags && v.tags.includes(k))
+               let usage = Object.keys(Object.fromEntries(cmd))
+               if (usage.length == 0) continue
+
+               let commands = []
+               cmd.map(([_, v]) => {
+                  if (v.help) {  // Memastikan v.help ada
+                     switch (v.help.constructor.name) {
+                        case 'Array':
+                           v.help.map(x => commands.push({
+                              usage: x,
+                              use: v.use ? Func.texted('bold', v.use) : ''
+                           }))
+                           break
+                        case 'String':
+                           commands.push({
+                              usage: v.help,
+                              use: v.use ? Func.texted('bold', v.use) : ''
+                           })
+                     }
+                  }
+               })
+               print += commands.sort((a, b) => a.usage.localeCompare(b.usage)).map((v, i) => {
+                  if (i == 0) {
+                     return `┌  ◦  ${_p + v.usage} ${v.use}`;
+                  } else if (i == commands.length - 1) {
+                     return `└  ◦  ${_p + v.usage} ${v.use}`;
+                  } else {
+                     return `│  ◦  ${_p + v.usage} ${v.use}`;
+                  }
+               }).join('\n')
+            }
+
+            conn.sendMessageModify(m.chat, Func.Styles(print) + '\n\n' + global.footer, m, {
+               ads: false,
+               largeThumb: true,
+               thumbnail: setting.cover,
+               url: setting.link
+            })
+         } else if (style === 7) {
+            if (text) {
+               let cmd = Object.entries(plugins).filter(([_, v]) => v.help && v.tags && v.tags.includes(text.trim().toLowerCase()) && !setting.hidden.includes(v.tags[0]))
+               let usage = Object.keys(Object.fromEntries(cmd))
+               if (usage.length == 0) return
+               let commands = []
+               cmd.forEach(([_, v]) => {
+                  switch (v.help.constructor.name) {
+                     case 'Array':
+                        v.help.forEach(x => commands.push({
+                           usage: x,
+                           use: v.use ? Func.texted('bold', v.use) : ''
+                        }))
+                        break
+                     case 'String':
+                        commands.push({
+                           usage: v.help,
+                           use: v.use ? Func.texted('bold', v.use) : ''
+                        })
+                  }
+               })
+               let print = commands.sort((a, b) => a.usage.localeCompare(b.usage)).map((v, i) => {
+                  if (i == 0) {
+                     return `┌  ◦  ${_p + v.usage} ${v.use}`
+                  } else if (i == commands.length - 1) {
+                     return `└  ◦  ${_p + v.usage} ${v.use}`
+                  } else {
+                     return `│  ◦  ${_p + v.usage} ${v.use}`
+                  }
+               }).join('\n')
+               m.reply(Func.Styles(print))
+            } else {
+               let print = message
+               print += '\n' + String.fromCharCode(8206).repeat(4001) + '\n'
+               let filter = Object.entries(plugins).filter(([_, obj]) => obj.help)
+               let cmd = Object.fromEntries(filter)
+               let category = {}
+               for (let name in cmd) {
+                  let obj = cmd[name]
+                  if (!obj) continue
+                  if (!obj.tags || setting.hidden.includes(obj.tags[0])) continue
+                  if (Object.keys(category).includes(obj.tags[0])) {
+                     category[obj.tags[0]].push(obj)
+                  } else {
+                     category[obj.tags[0]] = [obj]
+                  }
+               }
+               const keys = Object.keys(category).sort()
+               print += keys.map((v, i) => {
+                  if (i == 0) {
+                     return `┌  ◦  ${_p + command} ${v}`
+                  } else if (i == keys.length - 1) {
+                     return `└  ◦  ${_p + command} ${v}`
+                  } else {
+                     return `│  ◦  ${_p + command} ${v}`
+                  }
+               }).join('\n')
+               conn.sendMessageModify(m.chat, Func.Styles(print) + '\n\n' + global.footer, m, {
+                  ads: false,
+                  largeThumb: true,
+                  thumbnail: setting.cover,
+                  url: setting.link
+               })
+            }
+         } else if (style === 8) {
+            if (text) {
+               let cmd = Object.entries(plugins).filter(([_, v]) => v.help && v.tags && v.tags.includes(text.trim().toLowerCase()) && !setting.hidden.includes(v.tags[0]))
+               let usage = Object.keys(Object.fromEntries(cmd))
+               if (usage.length == 0) return
+               let commands = []
+               cmd.forEach(([_, v]) => {
+                  switch (v.help.constructor.name) {
+                     case 'Array':
+                        v.help.forEach(x => commands.push({
+                           usage: x,
+                           use: v.use ? Func.texted('bold', v.use) : ''
+                        }))
+                        break
+                     case 'String':
+                        commands.push({
+                           usage: v.help,
+                           use: v.use ? Func.texted('bold', v.use) : ''
+                        })
+                  }
+               })
+               let print = commands.sort((a, b) => a.usage.localeCompare(b.usage)).map((v, i) => {
+                  if (i == 0) {
+                     return `┌  ◦  ${_p + v.usage} ${v.use}`
+                  } else if (i == commands.length - 1) {
+                     return `└  ◦  ${_p + v.usage} ${v.use}`
+                  } else {
+                     return `│  ◦  ${_p + v.usage} ${v.use}`
+                  }
+               }).join('\n')
+               m.reply(Func.Styles(print))
+            } else {
+               let print = message;
+               let filter = Object.entries(plugins).filter(([_, obj]) => obj.help)
+               let cmd = Object.fromEntries(filter)
+               let category = {}
+               for (let name in cmd) {
+                  let obj = cmd[name]
+                  if (!obj) continue
+                  if (!obj.tags || setting.hidden.includes(obj.tags[0])) continue
+                  if (Object.keys(category).includes(obj.tags[0])) {
+                     category[obj.tags[0]].push(obj)
+                  } else {
+                     category[obj.tags[0]] = [obj]
+                  }
+               }
+               const keys = Object.keys(category).sort()
+               let sections = []
+               const label = {
+                  highlight_label: 'Many Used'
+               }
+               keys.sort((a, b) => a.localeCompare(b)).forEach((v, i) => sections.push({
+                  ...(/download|conver|util/.test(v) ? label : {}),
+                  rows: [{
+                     title: Func.ucword(v),
+                     description: `There are ${Func.arrayJoin(Object.entries(plugins).filter(([_, x]) => x.help && x.tags && x.tags.includes(v.trim().toLowerCase())).map(([_, x]) => x.help)).length} commands`,
+                     id: `${_p + command} ${v}`
+                  }]
+               }))
+               const buttons = [{
+                  name: 'single_select',
+                  buttonParamsJson: JSON.stringify({
+                     title: 'Tap Here!',
+                     sections
+                  })
+               }]
+               conn.sendIAMessage(m.chat, buttons, m, {
+                  header: '',
+                  content: Func.Styles(print),
+                  footer: global.footer,
+                  media: global.db.setting.cover
+               })
+            }
          }
       } catch (e) {
          conn.reply(m.chat, Func.jsonFormat(e), m)
-         console.log(e)
       }
    },
-   command: /^(menu|help)$/i,
    exp: 3
 }
-const more = String.fromCharCode(8206)
-const readMore = more.repeat(4001)
