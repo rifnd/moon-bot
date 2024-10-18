@@ -264,7 +264,7 @@ module.exports = {
                   header: '',
                   content: print,
                   footer: global.footer,
-                  media: global.db.setting.cover
+                  media: setting.cover
                })
             }
          } else if (style === 5) {
@@ -514,7 +514,7 @@ module.exports = {
                   header: '',
                   content: Func.Styles(print),
                   footer: global.footer,
-                  media: global.db.setting.cover
+                  media: setting.cover
                })
             }
          }
