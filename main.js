@@ -3,7 +3,7 @@
    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
    require('events').EventEmitter.defaultMaxListeners = 500
    require('./lib/system/config')
-   const { MongoDB, lowdb, CloudDBAdapter, Connection, Plugins } = new (require('@moonr/func'))
+   const { MongoDB, PostgresDB, lowdb, CloudDBAdapter, Connection, Plugins } = new (require('@moonr/func'))
    const { loadPlugins, watchPlugins } = Plugins
    const { join } = require('path')
    const { existsSync, mkdirSync, readdirSync, statSync, unlinkSync, openSync } = require('fs')
@@ -19,8 +19,7 @@
    global.prefix = new RegExp('^[' + (opts['prefix'] || '!+/#.') + ']')
 
    /** database */
-   global.db = new Low(/https?:\/\//.test(env.databaseurl) ? CloudDBAdapter(env.databaseurl) : /mongodb/.test(env.databaseurl) ? new MongoDB(env.databaseurl) : new JSONFile(`database.json`))
-   global.DATABASE = global.db // Backwards Compatibility
+   global.db = new Low(/https?:\/\//.test(env.databaseurl) ? CloudDBAdapter(env.databaseurl) : /mongodb/.test(env.databaseurl) ? new MongoDB(env.databaseurl) : /postgresql/.test(env.databaseurl) ? new PostgresDB(env.databaseurl) : new JSONFile(`database.json`))
    global.loadDatabase = async function loadDatabase() {
       if (global.db.READ) return new Promise((resolve) => setInterval(function () {
          (!global.db.READ ? (clearInterval(this), resolve(global.db.data == null ? global.loadDatabase() : global.db.data)) : null)
@@ -146,12 +145,12 @@
    }
 
    /** Load all plugins when application starts */
-   loadPlugins(conn);
+   loadPlugins(conn)
    /** Watch the plugins folder for automatic reloading if anything changes */
-   watchPlugins(conn);
+   watchPlugins(conn)
    /** reload handler */
    reloadHandler()
-   
+
    /** quick test */
    async function _quickTest() {
       let test = await Promise.all([

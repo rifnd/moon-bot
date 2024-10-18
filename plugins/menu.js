@@ -16,7 +16,7 @@ module.exports = {
          conn.menu = conn.menu ? conn.menu : {}
          const style = setting.style
          const local_size = fs.existsSync('./database.json') ? await Func.getSize(fs.statSync('./database.json').size) : ''
-         const message = setting.msg.replace('+tag', `@${m.sender.replace(/@.+/g, '')}`).replace('+name', m.name).replace('+greeting', Func.greeting()).replace('+db', (/mongo/.test(env.databaseurl) ? 'MongoDB' : `Local : ${local_size}`))
+         const message = setting.msg.replace('+tag', `@${m.sender.replace(/@.+/g, '')}`).replace('+name', m.name).replace('+greeting', Func.greeting()).replace('+db', (/mongo/.test(env.databaseurl) ? 'MongoDB' : /postgresql/.test(env.databaseurl) ? 'PostgreSQL' : `Local : ${local_size}`))
          if (style === 1) {
             let filter = Object.entries(plugins).filter(([_, obj]) => obj.help)
             let cmd = Object.fromEntries(filter)
