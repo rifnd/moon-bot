@@ -14,7 +14,7 @@ module.exports = {
             if (!fn.status) return m.reply(Func.texted('bold', '🚩 File cannot be downloaded.'))
             global.db.data = JSON.parse(readFileSync(fn.file, 'utf-8'))
             m.reply('✅ Database was successfully restored.').then(async () => {
-               await global.db.save(JSON.parse(readFileSync(fn.file, 'utf-8')))
+               await global.db.write(JSON.parse(readFileSync(fn.file, 'utf-8')))
             })
          } else m.reply(Func.texted('bold', '🚩 Reply to the backup file first then reply with this feature.'))
       } catch (e) {
