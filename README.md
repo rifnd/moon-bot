@@ -1,7 +1,5 @@
-### MOON-BOT (CJS)
+### MOON-BOT
 > - This script is 100% free, which uses the api from [AlyaChan-APIs](https://api.alyachan.pro)
-> - Using the module from [@moonr/func](https://www.npmjs.com/package/@moonr/func)
-> - I edited this bot like neoxr-bot, so it's kind of the same but different
 
 ### To install this script you need
 - [x] Server vCPU/RAM 1/1GB (Min)
@@ -37,9 +35,13 @@ module.exports = {
       state: true, // True or False
       number: 6281252848955 // Bot Number
    },
-   databaseurl: '' // Database use mongodb
+   databaseurl: '' // Database use mongodb & postgresql
 }
 ```
+
+### Database 
+> - MongoDB ~ [https://www.mongodb.com]
+> - PostgreSQL ~ [https://supabase.com]
 
 ### Plugins 1
 ```Javascript
@@ -152,19 +154,13 @@ $ pm2 start index.js && pm2 save && pm2 logs
 ```
 
 ## Heroku Buildpack
+> - heroku/nodejs
+> - https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
+> - https://github.com/DuckyTeam/heroku-buildpack-imagemagick.git
 
-```
-heroku/nodejs
-```
-```
-https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
-```
-```
-https://github.com/DuckyTeam/heroku-buildpack-imagemagick.git
-```
 
 ### Thanks To
-<a href="https://api.alyachan.dev"><img src="https://telegra.ph/file/8ee315efa49035e1c5e94.jpg" width="100" height="100"></a> | [![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) | [![Nando](https://github.com/rifnd.png?size=100)](https://github.com/rifnd) | [![Alya](https://github.com/alya-tok.png?size=100)](https://github.com/alya-tok) | [![Neoxr](https://github.com/neoxr.png?size=100)](https://github.com/neoxr)
+<a href="https://api.alyachan.dev"><img src="https://telegra.ph/file/8ee315efa49035e1c5e94.jpg" width="80"></a> | [![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) | [![Nando](https://github.com/rifnd.png?size=100)](https://github.com/rifnd) | [![Alya](https://github.com/alya-tok.png?size=100)](https://github.com/alya-tok) | [![Neoxr](https://github.com/neoxr.png?size=100)](https://github.com/neoxr)
 ----|----|----|----|----
 [ALYACHAN](https://api.alyachan.dev/) | [Nurutomo](https://github.com/Nurutomo) | [Nando](https://github.com/rifnd) | [Alya](https://github.com/alya-tok) | [Neoxr](https://github.com/neoxr)
 APIs Provider | Author / Creator | Decoder | Support System | All Functions

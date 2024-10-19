@@ -203,15 +203,15 @@ module.exports = {
 
                m.plugin = name
                if (m.chat in db.data.groups || m.sender in db.data.users) {
-                  if (name != 'owner-unbanned.js' && groupSet && groupSet.isBanned) return // Except conn
-                  if (name != 'owner-unbanned.js' && users && users.banned) return
+                  if (!['unbanned.js'].includes(name.split('/').pop()) && groupSet && groupSet.isBanned) return // Except conn
+                  if (!['unbanned.js'].includes(name.split('/').pop()) && users && users.banned) return
                }
 
                if (m.isBaileys || m.chat.endsWith('broadcast') || /edit/.test(m.mtype)) continue
                if (setting.self && !isOwner && !m.fromMe) continue
                if (setting.privatemode && !isOwner && !m.fromMe && m.isGroup) continue
-               if (!m.isGroup && !['miscs-owner.js', 'miscs-price.js', 'user-reg.js'].includes(name.split('/').pop()) && chats && !isPrems && !users.banned && new Date() * 1 - chats.lastchat < env.timeout) continue
-               if (!m.isGroup && !['miscs-owner.js', 'miscs-price.js', 'user-reg.js'].includes(name) && chats && !isPrems && !users.banned && setting.groupmode) {
+               if (!m.isGroup && !['owner.js', 'price.js', 'reg.js'].includes(name.split('/').pop()) && chats && !isPrems && !users.banned && new Date() * 1 - chats.lastchat < env.timeout) continue
+               if (!m.isGroup && !['owner.js', 'price.js', 'reg.js'].includes(name) && chats && !isPrems && !users.banned && setting.groupmode) {
                   conn.sendMessageModify(m.chat, `⚠️ Using bot in private chat only for premium user, want to upgrade to premium plan ? send *${usedPrefix}premium* to see benefit and prices.`, m, {
                      largeThumb: true,
                      thumbnail: 'https://telegra.ph/file/0b32e0a0bb3b81fef9838.jpg',
