@@ -2,6 +2,7 @@ const { Functions: Func, Scraper, Print, Plugins } = new (require('@moonr/func')
 const { plugins } = Plugins
 const env = require('./config.json')
 const fs = require('fs')
+const cron = require('node-cron')
 const isNumber = x => typeof x === 'number' && !isNaN(x)
 
 module.exports = {
@@ -96,6 +97,17 @@ module.exports = {
             users.afk = -1
             users.afkReason = ''
          }
+         cron.schedule('00 00 * * *', () => {
+            setting.lastReset = Date.now()
+            Object.values(global.db.data.users).forEach(v => {
+               if (v.limit < env.limit && !v.premium) {
+                  v.limit = env.limit
+               }
+            })
+         }, {
+            scheduled: true,
+            timezone: 'Asia/Jakarta'
+         })
          if (m.isGroup && !m.fromMe) {
             let now = new Date() * 1
             if (!groupSet.member[m.sender]) {
