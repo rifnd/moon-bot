@@ -211,7 +211,6 @@ module.exports = {
 
                users.hit += 1
                users.usebot = Date.now()
-               console.log({ hit: users.hit, prefix: usedPrefix.trim(), command: command })
 
                m.plugin = name
                if (m.chat in db.data.groups || m.sender in db.data.users) {
@@ -509,7 +508,7 @@ To turn off this feature, send
 let file = require.resolve(__filename)
 fs.watchFile(file, () => {
    fs.unwatchFile(file)
-   Func.logFile('UPDATE : handler.js')
+   Func.logFile("Update ~ 'handler.js'")
    delete require.cache[file]
    if (global.reloadHandler) console.log(global.reloadHandler())
 })

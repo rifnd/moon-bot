@@ -1,6 +1,6 @@
 (async () => {
    "use strict";
-   process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0'
+   process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0
    require('events').EventEmitter.defaultMaxListeners = 500
    require('./lib/system/config')
    const { MongoDB, PostgresDB, lowdb, CloudDBAdapter, Connection, Plugins } = new (require('@moonr/func'))
@@ -8,8 +8,7 @@
    const { join } = require('path')
    const { existsSync, mkdirSync, readdirSync, statSync, unlinkSync, openSync } = require('fs')
    const yargs = require('yargs/yargs')
-   const { spawn } = require('child_process')
-   const _ = require('lodash')
+   const { chain } = require('lodash')
    const env = require('./config.json')
    const { Low, JSONFile } = lowdb
 
@@ -40,7 +39,7 @@
          chara: '',
          ...(global.db.data || {})
       }
-      global.db.chain = _.chain(global.db.data)
+      global.db.chain = chain(global.db.data)
    }
    loadDatabase()
 
@@ -150,46 +149,4 @@
    watchPlugins(conn)
    /** reload handler */
    reloadHandler()
-
-   /** quick test */
-   async function _quickTest() {
-      let test = await Promise.all([
-         spawn('ffmpeg'),
-         spawn('ffprobe'),
-         spawn('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-filter_complex', 'color', '-frames:v', '1', '-f', 'webp', '-']),
-         spawn('convert'),
-         spawn('magick'),
-         spawn('gm'),
-         spawn('find', ['--version'])
-      ].map(p => {
-         return Promise.race([
-            new Promise(resolve => {
-               p.on('close', code => {
-                  resolve(code !== 127)
-               })
-            }),
-            new Promise(resolve => {
-               p.on('error', _ => resolve(false))
-            })
-         ])
-      }))
-      let [ffmpeg, ffprobe, ffmpegWebp, convert, magick, gm, find] = test
-      console.log(test)
-      let s = global.support = {
-         ffmpeg,
-         ffprobe,
-         ffmpegWebp,
-         convert,
-         magick,
-         gm,
-         find
-      }
-      // require('./lib/sticker').support = s
-      Object.freeze(global.support)
-
-      if (!s.ffmpeg) conn.logger.warn('Please install ffmpeg for sending videos (pkg install ffmpeg)')
-      if (s.ffmpeg && !s.ffmpegWebp) conn.logger.warn('Stickers may not animated without libwebp on ffmpeg (--enable-ibwebp while compiling ffmpeg)')
-      if (!s.convert && !s.magick && !s.gm) conn.logger.warn('Stickers may not work without imagemagick if libwebp on ffmpeg doesnt isntalled (pkg install imagemagick)')
-   }
-   _quickTest().then(() => conn.logger.info('Quick Test Done')).catch(console.error)
 })()
