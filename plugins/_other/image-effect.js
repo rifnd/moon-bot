@@ -6,6 +6,7 @@ module.exports = {
    run: async (m, {
       conn,
       usedPrefix,
+      command,
       Scraper,
       Func
    }) => {
