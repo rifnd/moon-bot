@@ -4,7 +4,7 @@ const { exec } = require('child_process')
 module.exports = {
    help: ['bass', 'blown', 'chipmunk', 'deep', 'earrape', 'fast', 'fat', 'nightcore', 'reverse', 'robot', 'slow', 'smooth'],
    use: 'reply audio',
-   tags: ['voice'],
+   tags: ['voice changer'],
    command: /^(bass|blown|chipmunk|deep|earrape|fast|fat|nightcore|reverse|robot|slow|smooth)$/i,
    run: async (m, {
       conn,
