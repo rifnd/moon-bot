@@ -413,24 +413,22 @@ module.exports = {
                      pp = await this.profilePictureUrl(user, 'image')
                   } catch (e) {
                   } finally {
-                     /** welcome */
+                     /** welcome 
                      let wel = (await Api.get('api/welcome', {
                         picture: pp,
                         background: 'https://i.ibb.co/0tZvYK8/image.jpg',
                         desc: `Welcome to ${await this.getName(id)}`
-                     }).catch(() => pp))
-                     /** leave */
+                     }).catch(() => pp)) */
+                     /** leave 
                      let lea = (await Api.get('api/leave', {
                         picture: pp,
                         background: 'https://i.ibb.co/0tZvYK8/image.jpg',
                         desc: `Good Bye ${await this.getName(user)}`
-                     }).catch(() => pp))
-                     /** text */
+                     }).catch(() => pp)) */
                      text = (action === 'add' ? (group.sWelcome || this.welcome || this.welcome || 'Welcome, @user!').replace('@subject', await this.getName(id)).replace('@desc', metadata.desc.toString()) : (group.sBye || this.bye || this.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
-
                      this.sendMessageModify(id, text, null, {
                         largeThumb: true,
-                        thumbnail: action === 'add' ? wel : lea,
+                        thumbnail: pp,
                         url: global.db.data.setting.link
                      })
                   }
