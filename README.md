@@ -162,5 +162,5 @@ $ pm2 start index.js && pm2 save && pm2 logs
 ### Thanks To
 <a href="https://api.alyachan.dev"><img src="https://telegra.ph/file/8ee315efa49035e1c5e94.jpg" width="80"></a> | [![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) | [![Nando](https://github.com/rifnd.png?size=100)](https://github.com/rifnd) | [![Alya](https://github.com/alya-tok.png?size=100)](https://github.com/alya-tok) | [![Neoxr](https://github.com/neoxr.png?size=100)](https://github.com/neoxr)
 ----|----|----|----|----
-[ALYACHAN](https://api.alyachan.dev/) | [Nurutomo](https://github.com/Nurutomo) | [Nando](https://github.com/rifnd) | [Alya](https://github.com/alya-tok) | [Neoxr](https://github.com/neoxr)
-APIs Provider | Author / Creator | Decoder | Support System | All Functions
+[ALYACHAN](https://api.alyachan.dev/) | [Nurutomo](https://github.com/Nurutomo) | [Nando](https://github.com/rifnd)
+APIs Provider | Author / Creator
