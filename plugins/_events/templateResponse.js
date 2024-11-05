@@ -1,7 +1,6 @@
 const { proto, generateWAMessage, areJidsSameUser } = require('@whiskeysockets/baileys')
 const { Plugins } = new (require('@moonr/func'))
 const { plugins } = Plugins
-const { } = 
 module.exports = {
    async all(m, chatUpdate) {
       if (m.isBaileys) return
@@ -9,7 +8,7 @@ module.exports = {
       if (!(m.message.buttonsResponseMessage || m.message.templateButtonReplyMessage || m.message.interactiveResponseMessage)) return
       let id = m.message.buttonsResponseMessage?.selectedButtonId || m.message.templateButtonReplyMessage?.selectedId || m.message.listResponseMessage?.singleSelectReply?.selectedRowId || JSON.parse(m.message.interactiveResponseMessage?.nativeFlowResponseMessage?.paramsJson)?.id
       let text = m.message.buttonsResponseMessage?.selectedDisplayText || m.message.templateButtonReplyMessage?.selectedDisplayText || m.message.listResponseMessage?.title
-      let isIdMessage = false, usedPrefix
+      let isIdMessage = false, displayPrefix
       for (let name in plugins) {
          let plugin
          if (typeof plugins[name].run === 'function') {
@@ -24,12 +23,10 @@ module.exports = {
             plugin = plugins[name]
          }
          if (!plugin) continue
-         if (plugin.disabled) continue
-         if (!opts['restrict']) if (plugin.tags && plugin.tags.includes('admin')) continue
          if (typeof plugin !== 'function') continue
          if (!plugin.command) continue
          const str2Regex = str => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
-         let _prefix = plugin.customPrefix ? plugin.customPrefix : this.prefix ? this.prefix : global.prefix
+         let _prefix = global.prefix
          const match = (_prefix instanceof RegExp ? // RegExp Mode?
             [[_prefix.exec(id), _prefix]] :
             Array.isArray(_prefix) ? // Array?
@@ -43,8 +40,8 @@ module.exports = {
                   [[new RegExp(str2Regex(_prefix)).exec(id), new RegExp(str2Regex(_prefix))]] :
                   [[[], new RegExp]]
          ).find(p => p[1])
-         if ((usedPrefix = (match[0] || '')[0])) {
-            let noPrefix = id.replace(usedPrefix, '')
+         if ((displayPrefix = (match[0] || '')[0]) || global.db.data.setting.noprefix) {
+            let noPrefix = id.replace(displayPrefix, '')
             let [command, ...args] = noPrefix.trim().split` `.filter(v => v)
             command = (command || '').toLowerCase()
             let isId = plugin.command instanceof RegExp ? // RegExp Mode?
@@ -58,7 +55,7 @@ module.exports = {
                      plugin.command === command :
                      false
             if (!isId) continue
-            console.log({ name, command: plugin.command, text: id })
+            let usedPrefix = displayPrefix !== undefined ? displayPrefix : (global.db.data.setting.noprefix ? '' : global.db.data.setting.onlyprefix || '.')
             isIdMessage = true
          }
       }

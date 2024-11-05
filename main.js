@@ -45,8 +45,9 @@
 
    /* connection */
    const connectionOptions = new Connection({
-      session: 'session',
-      online: true,
+      session: 'session', /** this is for the folder storing the session */
+      online: false, /** in for online view on whatsapp */
+      browser: ['Ubuntu', 'Chrome', '20.0.04'] /** this is for the browser version */
    })
    const conn = await connectionOptions.connect()
 
@@ -69,29 +70,6 @@
          if (tmpFiles.length > 0) {
             tmpFiles.filter(v => !v.endsWith('.file')).map(v => unlinkSync('./tmp/' + v))
          }
-
-         /* this source from @jarspay */
-         const TIME = 1000 * 60 * 60
-         const filename = []
-         const files = await readdirSync('./session')
-         for (const file of files) {
-            if (file != 'creds.json') filename.push(join('./session', file))
-         }
-
-         await Promise.allSettled(filename.map(async (file) => {
-            const stat = await statSync(file)
-            if (stat.isFile() && (Date.now() - stat.mtimeMs >= TIME)) {
-               if (platform() === 'win32') {
-                  let fileHandle
-                  try {
-                     fileHandle = await openSync(file, 'r+')
-                  } catch (e) { } finally {
-                     await fileHandle.close()
-                  }
-               }
-               await unlinkSync(file)
-            }
-         }))
       } catch { }
    }, 60 * 1000 * 10)
 

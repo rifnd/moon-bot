@@ -1,5 +1,5 @@
 ### MOON-BOT
-> - This script is 100% free, which uses the api from [AlyaChan-APIs](https://api.alyachan.pro)
+> This script is 100% free, which uses the api from [AlyaChan-APIs](https://api.alyachan.pro)
 
 ### To install this script you need
 - [x] Server vCPU/RAM 1/1GB (Min)
@@ -10,38 +10,52 @@
 
 **Group** : [Community](https://chat.whatsapp.com/G57unQZ7saFIq2rdpVw0Tu)
 
+<br><hr><br>
+
+<details>
+<summary><b>Setting Options</b></summary>
+
 ### Set in .env
-```
+```.env
 API_ENDPOINT = 'https://api.alyachan.dev/'
 API_KEY = 'yourkey'
 ```
 
-### Set in config.js
-```Javascript
-module.exports = {
-   owner: 6281252848955, // Owner Number
-   owner_name: 'Contact Support', // Owner Name
-   limit: '10', // Limit Default
-   multiplier: '250', // Rpg
-   min_reward: 100000, // Minimal Reward Game
-   max_reward: 500000, // Max Reward Game
-   ram_limit: '1.2GB', // Ram Limit Server
-   max_upload: 150, // Max upload bot
-   max_upload_free: 40, // Max upload bot free users
-   timer: 180000, // Timer other
-   timeout: 1800000, // Timeout other
-   evaluate_chars: ['=>', '>', '$', '~>'], // Includes
-   pairing: {
-      state: true, // True or False
-      number: 6281252848955 // Bot Number
+### Set in config.json
+```JSON
+{
+   "owner": "6281252848955",
+   "owner_name": "Contact Support",
+   "limit": "10",
+   "multiplier": "250",
+   "min_reward": 100000,
+   "max_reward": 500000,
+   "ram_limit": "1.2GB",
+   "max_upload": 150,
+   "max_upload_free": 40,
+   "timer": 180000,
+   "timeout": 1800000,
+   "evaluate_chars": ["=>", ">", "$", "~>", "!", "+", "/", "#", "."],
+   "pairing": {
+     "state": false,
+     "number": 62000
    },
-   databaseurl: '' // Database use mongodb & postgresql
+   "databaseurl": ""
 }
 ```
+</details><br>
 
-### Database 
+<details>
+<summary><b>Database</b></summary>
+
+There are 2 databases, mongoDB and postgreSQL, but I recommend using mongoDB instead.
 > - MongoDB ~ [https://www.mongodb.com]
 > - PostgreSQL ~ [https://supabase.com]
+
+</details><br>
+
+<details>
+<summary><b>Plugins</b></summary>
 
 ### Plugins 1
 ```Javascript
@@ -138,16 +152,20 @@ module.exports = {
    }
 }
 ```
+</details><br>
+
+<details>
+<summary><b>Install</br></summary>
 
 ### Install and run
-```
+```sh
 $ npm install
 $ npm start
 ```
 
 ## Install & Run use PM2
 
-```
+```sh
 $ npm install pm2 -g
 $ npm install
 $ pm2 start index.js && pm2 save && pm2 logs
@@ -157,10 +175,4 @@ $ pm2 start index.js && pm2 save && pm2 logs
 > - heroku/nodejs
 > - https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
 > - https://github.com/DuckyTeam/heroku-buildpack-imagemagick.git
-
-
-### Thanks To
-<a href="https://api.alyachan.dev"><img src="https://telegra.ph/file/8ee315efa49035e1c5e94.jpg" width="80"></a> | [![Nurutomo](https://github.com/Nurutomo.png?size=100)](https://github.com/Nurutomo) | [![Nando](https://github.com/rifnd.png?size=100)](https://github.com/rifnd)
-----|----|----|----|----
-[ALYACHAN](https://api.alyachan.dev/) | [Nurutomo](https://github.com/Nurutomo) | [Nando](https://github.com/rifnd)
-APIs Provider | Author / Creator
+</details>

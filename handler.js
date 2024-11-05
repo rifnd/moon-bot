@@ -3,6 +3,7 @@ const { plugins } = Plugins
 const env = require('./config.json')
 const fs = require('fs')
 const cron = require('node-cron')
+const { exec } = require('child_process')
 const isNumber = x => typeof x === 'number' && !isNaN(x)
 
 module.exports = {
@@ -52,7 +53,6 @@ module.exports = {
          if (m.isBaileys) return
          if (m.chat.endsWith('broadcast') || m.key.remoteJid.endsWith('broadcast')) return
          m.exp += Math.ceil(Math.random() * 10)
-         let usedPrefix
          if (typeof m.text !== 'string') m.text = ''
 
          if (!setting.online) conn.sendPresenceUpdate('unavailable', m.chat)
@@ -151,7 +151,7 @@ module.exports = {
             }*/
 
             const str2Regex = str => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
-            let _prefix = plugin.customPrefix ? plugin.customPrefix : conn.prefix ? conn.prefix : global.prefix
+            let _prefix = global.prefix
             let match = (_prefix instanceof RegExp ? // RegExp Mode?
                [[_prefix.exec(m.text), _prefix]] :
                Array.isArray(_prefix) ? // Array?
@@ -188,8 +188,9 @@ module.exports = {
             })) continue
 
             if (typeof plugin !== 'function') continue
-            if ((usedPrefix = (match[0] || '')[0])) {
-               let noPrefix = m.text.replace(usedPrefix, '')
+            let displayPrefix
+            if ((displayPrefix = (match[0] || '')[0]) || global.db.data.setting.noprefix) {
+               let noPrefix = m.text.replace(displayPrefix, '')
                let [command, ...args] = noPrefix.trim().split` `.filter(v => v)
                args = args || []
                let _args = noPrefix.trim().split` `.slice(1)
@@ -207,6 +208,7 @@ module.exports = {
                         plugin.command === command :
                         false
 
+               let usedPrefix = displayPrefix !== undefined ? displayPrefix : (global.db.data.setting.noprefix ? '' : global.db.data.setting.onlyprefix || '.')
                if (!isAccept) continue
 
                users.hit += 1

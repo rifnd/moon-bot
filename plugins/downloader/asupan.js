@@ -1,6 +1,6 @@
 module.exports = {
    help: ['asupan'],
-   use: 'username (optinal)',
+   use: 'username (optional)',
    tags: ['downloader'],
    command: /^(asupan)$/i,
    run: async (m, {

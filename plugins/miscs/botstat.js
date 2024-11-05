@@ -61,6 +61,7 @@ const statistic = (Func, stats, system) => {
 	◦  ${Func.texted('bold', system.groupmode ? '[ √ ]' : '[ × ]')}  Group Mode
 	◦  ${Func.texted('bold', system.privatemode ? '[ √ ]' : '[ × ]')}  Private Mode
 	◦  ${Func.texted('bold', system.online ? '[ √ ]' : '[ × ]')}  Always Online
+	◦  ${Func.texted('bold', system.noprefix ? '[ √ ]' : '[ × ]')}  Noprefix
 	◦  ${Func.texted('bold', system.self ? '[ √ ]' : '[ × ]')}  Self Mode
 	◦  ${Func.texted('bold', system.anticall ? '[ √ ]' : '[ × ]')}  Anti Call
 	◦  ${Func.texted('bold', system.game ? '[ √ ]' : '[ × ]')}  Game Mode

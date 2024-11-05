@@ -20,7 +20,7 @@ module.exports = {
          let usersLevel = sortedLevel.map(enumGetKey)
          try {
             var pic = await conn.profilePictureUrl(m.sender, 'image')
-         } catch { } finally {
+         } catch (e) { } finally {
             let json = await Api.get('api/rank', {
                rank: usersLevel.indexOf(m.sender) + 1, level: users.level, picture: pic, currentXp: users.exp - min, requiredXp: xp, name: m.pushName
             })
@@ -30,9 +30,15 @@ module.exports = {
             }
             let before = users.level * 1
             while (canLevelUp(users.level, users.exp, env.multiplier)) users.level++
-            if (before !== user.level) {
-               if (!json.status) return conn.reply(m.chat, `乂  *L E V E L - U P*\n\nFrom : [ *${before}* ] ➠ [ *${users.level}* ]\n*Congratulations!*, you have leveled up 🎉🎉🎉`, m)
-               await conn.sendFile(m.chat, json.data.url, Func.filename('jpg'), `乂  *L E V E L - U P*\n\nFrom : [ *${before}* ] ➠ [ *${users.level}* ]\n*Congratulations!*, you have leveled up 🎉🎉🎉`, m)
+            try {
+               if (before !== user.level) {
+                  if (!json.status) {
+                     return conn.reply(m.chat, `乂  *L E V E L - U P*\n\nFrom : [ *${before}* ] ➠ [ *${users.level}* ]\n*Congratulations!*, you have leveled up 🎉🎉🎉`, m)
+                  }
+                  await conn.sendFile(m.chat, json.data.url, Func.filename('jpg'), `乂  *L E V E L - U P*\n\nFrom : [ *${before}* ] ➠ [ *${users.level}* ]\n*Congratulations!*, you have leveled up 🎉🎉🎉`, m)
+               }
+            } catch (e) {
+               return conn.reply(m.chat, Func.jsonFormat(e), m)
             }
          }
       } catch (e) {
