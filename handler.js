@@ -39,6 +39,7 @@ module.exports = {
          const isBotAdmin = m.isGroup ? adminList.includes((conn.user.id.split`:`[0]) + '@s.whatsapp.net') : false
          const blockList = typeof await (await conn.fetchBlocklist()) != 'undefined' ? await (await conn.fetchBlocklist()) : []
          const body = typeof m.text == 'string' ? m.text : false
+         const prefixes = setting.noprefix ? '' : (setting.onlyprefix)
 
          if (opts['queque'] && m.text && !(isPrems)) {
             let queque = conn.msgqueque, time = 1000 * 5
@@ -51,6 +52,7 @@ module.exports = {
          }
 
          if (m.isBaileys) return
+         if (m.fromMe && setting.noprefix) return
          if (m.chat.endsWith('broadcast') || m.key.remoteJid.endsWith('broadcast')) return
          m.exp += Math.ceil(Math.random() * 10)
          if (typeof m.text !== 'string') m.text = ''
@@ -106,7 +108,7 @@ module.exports = {
             })
          }, {
             scheduled: true,
-            timezone: 'Asia/Jakarta'
+            timezone: process.env.TZ
          })
          if (m.isGroup && !m.fromMe) {
             let now = new Date() * 1
@@ -170,6 +172,7 @@ module.exports = {
                body,
                blockList,
                conn: conn,
+               prefixes,
                plugins,
                participants,
                groupMetadata,
