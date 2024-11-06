@@ -41,13 +41,11 @@ module.exports = {
             const keys = Object.keys(category).sort()
             let print = message
             print += '\n' + String.fromCharCode(8206).repeat(4001)
-
             for (let k of keys) {
                print += '\n\n乂  *' + k.toUpperCase().split('').join(' ') + '*\n\n'
-               let commands = category[k].sort((a, b) => a.usage.localeCompare(b.usage))
+               let commands = category[k].filter(v => v.usage).sort((a, b) => a.usage.localeCompare(b.usage))
                print += commands.map(v => `	◦  ${_p + v.usage} ${v.use}`).join('\n')
             }
-
             conn.sendMessageModify(m.chat, print + '\n\n' + global.footer, m, {
                ads: false,
                largeThumb: true,
@@ -55,24 +53,16 @@ module.exports = {
                url: setting.link
             })
          } else if (style === 2) {
-            // Filter hanya plugin yang memiliki 'help' dan simpan dalam variabel cmd
             let filter = Object.entries(plugins).filter(([_, obj]) => obj.help)
             let cmd = Object.fromEntries(filter)
-
-            // Gunakan objek kosong untuk menyimpan kategori
             let category = {}
-
             for (let name in cmd) {
                let obj = cmd[name]
                if (!obj) continue
                if (!obj.tags || setting.hidden.includes(obj.tags[0])) continue
-
-               // Cek jika kategori sudah ada, jika tidak, inisialisasi sebagai array
                if (!category[obj.tags[0]]) {
                   category[obj.tags[0]] = []
                }
-
-               // Tambahkan command ke kategori jika belum ada (mencegah duplikasi)
                let usageList = obj.help.constructor.name === 'Array' ? obj.help : [obj.help]
                usageList.forEach(usage => {
                   if (!category[obj.tags[0]].some(item => item.usage === usage)) {
@@ -83,21 +73,12 @@ module.exports = {
                   }
                })
             }
-
-            // Dapatkan kunci kategori dan urutkan
             const keys = Object.keys(category).sort()
             let print = message
-            // Tambahkan karakter invisible untuk memastikan pesan lengkap muncul di WhatsApp
             print += '\n' + String.fromCharCode(8206).repeat(4001)
-
             for (let k of keys) {
-               // Tambahkan header untuk setiap kategori
                print += '\n\n –  *' + k.toUpperCase().split('').join(' ') + '*\n\n'
-
-               // Ambil semua command dalam kategori ini dan urutkan berdasarkan `usage`
-               let commands = category[k].sort((a, b) => a.usage.localeCompare(b.usage))
-
-               // Map setiap command ke dalam format tampilan yang diinginkan
+               let commands = category[k].filter(v => v.usage).sort((a, b) => a.usage.localeCompare(b.usage))
                print += commands.map((v, i) => {
                   if (i == 0) {
                      return `┌  ◦  ${_p + v.usage} ${v.use}`
@@ -108,8 +89,6 @@ module.exports = {
                   }
                }).join('\n')
             }
-
-            // Kirim pesan modifikasi ke pengguna
             conn.sendMessageModify(m.chat, print + '\n\n' + global.footer, m, {
                ads: false,
                largeThumb: true,
@@ -138,7 +117,6 @@ module.exports = {
                   }
                })
                commands = commands.filter((v, i, self) => i === self.findIndex((t) => (t.usage === v.usage))).sort((a, b) => a.usage.localeCompare(b.usage))
-
                let print = commands.map((v, i) => {
                   if (i == 0) {
                      return `┌  ◦  ${_p + v.usage} ${v.use}`
@@ -149,11 +127,9 @@ module.exports = {
                   }
                }).join('\n')
                m.reply(print)
-
             } else {
                let print = message
                print += '\n' + String.fromCharCode(8206).repeat(4001) + '\n'
-
                let category = {}
                Object.entries(plugins).forEach(([name, obj]) => {
                   if (obj.help && obj.tags && !setting.hidden.includes(obj.tags[0])) {
@@ -208,7 +184,6 @@ module.exports = {
                   }
                })
                commands = commands.filter((v, i, self) => i === self.findIndex((t) => (t.usage === v.usage))).sort((a, b) => a.usage.localeCompare(b.usage))
-
                let print = commands.map((v, i) => {
                   if (i == 0) {
                      return `┌  ◦  ${_p + v.usage} ${v.use}`
@@ -219,11 +194,9 @@ module.exports = {
                   }
                }).join('\n')
                m.reply(print)
-
             } else {
                let print = message
                print += '\n' + String.fromCharCode(8206).repeat(4001) + '\n'
-
                let category = {}
                Object.entries(plugins).forEach(([name, obj]) => {
                   if (obj.help && obj.tags && !setting.hidden.includes(obj.tags[0])) {
