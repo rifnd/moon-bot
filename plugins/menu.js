@@ -98,6 +98,9 @@ module.exports = {
          } else if (style === 3) {
             if (text) {
                let cmd = Object.entries(plugins).filter(([_, v]) => v.help && v.tags && v.tags.includes(text.trim().toLowerCase()) && !setting.hidden.includes(v.tags[0]))
+               if (cmd.length === 0) {
+                  return m.reply(`The category “${text.trim()}” was not found.`)
+               }
                let commands = []
                cmd.forEach(([_, v]) => {
                   if (v.help) {
@@ -165,6 +168,9 @@ module.exports = {
          } else if (style === 4) {
             if (text) {
                let cmd = Object.entries(plugins).filter(([_, v]) => v.help && v.tags && v.tags.includes(text.trim().toLowerCase()) && !setting.hidden.includes(v.tags[0]))
+               if (cmd.length === 0) {
+                  return m.reply(`The category “${text.trim()}” was not found.`)
+               }
                let commands = []
                cmd.forEach(([_, v]) => {
                   if (v.help) {

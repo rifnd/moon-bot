@@ -1430,5 +1430,5 @@ Contoh : *${usedPrefix}shop buy potion 1*
 
 handler.help = ['shop']
 handler.tags = ['user']
-handler.command = /^(shop|toko|buy|beli|sell|jual)$/i
+handler.command = /^(shop|toko)$/i
 module.exports = handler
