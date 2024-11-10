@@ -18,9 +18,9 @@ module.exports = {
                let old = new Date()
                let img = await conn.downloadMediaMessage(q)
                let image = await Scraper.uploader(img)
-               const json = await Api.get('api/filter-ai', {
+               const json = await Api.get('api/ai-photo-editor', {
                   image: image.data.url,
-                  model: 'Barbie'
+                  style: 'barbie'
                })
                if (!json.status) return m.reply(Func.jsonFormat(json))
                conn.sendFile(m.chat, json.data.url, Func.filename('jpg'), `🍟 *Fetching* : ${((new Date - old) * 1)} ms`, m)
@@ -34,9 +34,9 @@ module.exports = {
             let old = new Date()
             let img = await q.download()
             let image = await Scraper.uploader(img)
-            const json = await Api.get('api/filter-ai', {
+            const json = await Api.get('api/ai-photo-editor', {
                image: image.data.url,
-               model: 'Barbie'
+               style: 'barbie'
             })
             if (!json.status) return m.reply(Func.jsonFormat(json))
             conn.sendFile(m.chat, json.data.url, Func.filename('jpg'), `🍟 *Fetching* : ${((new Date - old) * 1)} ms`, m)

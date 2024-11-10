@@ -19,7 +19,7 @@ module.exports = {
       var isAll = false
       var isUser = false
       var g = ['welcome', 'detect', 'antidelete', 'antilink', 'antivirtex', 'autosticker', 'antisticker', 'viewonce', 'filter']
-      var o = ['anticall', 'chatbot', 'levelup', 'self', 'online', 'antispam', 'debug', 'groupmode', 'privatemode', 'game', 'rpg', 'noprefix']
+      var o = ['anticall', 'chatbot', 'levelup', 'self', 'online', 'antispam', 'debug', 'autodownload', 'groupmode', 'privatemode', 'game', 'rpg', 'noprefix']
       switch (type) {
          /** group setting */
          case 'welcome': {
@@ -202,6 +202,15 @@ module.exports = {
                throw false
             }
             setting.debug = isEnable
+         }
+         break
+         case 'autodownload': {
+            isAll = true
+            if (!isOwner) {
+               conn.reply(m.chat, global.status.owner, m)
+               throw false
+            }
+            setting.autodownload = isEnable
          }
          break
          case 'groupmode': {

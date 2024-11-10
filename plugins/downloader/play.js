@@ -21,6 +21,12 @@ module.exports = {
          var json = await Api.get('api/yta', {
             url: yt[0].url
          })
+         if (!json.status) {
+            var json = await Api.get('api/youtube', {
+               url: yt[0].url, type: 'mp3'
+            })
+         }
+         if (!json.status) return conn.reply(m.chat, Func.jsonFormat(json), m)
          var caption = `乂  *Y T - P L A Y*\n\n`
          caption += `  ∘  *Title* : ` + json.title + `\n`
          caption += `  ∘  *Size* : ` + json.data.size + `\n`

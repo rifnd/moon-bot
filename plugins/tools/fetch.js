@@ -11,7 +11,7 @@ module.exports = {
       text,
       Func
    }) => {
-      if (!/^https?:\/\//.test(text)) return conn.reply(m.chat, Func.example(usedPrefix, command, 'https://google.com'))
+      if (!/^https?:\/\//.test(text)) return conn.reply(m.chat, Func.example(usedPrefix, command, 'https://google.com'), m)
       let url = text
       let res = await fetch(url)
       if (res.headers.get('content-length') > 100 * 1024 * 1024 * 1024) {

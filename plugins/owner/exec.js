@@ -1,11 +1,10 @@
 const cp = require('child_process')
-const { promisify, inspect } = require('util')
+const { promisify, inspect, format } = require('util')
 const exec = promisify(cp.exec).bind(cp)
 const syntaxerror = require('syntax-error')
-const util = require('util')
 let handler = m => m
 handler.before = async function (m, _2) {
-   let { conn, usedPrefix, noPrefix, args, groupMetadata, isOwner, Func, Scraper } = _2
+   let { conn, args, groupMetadata, isOwner, Func, Scraper } = _2
    if (!isOwner) return
    let _return
    let _syntax = ''
@@ -17,12 +16,12 @@ handler.before = async function (m, _2) {
          let f = {
             exports: {},
          }
-         let execFunc = new (async () => { }).constructor('print', 'm', 'handler', 'require', 'conn', 'Array', 'process', 'args', 'groupMetadata', 'module', 'exports', 'argument', txt);
+         let execFunc = new (async () => { }).constructor('print', 'm', 'handler', 'require', 'conn', 'Func', 'Scraper', 'Array', 'process', 'args', 'groupMetadata', 'module', 'exports', 'argument', txt);
          _return = await execFunc.call(conn, (...args) => {
             if (--i < 1) return
             console.log(...args)
-            return conn.reply(m.chat, util.format(...args), m)
-         }, m, handler, require, conn, CustomArray, process, args, groupMetadata, f, f.exports, [conn, _2])
+            return conn.reply(m.chat, format(...args), m)
+         }, m, handler, require, conn, Func, Scraper, CustomArray, process, args, groupMetadata, f, f.exports, [conn, _2])
       } catch (e) {
          let err = await syntaxerror(txt, 'Execution Function', {
             allowReturnOutsideFunction: true,

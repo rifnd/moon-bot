@@ -503,9 +503,10 @@ To turn off this feature, send
       if ((status === 'composing' || status === 'recording') && user?.afk && user.afk > -1) {
          const username = nouser[0].split('@')[0]
          const timeAfk = new Date() - user.afk
-         this.reply(id, `System detects activity from @${username} after being offline for : *${Func.toTime(timeAfk)}*\n\n➠ *Reason* : ${user.afkReason ? user.afkReason : '-'}`, null)
+         this.reply(id, `System detects activity from @${username} after being offline for : *${Func.toTime(timeAfk)}*\n\n➠ *Reason* : ${user.afkReason ? user.afkReason : '-'}`, user.afkObj)
          user.afk = -1
          user.afkReason = ''
+         user.afkObj = {}
       }
    }
 }

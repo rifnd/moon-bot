@@ -12,6 +12,7 @@ module.exports = {
          let user = global.db.data.users[m.sender]
          user.afk = +new Date
          user.afkReason = text
+         user.afkObj = m
          let tag = m.sender.split`@`[0]
          return conn.reply(m.chat, Func.texted('bold', `🚩 @${tag} is now AFK!`), m)
       } catch {

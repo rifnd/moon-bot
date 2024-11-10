@@ -1,8 +1,8 @@
 module.exports = {
-   help: ['mediafire'],
+   help: ['pindl'],
    use: 'link',
    tags: ['downloader'],
-   command: /^(mediafire|mf)$/i,
+   command: /^(pindl)$/i,
    run: async (m, {
       conn,
       usedPrefix,

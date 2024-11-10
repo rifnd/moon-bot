@@ -20,7 +20,7 @@ module.exports = {
                let image = await Scraper.uploader(img)
                const json = await Api.get('api/filter-ai', {
                   image: image.data.url,
-                  model: 'PS2'
+                  prompt: 'Make it like grafix playstation 2'
                })
                if (!json.status) return m.reply(Func.jsonFormat(json))
                conn.sendFile(m.chat, json.data.url, Func.filename('jpg'), `🍟 *Fetching* : ${((new Date - old) * 1)} ms`, m)
@@ -36,7 +36,7 @@ module.exports = {
             let image = await Scraper.uploader(img)
             const json = await Api.get('api/filter-ai', {
                image: image.data.url,
-               model: 'PS2'
+               prompt: 'Make it like grafix playstation 2'
             })
             if (!json.status) return m.reply(Func.jsonFormat(json))
             conn.sendFile(m.chat, json.data.url, Func.filename('jpg'), `🍟 *Fetching* : ${((new Date - old) * 1)} ms`, m)

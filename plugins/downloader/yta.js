@@ -16,10 +16,15 @@ module.exports = {
          if (!args[0]) return m.reply(Func.example(usedPrefix, command, 'https://youtu.be/zaRFmdtLhQ8'))
          if (!/^(?:https?:\/\/)?(?:www\.|m\.|music\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/.test(args[0])) return m.reply(status.invalid)
          m.react('🕒')
-         var json = await Api.get('api/youtube', {
-            url: args[0], type: 'mp3'
+         var json = await Api.get('api/yta', {
+            url: args[0]
          })
-         if (!json.status) return m.reply(Func.jsonFormat(json))
+         if (!json.status) {
+            var json = await Api.get('api/youtube', {
+               url: args[0], type: 'mp3'
+            })
+         }
+         if (!json.status) return conn.reply(m.chat, Func.jsonFormat(json), m)
          let caption = `乂  *Y T - M P 3*\n\n`
          caption += `  ◦  *Title* : ${json.title}\n`
          caption += `  ◦  *Size* : ${json.data.size}\n`
