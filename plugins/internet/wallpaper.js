@@ -12,7 +12,7 @@ module.exports = {
    }) => {
       try {
          if (!text) return m.reply(Func.example(usedPrefix, command, 'sunset'))
-         m.react('🕐')
+         m.react('🕒')
          const json = await Api.get('api/wallpaper', {
             q: text
          })

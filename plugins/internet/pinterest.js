@@ -13,7 +13,7 @@ module.exports = {
    }) => {
       try {
          if (!text) return conn.reply(m.chat, Func.example(usedPrefix, command, 'Kucing'), m)
-         m.react('🕐')
+         m.react('🕒')
          let json = await Api.get('api/pinterest', {
             q: text
          })

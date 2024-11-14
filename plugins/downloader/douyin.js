@@ -12,7 +12,7 @@ module.exports = {
    }) => {
       if (!args[0]) return m.reply(Func.example(usedPrefix, command, 'https://v.douyin.com/ieWfMQA1/'))
       if (!args[0].match('douyin.com')) return m.reply(status.invalid)
-      m.react('🕐')
+      m.react('🕒')
       let old = new Date()
       try {
          var json = await Api.get('api/douyin', {

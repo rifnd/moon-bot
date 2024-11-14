@@ -11,7 +11,7 @@ module.exports = {
       Func
    }) => {
       try {
-         m.react('🕐')
+         m.react('🕒')
          let old = new Date()
          let json = await Api.get('api/tiktok-post', {
             q: args[0] || Func.random(['itsbellefirst', 'aletaanovianda', 'faisafch', '0rbby', 'cindyanastt', 'awaa.an', 'bulansutena', 'bulanniiii', 'asheljkt48'])

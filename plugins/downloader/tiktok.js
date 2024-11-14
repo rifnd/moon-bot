@@ -12,7 +12,7 @@ module.exports = {
    }) => {
       if (!args[0]) return m.reply(Func.example(usedPrefix, command, 'https://www.tiktok.com/@cikaseiska/video/7379107227363200261?is_from_webapp=1&sender_device=pc&web_id=7330639260519974418'))
       if (!args[0].match('tiktok.com')) return m.reply(status.invalid)
-      m.react('🕐')
+      m.react('🕒')
       let old = new Date()
       try {
          var json = await Api.get('api/tiktok', {

@@ -2,6 +2,19 @@
    "name": "moon-bot",
    "version": "4.1.1",
    "description": "Simple whatsapp bot",
+   "keywords": [
+      "whatsapp-bot"
+   ],
+   "homepage": "https://github.com/rifnd/moon-bot#readme",
+   "bugs": {
+      "url": "https://github.com/rifnd/moon-bot/issues"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/rifnd/moon-bot.git"
+   },
+   "license": "MIT",
+   "author": "rifnd",
    "main": "index.js",
    "directories": {
       "lib": "lib"
@@ -9,22 +22,10 @@
    "scripts": {
       "start": "node index.js"
    },
-   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/rifnd/moon-bot.git"
-   },
-   "keywords": [
-      "whatsapp-bot"
-   ],
-   "author": "rifnd",
-   "license": "MIT",
-   "bugs": {
-      "url": "https://github.com/rifnd/moon-bot/issues"
-   },
-   "homepage": "https://github.com/rifnd/moon-bot#readme",
    "dependencies": {
       "@moonr/func": "^0.2.9",
       "@whiskeysockets/baileys": "^6.7.9",
+      "@xncn/instagramdownloaderpro": "^0.0.7",
       "awesome-phonenumber": "^5.6.0",
       "bytes": "^3.1.2",
       "cfonts": "^2.10.1",

@@ -18,7 +18,7 @@ module.exports = {
       } catch (e) {
          pic = 'https://telegra.ph/file/32ffb10285e5482b19d89.jpg'
       } finally {
-         m.react('🕐')
+         m.react('🕒')
          const json = {
             "type": "quote",
             "format": "png",

@@ -13,7 +13,7 @@ module.exports = {
    }) => {
       try {
          if (!text) return m.reply(Func.example(usedPrefix, command, 'alay'))
-         m.react('🕐')
+         m.react('🕒')
          const json = await Api.get('api/kbbg', { q: text })
          if (!json.status) return m.reply(Func.jsonFormat(json))
          m.reply(json.data.description)
