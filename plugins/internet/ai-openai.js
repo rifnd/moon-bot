@@ -17,7 +17,7 @@ module.exports = {
          var result = await Api.get('api/gpt-3.5-turbo', {
             prompt: text
          })
-         if (!result.status) return m.reply(Func.jsonFormat(json))
+         if (!result.status) return m.reply(Func.jsonFormat(result))
          conn.reply(m.chat, result.data.content, m)
       } catch (e) {
          console.log(e)
