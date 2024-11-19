@@ -13,7 +13,7 @@
    "evaluate_chars": ["=>", ">", "$", "~>", "!", "+", "/", "#", "."],
    "pairing": {
      "state": false,
-     "number": 62000
+     "number": ""
    },
    "databaseurl": ""
 }

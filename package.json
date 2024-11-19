@@ -23,7 +23,7 @@
       "start": "node index.js"
    },
    "dependencies": {
-      "@moonr/func": "^0.2.9",
+      "@moonr/func": "^0.3.1",
       "@whiskeysockets/baileys": "^6.7.9",
       "@xncn/instagramdownloaderpro": "^0.0.7",
       "awesome-phonenumber": "^5.6.0",
