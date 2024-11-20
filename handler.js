@@ -222,6 +222,10 @@ module.exports = {
                   if (!['unbanned.js'].includes(name.split('/').pop()) && groupSet && groupSet.isBanned) return // Except conn
                   if (!['unbanned.js'].includes(name.split('/').pop()) && users && users.banned) return
                }
+               /** command disabled */
+               if (setting.error.includes(command)) return m.reply(Func.texted('bold', `🚩 Command _${usedPrefix + command}_ disabled.`))
+               /** plugin disabled */
+               if (plugin.disabled || setting.pluginDisable.includes(name.split('/').pop())) return
 
                if (m.isBaileys || m.chat.endsWith('broadcast') || /edit/.test(m.mtype)) continue
                if (setting.self && !isOwner && !m.fromMe) continue
@@ -241,18 +245,7 @@ module.exports = {
                   continue
                }
                if (plugin.premium && !isPrems) { // Premium
-                  const soad = [{
-                     name: 'quick_reply',
-                     buttonParamsJson: JSON.stringify({
-                        display_text: 'Contact Owner',
-                        id: `${usedPrefix}owner`
-                     })
-                  }]
-                  conn.sendIAMessage(m.chat, soad, m, {
-                     content: global.status.premium,
-                     footer: global.footer,
-                  })
-                  //m.reply(global.status.premium)
+                  m.reply(global.status.premium)
                   continue
                }
                if (plugin.group && !m.isGroup) { // Group Only
@@ -275,12 +268,12 @@ module.exports = {
                }
                if (plugin.game && setting.game == false) {
                   // game mode
-                  m.reply(status.game)
+                  m.reply(global.status.game)
                   continue
                }
                if (plugin.rpg && setting.rpg == false) {
                   // RPG mode
-                  m.reply(status.rpg)
+                  m.reply(global.status.rpg)
                   continue
                }
 
@@ -289,19 +282,8 @@ module.exports = {
                if (xp > 200) m.reply('Ngecit -_-') // Hehehe
                else m.exp += xp
                if (!isPrems && plugin.limit && users.limit < plugin.limit * 1) {
-                  const soad = [{
-                     name: 'quick_reply',
-                     buttonParamsJson: JSON.stringify({
-                        display_text: 'Buy',
-                        id: `${usedPrefix}buy 1`
-                     })
-                  }]
-                  conn.sendIAMessage(m.chat, soad, m, {
-                     content: `Your limit is exhausted, please purchase via *${usedPrefix}buy*`,
-                     footer: global.footer,
-                  })
-                  //conn.reply(m.chat, `Your limit is exhausted, please purchase via *${usedPrefix}buy*`, m)
-                  continue // Limit habis
+                  conn.reply(m.chat, `Your limit is exhausted, please purchase via *${usedPrefix}buy*`, m)
+                  continue
                }
                if (plugin.level > users.level) {
                   conn.reply(m.chat, `level ${plugin.level} is required to use conn command. Your level ${users.level}`, m)
@@ -367,34 +349,20 @@ module.exports = {
          let user, stats = db.data.stats
          if (m) {
             if (m.sender && (user = db.data.users[m.sender])) {
-               user.exp += m.exp
+               user.exp += m.exp;
                user.limit -= m.limit * 1
             }
-
-            let stat
+            let now = +new Date()
             if (m.plugin) {
-               let now = + new Date
-               if (m.plugin in stats) {
-                  stat = stats[m.plugin]
-                  if (!isNumber(stat.total)) stat.total = 1
-                  if (!isNumber(stat.success)) stat.success = m.error != null ? 0 : 1
-                  if (!isNumber(stat.last)) stat.last = now
-                  if (!isNumber(stat.lastSuccess)) stat.lastSuccess = m.error != null ? 0 : now
-               } else stat = stats[m.plugin] = {
-                  total: 1,
-                  success: m.error != null ? 0 : 1,
-                  last: now,
-                  lastSuccess: m.error != null ? 0 : now
-               }
-               stat.total += 1
-               stat.last = now
-               if (m.error == null) {
-                  stat.success += 1
-                  stat.lastSuccess = now
-               }
+               let pluginName = m.plugin.split('/').pop().replace('.js', '')
+               let stat = stats[pluginName] || { hitstat: 0, today: 0, lasthit: 0, sender: m.sender, lastDate: '' }
+               stat.hitstat += 1
+               stat.today += 1
+               stat.lasthit = now
+               stat.lastDate = new Date(now).toDateString()
+               stats[pluginName] = stat
             }
          }
-
          try {
             Print(m, conn)
          } catch (e) {

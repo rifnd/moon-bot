@@ -21,7 +21,7 @@ module.exports = {
          })
          if (!json.status) return m.reply(Func.jsonFormat(json))
          if (json.data.length == 0) return m.reply(Func.texted('bold', '🚩 Package not found.'))
-         let teks = `– *N P M J S*\n\n`
+         let teks = `乂 *N P M J S*\n\n`
          json.data.map((v, i) => {
             teks += '*' + (i + 1) + '. ' + v.package.name + '*\n'
             teks += '  ◦  *Version* : ' + v.package.version + '\n'
