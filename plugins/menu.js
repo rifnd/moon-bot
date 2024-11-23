@@ -65,7 +65,10 @@ module.exports = {
                         }
                   }
                })
-               print += commands.sort((a, b) => a.usage.localeCompare(b.usage)).map(v => `	◦  ${_p + v.usage} ${v.use}`).join('\n')
+               print += commands.sort((a, b) => {
+                  if (!a.usage || !b.usage) return 0
+                  return a.usage.localeCompare(b.usage)
+               }).map(v => `	◦  ${_p + v.usage} ${v.use}`).join('\n')
             }
             conn.sendMessageModify(m.chat, print + '\n\n' + global.footer, m, {
                ads: false,
@@ -120,7 +123,10 @@ module.exports = {
                         }
                   }
                })
-               print += commands.sort((a, b) => a.usage.localeCompare(b.usage)).map((v, i) => {
+               print += commands.sort((a, b) => {
+                  if (!a.usage || !b.usage) return 0
+                  return a.usage.localeCompare(b.usage)
+               }).map((v, i) => {
                   if (i == 0) {
                      return `┌  ◦  ${_p + v.usage} ${v.use}`
                   } else if (i == commands.length - 1) {
@@ -163,7 +169,10 @@ module.exports = {
                         }
                   }
                })
-               let print = commands.sort((a, b) => a.usage.localeCompare(b.usage)).map((v, i) => {
+               let print = commands.sort((a, b) => {
+                  if (!a.usage || !b.usage) return 0
+                  return a.usage.localeCompare(b.usage)
+               }).map((v, i) => {
                   if (i == 0) {
                      return `┌  ◦  ${_p + v.usage} ${v.use}`
                   } else if (i == commands.length - 1) {
@@ -236,7 +245,10 @@ module.exports = {
                         }
                   }
                })
-               let print = commands.sort((a, b) => a.usage.localeCompare(b.usage)).map((v, i) => {
+               let print = commands.sort((a, b) => {
+                  if (!a.usage || !b.usage) return 0
+                  return a.usage.localeCompare(b.usage)
+               }).map((v, i) => {
                   if (i == 0) {
                      return `┌  ◦  ${_p + v.usage} ${v.use}`
                   } else if (i == commands.length - 1) {
@@ -338,7 +350,10 @@ module.exports = {
                         }
                   }
                })
-               print += commands.sort((a, b) => a.usage.localeCompare(b.usage)).map(v => `	◦  ${_p + v.usage} ${v.use}`).join('\n')
+               print += commands.sort((a, b) => {
+                  if (!a.usage || !b.usage) return 0
+                  return a.usage.localeCompare(b.usage)
+               }).map(v => `	◦  ${_p + v.usage} ${v.use}`).join('\n')
             }
             conn.sendMessageModify(m.chat, Func.Styles(print) + '\n\n' + global.footer, m, {
                ads: false,
@@ -393,7 +408,10 @@ module.exports = {
                         }
                   }
                })
-               print += commands.sort((a, b) => a.usage.localeCompare(b.usage)).map((v, i) => {
+               print += commands.sort((a, b) => {
+                  if (!a.usage || !b.usage) return 0
+                  return a.usage.localeCompare(b.usage)
+               }).map((v, i) => {
                   if (i == 0) {
                      return `┌  ◦  ${_p + v.usage} ${v.use}`
                   } else if (i == commands.length - 1) {
@@ -436,7 +454,10 @@ module.exports = {
                         }
                   }
                })
-               let print = commands.sort((a, b) => a.usage.localeCompare(b.usage)).map((v, i) => {
+               let print = commands.sort((a, b) => {
+                  if (!a.usage || !b.usage) return 0
+                  return a.usage.localeCompare(b.usage)
+               }).map((v, i) => {
                   if (i == 0) {
                      return `┌  ◦  ${_p + v.usage} ${v.use}`
                   } else if (i == commands.length - 1) {
@@ -509,7 +530,10 @@ module.exports = {
                         }
                   }
                })
-               let print = commands.sort((a, b) => a.usage.localeCompare(b.usage)).map((v, i) => {
+               let print = commands.sort((a, b) => {
+                  if (!a.usage || !b.usage) return 0
+                  return a.usage.localeCompare(b.usage)
+               }).map((v, i) => {
                   if (i == 0) {
                      return `┌  ◦  ${_p + v.usage} ${v.use}`
                   } else if (i == commands.length - 1) {
