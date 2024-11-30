@@ -1,4 +1,4 @@
-const decode = require('html-entities').decode
+const axios = require('axios')
 module.exports = {
    help: ['mediafire'],
    use: 'link',
@@ -21,22 +21,19 @@ module.exports = {
             url: args[0]
          })
          if (!json.status) return conn.reply(m.chat, Func.jsonFormat(json), m)
-         let text = `乂  *M E D I A F I R E*\n\n`
-         text += '	◦  *Name* : ' + unescape(decode(json.data.filename)) + '\n'
-         text += '	◦  *Size* : ' + json.data.filesize + '\n'
-         text += '	◦  *Extension* : ' + json.data.ext + '\n'
-         text += '	◦  *Mime* : ' + json.data.filetype + '\n'
-         text += '	◦  *Uploaded* : ' + json.data.uploadAt + '\n\n'
-         text += global.footer
-         const chSize = Func.sizeLimit(json.data.filesize, users.premium ? env.max_upload : env.max_upload_free)
-         const isOver = users.premium ? `💀 File size (${json.data.filesize}) exceeds the maximum limit.` : `⚠️ File size (${json.data.filesize}), you can only download files with a maximum size of ${env.max_upload_free} MB and for premium users a maximum of ${env.max_upload} MB.`
+         const chSize = Func.sizeLimit(json.data.size, users.premium ? env.max_upload : env.max_upload_free)
+         const isOver = users.premium ? `💀 File size (${json.data.size}) exceeds the maximum limit.` : `⚠ File size (${json.data.size}), you can only download files with a maximum size of ${env.max_upload_free} MB and for premium users a maximum of ${env.max_upload} MB.`
          if (chSize.oversize) return conn.reply(m.chat, isOver, m)
-         conn.sendMessageModify(m.chat, text, m, {
-            largeThumb: true,
-            thumbnail: 'https://telegra.ph/file/fcf56d646aa059af84126.jpg'
-         }).then(async () => {
-            conn.sendFile(m.chat, json.data.link, unescape(decode(json.data.filename)), '', m)
-         })
+         const buffer = await (await axios.request({
+            url: json.data.url,
+            method: 'GET',
+            responseType: 'arraybuffer',
+            headers: {
+               'Cookie': json.data.cookies.join('; '),
+               'User-Agent': 'Mozilla/5.0 (iPad; CPU OS 16_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.2 Mobile/15E148 Safari/605.1.15'
+            }
+         })).data
+         await conn.sendFile(m.chat, buffer, json.data.filename, '', m)
       } catch (e) {
          console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)

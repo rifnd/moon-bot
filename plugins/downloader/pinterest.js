@@ -20,8 +20,8 @@ module.exports = {
          })
          if (!json.status) return m.reply(Func.jsonFormat(json))
          json.data.map(v => {
-            if (v.type == 'video') return conn.sendFile(m.chat, v.url, '', `🍟 *Fetching* : ${((new Date - old) * 1)} ms`, m)
-            if (v.type == 'image') return conn.sendFile(m.chat, v.url, '', `🍟 *Fetching* : ${((new Date - old) * 1)} ms`, m)
+            if (v.type == 'video') return conn.sendFile(m.chat, v.url, Func.filename('mp4'), `🍟 *Fetching* : ${((new Date - old) * 1)} ms`, m)
+            if (v.type == 'image') return conn.sendFile(m.chat, v.url, Func.filename('jpg'), `🍟 *Fetching* : ${((new Date - old) * 1)} ms`, m)
          })
       } catch (e) {
          console.log(e)
