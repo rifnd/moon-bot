@@ -1,4 +1,4 @@
-module.exports = {
+🍟 *Process*🍟 *Process*module.exports = {
    help: ['pin'],
    use: 'query',
    tags: ['internet'],

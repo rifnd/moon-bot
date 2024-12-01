@@ -18,13 +18,13 @@ module.exports = {
             q: args[0]
          })
          if (!json.status) return m.reply(Func.jsonFormat(json))
-         for (let i = 0; i < json.data.length; i++) {
-            conn.sendFile(m.chat, json.data[i].url, ``, `🍟 *Fetching* : ${((new Date - old) * 1)} ms (${i + 1})`, m)
+         json.data.map(async (v, i) => {
+            conn.sendFile(m.chat, v.url, v.type == 'video' ? Func.filename('mp4') : Func.filename('jpg'), `🍟 *Process* : ${((new Date - old) * 1)} ms (${i + 1})`, m)
             await Func.delay(1500)
-         }
+         })
       } catch (e) {
          console.log(e)
-         return m.reply(Func.jsonFormat(e))
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true

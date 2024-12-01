@@ -1,4 +1,4 @@
-module.exports = {
+🍟 *Process*🍟 *Process*module.exports = {
    help: ['toanime'],
    use: 'reply photo',
    tags: ['tools'],
