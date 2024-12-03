@@ -1,4 +1,4 @@
-🍟 *Process*🍟 *Process*module.exports = {
+module.exports = {
    help: ['twitter'],
    use: 'link',
    tags: ['downloader'],

@@ -19,7 +19,7 @@ module.exports = {
                      })
                      if (!json.status) return conn.reply(m.chat, Func.jsonFormat(json), m)
                      for (let i of json.data) {
-                        conn.sendFile(m.chat, i.url, i.type == 'video' ? Func.filename('mp4') : Func.filename('jpg'), `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
+                        conn.sendFile(m.chat, i.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
                         await Func.delay(1500)
                      }
                   } catch (e) {

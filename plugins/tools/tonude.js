@@ -1,4 +1,4 @@
-🍟 *Process*🍟 *Process*module.exports = {
+module.exports = {
    help: ['tonude'],
    use: 'reply photo',
    tags: ['tools'],

@@ -1,4 +1,4 @@
-🍟 *Process*🍟 *Process*module.exports = {
+module.exports = {
    help: ['threads'],
    use: 'link',
    tags: ['downloader'],

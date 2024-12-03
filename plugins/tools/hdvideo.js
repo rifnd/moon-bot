@@ -1,4 +1,5 @@
-🍟 *Process*🍟 *Process*module.exports = {
+
+module.exports = {
    help: ['hdvideo'],
    use: 'reply video',
    tags: ['tools'],
