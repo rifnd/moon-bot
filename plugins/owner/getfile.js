@@ -1,9 +1,9 @@
 const fs = require('fs')
 module.exports = {
    help: ['getplugin'],
+   command: ['gp', 'getfile'],
    use: 'filename',
    tags: ['owner'],
-   command: /^g(et)?(p(lugin)?|f(ile)?)$/i,
    run: async (m, {
       conn,
       usedPrefix,

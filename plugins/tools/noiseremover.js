@@ -1,13 +1,12 @@
 module.exports = {
    help: ['noiseremover'],
+   command: ['noise'],
    use: 'reply audio',
-   command: /^(noise|noiseremover)$/i,
    tags: ['tools'],
    run: async (m, {
       conn,
       usedPrefix,
       command,
-      text,
       Scraper,
       Func
    }) => {

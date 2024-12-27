@@ -3,7 +3,6 @@ module.exports = {
    help: ['setpp'],
    use: 'reply photo',
    tags: ['owner'],
-   command: /^(setpp)$/i,
    run: async (m, {
       conn,
       usedPrefix,

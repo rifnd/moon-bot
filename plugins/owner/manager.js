@@ -2,7 +2,6 @@ module.exports = {
    help: ['+owner', '-owner', '-prem', 'block', 'unblock'],
    use: 'mention or reply',
    tags: ['owner'],
-   command: /^(\+owner|\-owner|\-prem|block|unblock)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -19,19 +18,19 @@ module.exports = {
          let jid = conn.decodeJid(p[0].jid)
          let number = jid.replace(/@.+/, '')
          if (command == '+owner') { // add owner number
-            let owners = global.db.data.setting.owners
+            let owners = global.db.setting.owners
             if (owners.includes(number)) return conn.reply(m.chat, Func.texted('bold', `🚩 Target is already the owner.`), m)
             owners.push(number)
             conn.reply(m.chat, Func.texted('bold', `🚩 Successfully added @${number} as owner.`), m)
          } else if (command == '-owner') { // remove owner number
-            let owners = global.db.data.setting.owners
+            let owners = global.db.setting.owners
             if (!owners.includes(number)) return conn.reply(m.chat, Func.texted('bold', `🚩 Target is not owner.`), m)
             owners.forEach((data, index) => {
                if (data === number) owners.splice(index, 1)
             })
             conn.reply(m.chat, Func.texted('bold', `🚩 Successfully removing @${number} from owner list.`), m)
          } else if (command == '-prem') { // remove premium
-            let data = global.db.data.users[jid]
+            let data = global.db.users[jid]
             if (typeof data == 'undefined') return conn.reply(m.chat, Func.texted('bold', `🚩 Can't find user data.`), m)
             if (!data.premium) return conn.reply(m.chat, Func.texted('bold', `🚩 Not a premium account.`), m)
             data.premium = false

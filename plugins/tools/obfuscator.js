@@ -1,7 +1,6 @@
 module.exports = {
    help: ['obfuscator'],
-   use: 'link',
-   command: /^(obfuscator|enc)$/i,
+   use: 'code',
    tags: ['tools'],
    run: async (m, {
       conn,
@@ -25,5 +24,6 @@ module.exports = {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
+   limit: true,
    premium: true
 }

@@ -2,7 +2,6 @@ module.exports = {
    help: ['group'],
    use: 'open / close',
    tags: ['admin'],
-   command: /^(group)$/i,
    run: async (m, {
       conn,
       args,

@@ -2,7 +2,6 @@ module.exports = {
    help: ['wmremover'],
    use: 'reply photo',
    tags: ['tools'],
-   command: /^(wmremover)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -21,7 +20,7 @@ module.exports = {
                   image: image.data.url
                })
                if (!json.status) return m.reply(Func.jsonFormat(json))
-               conn.sendFile(m.chat, json.data.url, 'image.jpg', '', m)
+               conn.sendFile(m.chat, json.data.url, 'image.jpg', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
             } else conn.reply(m.chat, Func.texted('bold', `🚩 Only for photo.`), m)
          } else {
             let q = m.quoted ? m.quoted : m
@@ -35,11 +34,12 @@ module.exports = {
                image: image.data.url
             })
             if (!json.status) return m.reply(Func.jsonFormat(json))
-            conn.sendFile(m.chat, json.data.url, 'image.jpg', '', m)
+            conn.sendFile(m.chat, json.data.url, 'image.jpg', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
          }
       } catch (e) {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
-   premium: true,
+   limit: true,
+   premium: true
 }

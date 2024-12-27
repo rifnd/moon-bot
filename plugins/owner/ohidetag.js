@@ -2,7 +2,6 @@ module.exports = {
    help: ['ohidetag'],
    use: 'text',
    tags: ['owner'],
-   command: /^(ohidetag)$/i,
    run: async (m, {
       conn,
       usedPrefix,

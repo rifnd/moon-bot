@@ -1,7 +1,6 @@
 module.exports = {
    help: ['link'],
    tags: ['group'],
-   command: /^(link|getlink)$/i,
    run: async (m, {
       conn
    }) => {

@@ -4,24 +4,23 @@ const exec = promisify(cp.exec).bind(cp)
 const syntaxerror = require('syntax-error')
 let handler = m => m
 handler.before = async function (m, _2) {
-   let { conn, args, groupMetadata, plugins, isOwner, Func, Scraper } = _2
-   if (!isOwner) return
+   let { conn, args, groupMetadata, plugins, isOwner, Func, Scraper, setting } = _2
+   if (!isOwner && !m.fromMe) return
    let _return
    let _syntax = ''
    let txt = 'return ' + m.text.slice(3)
-   let old = m.exp * 1
    if (m.text.startsWith('=>')) {
       try {
          let i = 15
          let f = {
             exports: {},
          }
-         let execFunc = new (async () => { }).constructor('print', 'm', 'handler', 'require', 'conn', 'plugins', 'Func', 'Scraper', 'Array', 'process', 'args', 'groupMetadata', 'module', 'exports', 'argument', txt);
+         let execFunc = new (async () => { }).constructor('print', 'm', 'handler', 'require', 'conn', 'Func', 'Scraper', 'setting', 'Array', 'process', 'args', 'groupMetadata', 'plugins', 'module', 'exports', 'argument', txt)
          _return = await execFunc.call(conn, (...args) => {
             if (--i < 1) return
             console.log(...args)
             return conn.reply(m.chat, format(...args), m)
-         }, m, handler, require, conn, plugins, Func, Scraper, CustomArray, process, args, groupMetadata, f, f.exports, [conn, _2])
+         }, m, handler, require, conn, Func, Scraper, setting, CustomArray, process, args, groupMetadata, plugins, f, f.exports, [conn, _2])
       } catch (e) {
          let err = await syntaxerror(txt, 'Execution Function', {
             allowReturnOutsideFunction: true,
@@ -31,16 +30,15 @@ handler.before = async function (m, _2) {
          _return = e
       } finally {
          conn.reply(m.chat, _syntax + Func.jsonFormat(_return), m)
-         m.exp = old
       }
    } else if (m.text.startsWith('>')) {
       let txt = m.text.slice(2)
       try {
          let evaled = await eval(txt)
          if (typeof evaled !== 'string') evaled = inspect(evaled)
-         m.reply(evaled)
+         conn.reply(m.chat, evaled, m)
       } catch (e) {
-         m.reply(Func.jsonFormat(e))
+         conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    } else if (m.text.startsWith('$')) {
       let command = m.text.slice(2).trim()
@@ -51,8 +49,8 @@ handler.before = async function (m, _2) {
          output = e
       } finally {
          let { stdout, stderr } = output
-         if (stdout.trim()) m.reply(stdout)
-         if (stderr.trim()) m.reply(stderr)
+         if (stdout.trim()) conn.reply(m.chat, Func.texted('monospace', stdout), m)
+         if (stderr.trim()) conn.reply(m.chat, Func.texted('monospace', stderr), m)
       }
    }
 }

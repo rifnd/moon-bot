@@ -2,7 +2,6 @@ module.exports = {
    help: ['ocr'],
    use: 'reply photo',
    tags: ['tools'],
-   command: /^(ocr)$/i,
    run: async (m, {
       conn,
       usedPrefix,

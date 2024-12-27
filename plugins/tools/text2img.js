@@ -2,7 +2,6 @@ module.exports = {
    help: ['text2img'],
    use: 'prompt | negative | model | ratio',
    tags: ['tools'],
-   command: /^(text2img)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -20,9 +19,9 @@ module.exports = {
          if (!json.status) return conn.reply(m.chat, Func.jsonFormat(json), m)
          return conn.sendFile(m.chat, json.data.images[0].url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
       } catch (e) {
-         console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
-   premium: true,
+   limit: true,
+   premium: true
 }

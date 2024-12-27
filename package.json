@@ -1,6 +1,6 @@
 {
    "name": "moon-bot",
-   "version": "4.1.1",
+   "version": "5.0-alpha",
    "description": "Simple whatsapp bot",
    "keywords": [
       "whatsapp-bot"
@@ -20,15 +20,20 @@
       "lib": "lib"
    },
    "scripts": {
-      "start": "node index.js"
+      "start": "node index.js --max-old-space-size=8192",
+      "pm2": "pm2 start index.js --name moon-bot --max-memory-restart 8G -- --max-old-space-size=8192",
+      "test": "node test.js",
+      "server": "node index.js --server",
+      "queque": "node index.js --queque"
    },
    "dependencies": {
-      "@moonr/func": "^0.3.1",
-      "@whiskeysockets/baileys": "^6.7.9",
-      "awesome-phonenumber": "^5.6.0",
+      "@moonr/utils": "^0.2.7",
+      "@whiskeysockets/baileys": "npm:@neoxr/baileys",
+      "archiver": "^7.0.1",
       "bytes": "^3.1.2",
-      "cfonts": "^2.10.1",
-      "jimp": "^0.16.13",
+      "cfonts": "^3.3.0",
+      "express": "^4.21.2",
+      "ignore": "^7.0.0",
       "node-cron": "^3.0.0",
       "yt-search": "^2.10.4"
    }

@@ -1,24 +1,24 @@
 module.exports = {
-   help: ['lb'],
+   help: ['leaderboard'],
+   command: ['lb'],
    tags: ['user'],
-   command: /^(leaderboard|lb)$/i,
    run: async (m, {
       conn,
       args,
       participants,
       Func
    }) => {
-      let users = Object.entries(global.db.data.users).map(([key, value]) => {
+      let users = Object.entries(global.db.users).map(([key, value]) => {
          return { ...value, jid: key }
       })
-      let sortedExp = users.map(toNumber('exp')).sort(sort('exp'))
-      let sortedLim = users.map(toNumber('limit')).sort(sort('limit'))
-      let sortedLevel = users.map(toNumber('level')).sort(sort('level'))
-      let sortedMoney = users.map(toNumber('money')).sort(sort('money'))
-      let usersExp = sortedExp.map(enumGetKey)
-      let usersLim = sortedLim.map(enumGetKey)
-      let usersLevel = sortedLevel.map(enumGetKey)
-      let usersMoney = sortedMoney.map(enumGetKey)
+      let sortedExp = users.map(Func.toNumber('exp')).sort(Func.sort('exp'))
+      let sortedLim = users.map(Func.toNumber('limit')).sort(Func.sort('limit'))
+      let sortedLevel = users.map(Func.toNumber('level')).sort(Func.sort('level'))
+      let sortedMoney = users.map(Func.toNumber('money')).sort(Func.sort('money'))
+      let usersExp = sortedExp.map(Func.enumGetKey)
+      let usersLim = sortedLim.map(Func.enumGetKey)
+      let usersLevel = sortedLevel.map(Func.enumGetKey)
+      let usersMoney = sortedMoney.map(Func.enumGetKey)
       let len = args[0] && args[0].length > 0 ? Math.min(10, Math.max(parseInt(args[0]), 10)) : Math.min(10, sortedExp.length)
       let text = `
 • *XP Leaderboard Top ${len}* •
@@ -46,20 +46,4 @@ ${sortedMoney.slice(0, len).map(({ jid, money }, i) => `${i + 1}. ${participants
          }
       })
    }
-}
-
-function sort(property, ascending = true) {
-   if (property) return (...args) => args[ascending & 1][property] - args[!ascending & 1][property]
-   else return (...args) => args[ascending & 1] - args[!ascending & 1]
-}
-
-function toNumber(property, _default = 0) {
-   if (property) return (a, i, b) => {
-      return { ...b[i], [property]: a[property] === undefined ? _default : a[property] }
-   }
-   else return a => a === undefined ? _default : a
-}
-
-function enumGetKey(a) {
-   return a.jid
 }

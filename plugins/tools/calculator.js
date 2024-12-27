@@ -1,8 +1,8 @@
 module.exports = {
-   help: ['calc'],
+   help: ['calculator'],
+   command: ['calc'],
    use: 'expression',
    tags: ['tools'],
-   command: /^(calc(ulat(e|or))?|kalk(ulator)?)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -16,7 +16,7 @@ module.exports = {
       if (id in conn.math) {
          clearTimeout(conn.math[id][3])
          delete conn.math[id]
-         m.reply('Game over..\n\ndasar manusia berotak dongo bisanya nyontek doang.')
+         m.reply(`Game over, you're caught cheating..`)
       }
       let val = text
          .replace(/[^0-9\-\/+*×÷πEe()piPI/]/g, '')
@@ -38,9 +38,9 @@ module.exports = {
          if (!result) throw result
          m.reply(`*${format}* = _${result}_`)
       } catch (e) {
-         if (e == undefined) return m.reply(`Isinya?`)
-         return m.reply('Format salah, hanya 0-9 dan Simbol -, +, *, /, ×, ÷, π, e, (, ) yang support')
+         if (e == undefined) return m.reply(`What's inside?`)
+         return m.reply('Incorrect format, only 0-9 and Symbols -, +, *, /, ×, ÷, π, e, (, ) are supported.')
       }
    },
-   limit: true,
+   limit: true
 }

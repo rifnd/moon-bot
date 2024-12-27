@@ -1,4 +1,4 @@
-const { Converter } = new (require('@moonr/func'))
+const { Converter } = new (require('@moonr/utils'))
 const { readFileSync: read, unlinkSync: remove, writeFileSync: create } = require('fs')
 const path = require('path')
 const { exec } = require('child_process')
@@ -7,7 +7,6 @@ module.exports = {
    help: ['tomp3', 'tovn'],
    use: 'reply media',
    tags: ['converter'],
-   command: /^(to?(mp3|vn))$/i,
    run: async (m, {
       conn,
       command,

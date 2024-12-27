@@ -1,6 +1,5 @@
-<p align="center"><img align="center" width="100%" src="https://qu.ax/wSYXb.jpg"></img></p>
-
-> This script is 100% free, which uses the api from [AlyaChan-APIs](https://api.alyachan.pro)
+### MOON BOT
+> This script is 100% free, which uses the api from [AlyaChan-APIs](https://api.alyachan.dev)
 
 
 **Group** : [Community](https://chat.whatsapp.com/G57unQZ7saFIq2rdpVw0Tu)
@@ -39,6 +38,7 @@ There are 3 files that can be changed [.env](/.env), [config.json](/config.json)
 
 
 ```.env
+DATABASE_URL = ''
 API_ENDPOINT = 'https://api.alyachan.dev/'
 API_KEY = 'yourkey'
 ```
@@ -59,8 +59,7 @@ API_KEY = 'yourkey'
    "pairing": {
      "state": false,
      "number": 62000
-   },
-   "databaseurl": ""
+   }
 }
 ```
 
@@ -121,7 +120,7 @@ Note :
 module.exports = {
    help: ['display'],
    tags: ['category'],
-   command: /^(command)$/i,
+   command: ['command'],
    run: async (m, {
       conn,
       usedPrefix,

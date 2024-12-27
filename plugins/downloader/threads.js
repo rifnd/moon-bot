@@ -2,7 +2,6 @@ module.exports = {
    help: ['threads'],
    use: 'link',
    tags: ['downloader'],
-   command: /^(threads)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -20,11 +19,10 @@ module.exports = {
          })
          if (!json.status) return m.reply(Func.jsonFormat(json))
          for (let i of json.data) {
-            conn.sendFile(m.chat, i.url, '', `🍟 *Fetching* : ${((new Date - old) * 1)} ms`, m)
+            conn.sendFile(m.chat, i.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
          }
       } catch (e) {
-         console.log(e)
-         return m.reply(Func.jsonFormat(e))
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true

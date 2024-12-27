@@ -2,7 +2,6 @@ module.exports = {
    help: ['totag'],
    use: 'reply chat',
    tags: ['admin'],
-   command: /^(totag)$/i,
    run: async (m, {
       conn,
       text,

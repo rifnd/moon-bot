@@ -2,7 +2,6 @@ module.exports = {
    help: ['sider'],
    use: '(option)',
    tags: ['admin'],
-   command: /^(sider)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -17,7 +16,7 @@ module.exports = {
          const day = 86400000 * 7
          const now = new Date() * 1
          let sider1 = [], sider2 = []
-         const group = global.db.data.groups[m.chat]
+         const group = global.db.groups[m.chat]
          member.filter(v => group.member[v]).map(v => sider1.push({
             jid: v,
             ...group.member[v]

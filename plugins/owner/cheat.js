@@ -1,8 +1,8 @@
 module.exports = {
-   help: ['pay'],
-   use: 'type amount @tag',
+   help: ['cheat'],
+   command: ['pay'],
+   use: 'type amount @tag/reply',
    tags: ['owner'],
-   command: /^(pay|cheat)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -12,27 +12,29 @@ module.exports = {
    }) => {
       try {
          let type = (args[0] || '').toLowerCase()
-         let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
+         let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted && m.quoted.sender ? m.quoted.sender : null
+         if (!who || who === conn.user.jid) return conn.reply(m.chat, Func.texted('bold', 'Invalid target. You cannot use this command on bots.'), m)
+         if (!type || !args[1] || isNaN(args[1])) return conn.reply(m.chat, Func.example(usedPrefix, command, `${args[0]} 10 @628xx`), m)
          if (/pay|cheat/i.test(command)) {
-            const count = args[1] && args[1].length > 0 ? Math.max(parseInt(args[1]), 1) : !args[1] || args.length < 3 ? 1 : Math.min(1, count)
+            const count = Math.max(parseInt(args[1]), 1)
             switch (type) {
                case 'exp':
-                  if (typeof global.db.data.users[who] == 'undefined') return conn.reply(m.chat, Func.texted('Bold', '🚩 The user does not exist in the database'), m)
-                  global.db.data.users[who].exp += count * 1
-                  conn.reply(m.chat, `Added successfully ${count * 1} ${type}`, m)
-                  break // Attention, the exp cheat can make your database error!!
+                  if (typeof global.db.users[who] == 'undefined') return conn.reply(m.chat, Func.texted('bold', 'The user does not exist in the database'), m)
+                  global.db.users[who].exp += count * 1
+                  conn.reply(m.chat, `Successfully added ${count * 1} ${type} to @${who.split`@`[0]}`, m)
+               break // Attention, the exp cheat can make your database error!!
                case 'money':
-                  if (typeof global.db.data.users[who] == 'undefined') return conn.reply(m.chat, Func.texted('Bold', '🚩 The user does not exist in the database'), m)
-                  global.db.data.users[who].money += count * 1
-                  conn.reply(m.chat, `Added successfully ${count * 1} ${type}`, m)
-                  break
+                  if (typeof global.db.users[who] == 'undefined') return conn.reply(m.chat, Func.texted('bold','The user does not exist in the database'), m)
+                  global.db.users[who].money += count * 1
+                  conn.reply(m.chat, `Successfully added ${count * 1} ${type} to @${who.split`@`[0]}`, m)
+               break
                case 'limit':
-                  if (typeof global.db.data.users[who] == 'undefined') return conn.reply(m.chat, Func.texted('Bold', '🚩 The user does not exist in the database'), m)
-                  global.db.data.users[who].limit += count * 1
-                  conn.reply(m.chat, `Added successfully ${count * 1} ${type}`, m)
-                  break
+                  if (typeof global.db.users[who] == 'undefined') return conn.reply(m.chat, Func.texted('bold','The user does not exist in the database'), m)
+                  global.db.users[who].limit += count * 1
+                  conn.reply(m.chat, `Successfully added ${count * 1} ${type} to @${who.split`@`[0]}`, m)
+               break
                default:
-                  return conn.reply(m.chat, Func.example(usedPrefix, command, 'exp 10 @628xx'), m)
+               return conn.reply(m.chat, Func.example(usedPrefix, command, 'exp 10 @628xx'), m)
             }
          }
       } catch (e) {

@@ -2,7 +2,6 @@ module.exports = {
    help: ['add', 'promote', 'demote', 'kick'],
    use: 'mention or reply',
    tags: ['admin'],
-   command: /^(add|promote|demote|kick)$/i,
    run: async (m, {
       conn,
       usedPrefix,

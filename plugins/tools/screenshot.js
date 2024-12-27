@@ -1,4 +1,7 @@
 module.exports = {
+   help: ['ss', 'ssweb'],
+   use: 'link',
+   tags: ['tools'],
    run: async (m, {
       conn,
       usedPrefix,
@@ -7,8 +10,9 @@ module.exports = {
       Func
    }) => {
       try {
-         if (!args[0]) return m.reply(Func.example(usedPrefix, command, 'https://api.alyachan.pro'))
+         if (!args[0]) return m.reply(Func.example(usedPrefix, command, 'https://api.alyachan.dev'))
          if (!/^https?:\/\//.test(args[0])) return m.reply('Prefix links with https://')
+         let old = new Date()
          switch (command) {
             case 'ss':
             case 'screenshot': {
@@ -17,7 +21,7 @@ module.exports = {
                   url: args[0], mode: 'mobile'
                })
                if (!json.status) return m.reply(Func.jsonFormat(json))
-               conn.sendFile(m.chat, json.data.url, '', '', m)
+               conn.sendFile(m.chat, json.data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
             }
             break
             case 'ssweb': {
@@ -26,17 +30,13 @@ module.exports = {
                   url: args[0], mode: 'desktop'
                })
                if (!json.status) return m.reply(Func.jsonFormat(json))
-               conn.sendFile(m.chat, json.data.url, '', '', m)
+               conn.sendFile(m.chat, json.data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
             }
             break
          }
       } catch (e) {
-         m.reply(Func.jsonFormat(e))
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
-   help: ['ss', 'ssweb'],
-   use: 'link',
-   tags: ['tools'],
-   command: /^(ss|screenshot|ssweb)$/i,
    limit: true
 }

@@ -1,7 +1,7 @@
+const moment = require('moment-timezone')
 module.exports = {
    usage: ['couple'],
    tags: ['group'],
-   command: /^(couple)$/i,
    run: async (m, {
       conn,
       participants

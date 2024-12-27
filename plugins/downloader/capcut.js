@@ -1,8 +1,8 @@
 module.exports = {
    help: ['capcut'],
+   command: ['capcutwm'],
    use: 'link',
    tags: ['downloader'],
-   command: /^(capcut|capcutwm)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -28,8 +28,7 @@ module.exports = {
             conn.sendFile(m.chat, json.data[0].url, Func.filename('mp4'), `◦ *Title* : ${json.title}`, m)
          }
       } catch (e) {
-         console.log(e)
-         return m.reply(Func.jsonFormat(e))
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true

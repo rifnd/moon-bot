@@ -3,7 +3,6 @@ module.exports = {
    help: ['qc'],
    use: 'text',
    tags: ['converter'],
-   command: /^(qc|quickchat)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -14,10 +13,7 @@ module.exports = {
    }) => {
       if (!text) return conn.reply(m.chat, Func.example(usedPrefix, command, 'Hi!'), m)
       try {
-         pic = await conn.profilePictureUrl(m.quoted ? m.quoted.sender : m.sender, 'image')
-      } catch (e) {
-         pic = 'https://telegra.ph/file/32ffb10285e5482b19d89.jpg'
-      } finally {
+         var pic = await conn.profilePictureUrl(m.quoted ? m.quoted.sender : m.sender, 'image') || 'https://i.ibb.co/NLJdrcJ/image.jpg'
          m.react('🕒')
          const json = {
             "type": "quote",
@@ -50,6 +46,8 @@ module.exports = {
             packname: setting.sk_pack,
             author: setting.sk_author
          })
+      } catch (e) {
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true

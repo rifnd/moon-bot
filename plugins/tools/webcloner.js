@@ -1,8 +1,7 @@
 module.exports = {
-   help: ['webclone'],
+   help: ['webcloner'],
    use: 'link',
    tags: ['tools'],
-   command: /^(webclone)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -24,5 +23,6 @@ module.exports = {
          return m.reply(Func.jsonFormat(e))
       }
    },
-   premium: true,
+   limit: true,
+   premium: true
 }

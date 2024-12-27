@@ -1,11 +1,7 @@
-const { Converter } = new (require('@moonr/func'))
-const fs = require('fs')
-const { exec } = require('child_process')
 module.exports = {
    help: ['swm'],
    use: 'packname | author',
    tags: ['converter'],
-   command: /^(swm)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -53,7 +49,6 @@ module.exports = {
             } else conn.reply(m.chat, `🚩 To create a watermark on sticker reply media photo or video and use this format *${usedPrefix + command} packname | author*`, m)
          }
       } catch (e) {
-         console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },

@@ -2,7 +2,6 @@ module.exports = {
    help: ['twitter'],
    use: 'link',
    tags: ['downloader'],
-   command: /^(twitter|twit)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -20,10 +19,9 @@ module.exports = {
          })
          if (!json.status) return m.reply(Func.jsonFormat(json))
          let url = json.data.find((v) => v.url).url
-         await conn.sendFile(m.chat, url, '', `🍟 *Fetching* : ${((new Date - old) * 1)} ms`, m)
+         await conn.sendFile(m.chat, url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
       } catch (e) {
-         console.log(e)
-         return m.reply(Func.jsonFormat(e))
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true

@@ -2,7 +2,6 @@ module.exports = {
    help: ['douyin'],
    use: 'link',
    tags: ['downloader'],
-   command: /^(douyin)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -28,8 +27,7 @@ module.exports = {
             conn.sendFile(m.chat, result.url, Func.filename('mp4'), `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
          }
       } catch (e) {
-         console.log(e)
-         return m.reply(status.error)
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true

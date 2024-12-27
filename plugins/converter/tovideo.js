@@ -1,15 +1,15 @@
 module.exports = {
    help: ['tovideo'],
+   command: ['togif'],
    use: 'reply gif sticker',
    tags: ['converter'],
-   command: /^(to?(video|gif))$/i,
    run: async (m, {
       conn,
       Scraper,
       Func
    }) => {
       try {
-         let exif = global.db.data.setting
+         let exif = global.db.setting
          if (!m.quoted) return conn.reply(m.chat, Func.texted('bold', `🚩 Reply to gif sticker.`), m)
          let q = m.quoted ? m.quoted : m
          let mime = (q.msg || q).mimetype || ''
@@ -24,7 +24,6 @@ module.exports = {
          })
          conn.sendFile(m.chat, json.data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
       } catch (e) {
-         console.log(e)
          return conn.reply(m.chat, global.status.error, m)
       }
    },

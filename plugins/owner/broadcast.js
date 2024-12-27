@@ -2,7 +2,6 @@ module.exports = {
    help: ['bc', 'bcgc'],
    use: 'text or reply media',
    tags: ['owner'],
-   command: /^(bc|bcgc)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -13,7 +12,7 @@ module.exports = {
       try {
          let q = m.quoted ? m.quoted : m
          let mime = (q.msg || q).mimetype || ''
-         let chatJid = Object.entries(global.db.data.chats).filter(([jid, _]) => jid.endsWith('.net')).map(([jid, _]) => jid)
+         let chatJid = Object.entries(global.db.chats).filter(([jid, _]) => jid.endsWith('.net')).map(([jid, _]) => jid)
          let groupList = async () => Object.entries(await conn.groupFetchAllParticipating()).slice(0).map(entry => entry[1])
          let groupJid = await (await groupList()).map(v => v.id)
          const id = command == 'bc' ? chatJid : groupJid
@@ -23,9 +22,9 @@ module.exports = {
             for (let jid of id) {
                await Func.delay(1500)
                await conn.sendMessageModify(jid, text, null, {
-                  thumbnail: await Func.fetchBuffer('https://telegra.ph/file/aa76cce9a61dc6f91f55a.jpg'),
+                  thumbnail: await Func.fetchBuffer('https://qu.ax/lmNem.jpg'),
                   largeThumb: true,
-                  url: global.db.data.setting.link,
+                  url: global.db.setting.link,
                   mentions: command == 'bcgc' ? await (await conn.groupMetadata(jid)).participants.map(v => v.id) : []
                })
             }
@@ -35,8 +34,8 @@ module.exports = {
                await Func.delay(1500)
                let media = await q.download()
                await conn.sendSticker(jid, media, null, {
-                  packname: global.db.data.setting.sk_pack,
-                  author: global.db.data.setting.sk_author,
+                  packname: global.db.setting.sk_pack,
+                  author: global.db.setting.sk_author,
                   mentions: command == 'bcgc' ? await (await conn.groupMetadata(jid)).participants.map(v => v.id) : []
                })
             }

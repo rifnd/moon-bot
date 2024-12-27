@@ -2,7 +2,6 @@ module.exports = {
    help: ['join'],
    use: 'group link',
    tags: ['owner'],
-   command: /^(join)$/i,
    run: async (m, {
       conn,
       usedPrefix,

@@ -2,7 +2,6 @@ module.exports = {
    help: ['paretro', 'retrolga', 'plumy', 'hdr', 'sepia', 'duotone', 'blackwhite', 'sketch', 'sketchril', 'oils', 'esragan', 'watercolor', 'galaxy', 'freplace', 'rainbow', 'solarize', 'pinkbir'],
    use: 'reply photo',
    tags: ['image effect'],
-   command: /^(paretro|retrolga|plumy|hdr|sepia|duotone|blackwhite|sketch|sketchril|oils|esragan|watercolor|galaxy|freplace|rainbow|solarize|pinkbir)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -23,7 +22,7 @@ module.exports = {
                   image: image.data.url, style: command
                })
                if (!json.status) return m.reply(Func.jsonFormat(json))
-               conn.sendFile(m.chat, json.data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
+               conn.sendFile(m.chat, json.data.url, '', `Process : ${((new Date - old) * 1)} ms`, m)
             } else conn.reply(m.chat, Func.texted('bold', `🚩 Only for photo.`), m)
          } else {
             let q = m.quoted ? m.quoted : m
@@ -38,7 +37,7 @@ module.exports = {
                image: image.data.url, style: command
             })
             if (!json.status) return m.reply(Func.jsonFormat(json))
-            conn.sendFile(m.chat, json.data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
+            conn.sendFile(m.chat, json.data.url, '', `Process : ${((new Date - old) * 1)} ms`, m)
          }
       } catch (e) {
          return conn.reply(m.chat, Func.jsonFormat(e), m)

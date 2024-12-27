@@ -2,7 +2,6 @@ module.exports = {
    help: ['prompter'],
    use: 'reply photo',
    tags: ['tools'],
-   command: /^(prompter)$/i,
    run: async (m, {
       conn,
       usedPrefix,

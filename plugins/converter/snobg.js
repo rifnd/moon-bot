@@ -2,7 +2,6 @@ module.exports = {
    help: ['snobg'],
    use: 'reply photo',
    tags: ['converter'],
-   command: /^(snobg)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -12,7 +11,7 @@ module.exports = {
       Func
    }) => {
       try {
-         let exif = global.db.data.setting
+         let exif = global.db.setting
          if (m.quoted ? m.quoted.message : m.msg.viewOnce) {
             let type = m.quoted ? Object.keys(m.quoted.message)[0] : m.mtype
             let q = m.quoted ? m.quoted.message[type] : m.msg

@@ -4,7 +4,6 @@ module.exports = {
    help: ['npmjs'],
    use: 'query',
    tags: ['internet'],
-   command: /^(npmjs)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -32,8 +31,7 @@ module.exports = {
          })
          conn.reply(m.chat, teks + global.footer, m)
       } catch (e) {
-         console.log(e)
-         return m.reply(Func.texted('bold', '🚩 Package not found.'))
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true,

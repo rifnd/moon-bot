@@ -2,7 +2,6 @@ module.exports = {
    help: ['pindl'],
    use: 'link',
    tags: ['downloader'],
-   command: /^(pindl)$/i,
    run: async (m, {
       conn,
       usedPrefix,

@@ -2,7 +2,6 @@ module.exports = {
    help: ['kbbg'],
    use: 'text',
    tags: ['internet'],
-   command: /^(kbbg)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -18,7 +17,7 @@ module.exports = {
          if (!json.status) return m.reply(Func.jsonFormat(json))
          m.reply(json.data.description)
       } catch (e) {
-         console.log(e)
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true,

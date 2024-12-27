@@ -2,7 +2,6 @@ module.exports = {
    help: ['brainly'],
    use: 'query',
    tags: ['internet'],
-   command: /^(brainly)$/i,
    run: async (m, {
       conn,
       usedPrefix,

@@ -2,7 +2,6 @@ module.exports = {
    help: ['wallpaper'],
    use: 'query',
    tags: ['internet'],
-   command: /^(wallpaper)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -28,8 +27,7 @@ module.exports = {
             await Func.delay(3000)
          }
       } catch (e) {
-         console.log(e)
-         m.reply(Func.jsonFormat(e))
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true,

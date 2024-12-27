@@ -2,7 +2,6 @@ module.exports = {
    help: ['+command', '-command'],
    use: 'command',
    tags: ['owner'],
-   command: /^(\+command|\-command)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -11,7 +10,7 @@ module.exports = {
       plugins,
       Func
    }) => {
-      let cmd = global.db.data.setting
+      let cmd = global.db.setting
       if (!args || !args[0]) return conn.reply(m.chat, Func.example(usedPrefix, command, 'tiktok'), m)
       let commands = Func.arrayJoin(Object.values(Object.fromEntries(Object.entries(plugins).filter(([name, prop]) => prop.help))).map(v => v.help))
       if (!commands.includes(args[0])) return conn.reply(m.chat, Func.texted('bold', `🚩 Command ${usedPrefix + args[0]} does not exist.`), m)
@@ -27,5 +26,5 @@ module.exports = {
          conn.reply(m.chat, Func.texted('bold', `🚩 Command ${usedPrefix + args[0]} successfully activated.`), m)
       }
    },
-   owner: 1
+   owner: true
 }

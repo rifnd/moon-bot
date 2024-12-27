@@ -1,8 +1,8 @@
 module.exports = {
    help: ['tiktok', 'tikmp3', 'tikwm'],
+   command: ['tt'],
    use: 'link',
    tags: ['downloader'],
-   command: /^(tiktok|tt|tikmp3|tikwm)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -20,14 +20,14 @@ module.exports = {
          })
          if (!json.status) return m.reply(Func.jsonFormat(json))
          let teks = `乂  *T I K T O K*\n\n`
-         teks += `  ∘  *Author* : ${json.author.nickname}\n`
-         teks += `  ∘  *Like* : ${json.stats.likes}\n`
-         teks += `  ∘  *Share* : ${json.stats.share}\n`
-         teks += `  ∘  *Comment* : ${json.stats.comment}\n`
-         teks += `  ∘  *Duration* : ${json.duration}\n`
-         teks += `  ∘  *Sound* : ${json.music_info.title} - ${json.music_info.author}\n`
-         teks += `  ∘  *Caption* : ${json.title}\n`
-         teks += `  ∘  *Fetching* : ${((new Date - old) * 1)} ms\n\n`
+         teks += `   ∘  *Author* : ${json.author.nickname}\n`
+         teks += `   ∘  *Like* : ${json.stats.likes}\n`
+         teks += `   ∘  *Share* : ${json.stats.share}\n`
+         teks += `   ∘  *Comment* : ${json.stats.comment}\n`
+         teks += `   ∘  *Duration* : ${json.duration}\n`
+         teks += `   ∘  *Sound* : ${json.music_info.title} - ${json.music_info.author}\n`
+         teks += `   ∘  *Caption* : ${json.title}\n`
+         teks += `   ∘  *Fetching* : ${((new Date - old) * 1)} ms\n\n`
          teks += global.footer
          if (command == 'tiktok' || command == 'tt') {
             let result = json.data.find(v => v.type == 'nowatermark')
@@ -44,8 +44,7 @@ module.exports = {
             conn.sendFile(m.chat, json.music_info.url, Func.filename('mp3'), '', m)
          }
       } catch (e) {
-         console.log(e)
-         return m.reply(status.error)
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true

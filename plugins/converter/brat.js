@@ -2,7 +2,6 @@ module.exports = {
    help: ['brat'],
    use: 'text',
    tags: ['converter'],
-   command: /^(brat)$/,
    run: async (m, {
       conn,
       usedPrefix,

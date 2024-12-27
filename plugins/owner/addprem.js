@@ -1,8 +1,8 @@
 module.exports = {
    help: ['+prem'],
+   command: ['addprem'],
    use: 'mention or reply',
    tags: ['owner'],
-   command: /^(\+prem)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -17,15 +17,17 @@ module.exports = {
          if (args && isNaN(args[0])) return conn.reply(m.chat, Func.texted('bold', `🚩 Day must be a number.`), m)
          let days = args[0] ? parseInt(args[0]) : 30
          let jid = conn.decodeJid(m.quoted.sender)
-         let users = global.db.data.users[jid]
+         let users = global.db.users[jid]
          users.expired += users.premium ? (86400000 * days) : ((new Date() * 1) + (86400000 * days))
+         users.limit += 2000
          conn.reply(m.chat, users.premium ? Func.texted('bold', `🚩 Succesfully added ${days} days premium access for @${jid.replace(/@.+/, '')}.`) : Func.texted('bold', `🚩 Successfully added @${jid.replace(/@.+/, '')} to premium user.`), m).then(() => users.premium = true)
       } else if (m.mentionedJid.length != 0) {
          if (args && args[1] && isNaN(args[1])) return conn.reply(m.chat, Func.texted('bold', `🚩 Day must be a number.`), m)
          let days = args[1] ? parseInt(args[1]) : 30
          let jid = conn.decodeJid(m.mentionedJid[0])
-         const users = global.db.data.users[jid]
+         const users = global.db.users[jid]
          users.expired += users.premium ? (86400000 * days) : ((new Date() * 1) + (86400000 * days))
+         users.limit += 2000
          conn.reply(m.chat, users.premium ? Func.texted('bold', `🚩 Succesfully added ${days} days premium access for @${jid.replace(/@.+/, '')}.`) : Func.texted('bold', `🚩 Successfully added @${jid.replace(/@.+/, '')} to premium user.`), m).then(() => users.premium = true)
       } else if (text && /|/.test(text)) {
          let [number, day] = text.split`|`
@@ -34,9 +36,10 @@ module.exports = {
          if (isNaN(day)) return conn.reply(m.chat, Func.texted('bold', `🚩 Day must be a number.`), m)
          let days = day ? parseInt(day) : 30
          let jid = conn.decodeJid(p.jid)
-         const users = global.db.data.users[jid]
+         const users = global.db.users[jid]
          if (!users) return conn.reply(m.chat, Func.texted('bold', `🚩 Can't find user data.`), m)
          users.expired += users.premium ? (86400000 * days) : ((new Date() * 1) + (86400000 * days))
+         users.limit += 2000
          conn.reply(m.chat, users.premium ? Func.texted('bold', `🚩 Succesfully added ${days} days premium access for @${jid.replace(/@.+/, '')}.`) : Func.texted('bold', `🚩 Successfully added @${jid.replace(/@.+/, '')} to premium user.`), m).then(() => users.premium = true)
       } else {
          let teks = `• *Example* :\n\n`

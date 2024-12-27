@@ -2,7 +2,6 @@ module.exports = {
    help: ['photoexif'],
    use: 'reply photo',
    tags: ['tools'],
-   command: /^(photoexif)$/i,
    run: async (m, {
       conn,
       usedPrefix,

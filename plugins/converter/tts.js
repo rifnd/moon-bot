@@ -2,7 +2,6 @@ module.exports = {
    help: ['tts'],
    use: 'iso text',
    tags: ['converter'],
-   command: /^(tts)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -25,7 +24,6 @@ module.exports = {
          })
          conn.sendFile(m.chat, json.data.url, 'audio.mp3', '', m)
       } catch (e) {
-         console.log(e)
          return conn.reply(m.chat, Func.texted('bold', `🚩 Language code not supported.`), m)
       }
    },

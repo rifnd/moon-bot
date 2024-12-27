@@ -1,8 +1,8 @@
 module.exports = {
    help: ['shortner'],
+   command: ['shortlink', 'shorten'],
    use: 'link',
    tags: ['tools'],
-   command: /^(shortner|short)$/i,
    run: async (m, {
       conn,
       usedPrefix,

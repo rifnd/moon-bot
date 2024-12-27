@@ -1,9 +1,9 @@
 const moment = require('moment-timezone')
-moment.tz.setDefault('Asia/Jakarta')
+moment.tz.setDefault(process.env.TZ)
 module.exports = {
-   help: ['sc'],
+   help: ['sourcecode'],
+   command: ['sc'],
    tags: ['miscs'],
-   command: /^(sc|sourcecode)$/i,
    run: async (m, {
       conn,
       Func

@@ -1,10 +1,14 @@
 module.exports = {
+   help: ['rvo'],
+   command: ['readviewonce'],
+   use: 'reply viewonce',
+   tags: ['group'],
    run: async (m, {
       conn,
       Func
    }) => {
       try {
-         if (!m.quoted) return conn.reply(m.chat, Func.texted('bold', `🚩 Reply view once message to use this command.`), m)
+         if (!m.quoted) return conn.reply(m.chat, `Reply view once message to use this command.`, m)
          if (m.quoted.message) {
             let type = Object.keys(m.quoted.message)[0]
             let q = m.quoted.message[type]
@@ -20,10 +24,6 @@ module.exports = {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
-   help: ['rvo'],
-   use: 'reply viewonce',
-   tags: ['group'],
-   command: /^(rvo|readviewonce)$/i,
    group: true,
    limit: true
 }

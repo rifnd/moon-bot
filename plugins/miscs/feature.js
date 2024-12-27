@@ -1,13 +1,13 @@
 module.exports = {
    help: ['feature'],
+   command: ['fitur'],
    tags: ['miscs'],
-   command: /^(feature)$/i,
    run: async (m, {
       conn,
       plugins,
       Func
    }) => {
-      const totalHelpItems = Object.values(plugins).filter((v) => v.help).reduce((sum, v) => sum + (Array.isArray(v.help) ? v.help.length : 0), 0)
-      conn.reply(m.chat, Func.texted('bold', 'Total features available : [ ' + totalHelpItems + ' ]'), m)
+      let a = Func.arrayJoin(Object.values(Object.fromEntries(Object.entries(plugins).filter(([m, d]) => d.help))).map(m => m.help)).concat(Func.arrayJoin(Object.values(Object.fromEntries(Object.entries(plugins).filter(([m, d]) => d.command))).map(m => m.command))).length
+      conn.reply(m.chat, Func.texted('bold', 'Total features available : [ ' + a + ' ]'), m)
    }
 }

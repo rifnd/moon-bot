@@ -2,7 +2,6 @@ module.exports = {
    help: ['google', 'gimage'],
    use: 'query',
    tags: ['internet'],
-   command: /^(google|gimage)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -41,7 +40,7 @@ module.exports = {
             }
          }
       } catch (e) {
-         console.log(e)
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true,

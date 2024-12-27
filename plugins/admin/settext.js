@@ -2,7 +2,6 @@ module.exports = {
    help: ['setwelcome', 'setbye'],
    use: 'text',
    tags: ['admin'],
-   command: /^(setwelcome|setbye)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -11,7 +10,7 @@ module.exports = {
       participants,
       Func
    }) => {
-      let setup = global.db.data.groups[m.chat]
+      let setup = global.db.groups[m.chat]
       if (command == 'setwelcome') {
          if (!text) return conn.reply(m.chat, formatWel(usedPrefix, command), m)
          setup.sWelcome = text

@@ -1,0 +1,72 @@
+// please read!
+handler.help = ['example'] // commands displayed in the menu - perintah yang ditampilkan di menu
+handler.command = ['example'] // commands that are not displayed in the menu - perintah yang tidak ditampilkan
+handler.use = 'example' // for usage examples - untuk contoh penggunaan
+handler.tags = ['example'] // command category - kategori perintah 
+
+// plugins 1
+let handler = async (m, {
+   conn,
+   usedPrefix
+}) => {
+   console.log(conn)
+}
+handler.help = ['example']
+handler.command = ['example']
+handler.tags = ['example']
+handler.limit = true/false
+module.exports = handler
+
+// plugins 2
+module.exports = {
+   help: ['example'],
+   command: ['example'],
+   use: 'example',
+   tags: ['example'],
+   run: async (m, {
+      conn,
+      usedPrefix,
+      command
+   }) => {
+      console.log(conn)
+   },
+   limit: true/false
+} 
+
+// plugins event 1 - 1
+let handler = (m) => m
+handler.before = async function(m, {
+   conn
+}) {
+   console.log(conn)
+   return true
+}
+
+// plugins event 1 - 2
+let handler = (m) => m
+handler.all = async function(m, {
+   conn
+}) {
+   console.log(conn)
+   return true
+}
+
+// plugins event 2 - 1
+module.exports = {
+   async before (m, {
+      conn
+   }) {
+      console.log(e)
+      return true
+   }
+}
+
+// plugins event 2 - 2
+module.exports = {
+   async all (m, {
+      conn
+   }) {
+      console.log(e)
+      return true
+   }
+}

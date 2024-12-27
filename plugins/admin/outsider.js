@@ -2,7 +2,6 @@ module.exports = {
    help: ['outsider'],
    use: '(option)',
    tags: ['admin'],
-   command: /^(outsider)$/i,
    run: async (m, {
       conn,
       usedPrefix,

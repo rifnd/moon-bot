@@ -1,8 +1,7 @@
 module.exports = {
-   help: ['setmsg'],
+   help: ['setmsg', 'setgrmsg'],
    use: 'text',
    tags: ['owner'],
-   command: /^(setmsg)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -11,10 +10,14 @@ module.exports = {
       Func
    }) => {
       try {
-         let setting = global.db.data.setting
          if (!text) return conn.reply(m.chat, explain(usedPrefix, command), m)
-         setting.msg = text
-         conn.reply(m.chat, Func.texted('bold', `🚩 Menu Message successfully set.`), m)
+         if (command === 'setmsg') {
+            setting.msg = text
+            conn.reply(m.chat, Func.texted('bold', `🚩 Menu Message successfully set.`), m)
+         } else if (command === 'setgrmsg') {
+            setting._msg = text
+            conn.reply(m.chat, Func.texted('bold', `🚩 Greeting Message successfully set.`), m)
+         }
       } catch (e) {
          conn.reply(m.chat, Func.jsonFormat(e), m)
       }
@@ -28,6 +31,8 @@ const explain = (prefix, command) => {
 *1.* +tag : for mention sender.
 *2.* +name : to getting sender name.
 *3.* +greeting : to display greetings by time.
+*4.* +limit : to display sender limit.
+*5.* +premium : display whether the sender is premium
 
 • *Example* : ${prefix + command} Hi +tag +greeting, i'm an automation system`
 }

@@ -11,7 +11,6 @@ let format = sizeFormatter({
 module.exports = {
    help: ['ping'],
    tags: ['miscs'],
-   command: /^(ping)$/i,
    run: async (m, {
       conn,
       Func

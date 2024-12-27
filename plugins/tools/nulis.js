@@ -1,8 +1,8 @@
 module.exports = {
    help: ['nulis'],
+   command: ['magernulis'],
    use: 'text',
    tags: ['tools'],
-   command: /^(nulis)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -20,8 +20,7 @@ module.exports = {
          if (!json.status) return m.reply(Func.jsonFormat(json))
          conn.sendFile(m.chat, json.data.url, '', ``, m)
       } catch (e) {
-         console.log(e)
-         return m.reply(Func.jsonFormat(e))
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true,

@@ -1,7 +1,7 @@
 module.exports = {
    help: ['unshortner'],
+   command: ['unshort', 'unshortlink'],
    use: 'link',
-   command: /^(unshortner|unshort)$/i,
    tags: ['tools'],
    run: async (m, {
       conn,

@@ -2,7 +2,6 @@ module.exports = {
    help: ['emojimix'],
    use: 'emoji + emoji',
    tags: ['converter'],
-   command: /^(emojimix|emomix)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -11,7 +10,7 @@ module.exports = {
       Func
    }) => {
       try {
-         let exif = global.db.data.setting
+         let exif = global.db.setting
          if (!text) return conn.reply(m.chat, Func.example(usedPrefix, command, '😳+😩'), m)
          m.react('🕒')
          let [emo1, emo2] = text.split`+`
@@ -26,7 +25,6 @@ module.exports = {
             categories: [emo1, emo2]
          })
       } catch (e) {
-         console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },

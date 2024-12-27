@@ -1,8 +1,8 @@
 module.exports = {
    help: ['remini'],
+   command: ['hd'],
    use: 'reply photo',
    tags: ['tools'],
-   command: /^(remini|hd)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -21,7 +21,9 @@ module.exports = {
                   image: image.data.url
                })
                if (!json.status) return m.reply(Func.jsonFormat(json))
-               conn.sendFile(m.chat, json.data.url, 'image.jpg', '', m)
+               conn.sendFile(m.chat, json.data.url, 'Remini - ' + Func.randomString(10) + '.jpg', '', m, {
+                  document: true
+               })
             } else conn.reply(m.chat, Func.texted('bold', `🚩 Only for photo.`), m)
          } else {
             let q = m.quoted ? m.quoted : m
@@ -35,11 +37,14 @@ module.exports = {
                image: image.data.url
             })
             if (!json.status) return m.reply(Func.jsonFormat(json))
-            conn.sendFile(m.chat, json.data.url, 'image.jpg', '', m)
+            conn.sendFile(m.chat, json.data.url, 'Remini - ' + Func.randomString(10) + '.jpg', '', m, {
+               document: true
+            })
          }
       } catch (e) {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
-   premium: true,
+   limit: true,
+   premium: true
 }

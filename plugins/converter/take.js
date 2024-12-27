@@ -1,8 +1,8 @@
 module.exports = {
    help: ['take'],
+   command: ['wm'],
    use: 'packname | author',
    tags: ['converter'],
-   command: /^(take|wm)$/i,
    run: async (m, {
       conn,
       text,
@@ -22,7 +22,6 @@ module.exports = {
             author: author || ''
          })
       } catch (e) {
-         console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },

@@ -4,9 +4,9 @@ const { exec } = require('child_process')
 const { tmpdir } = require('os')
 module.exports = {
    help: ['toimg'],
+   command: ['toimage'],
    use: 'reply sticker',
    tags: ['converter'],
-   command: /^(to?(img|image))$/i,
    run: async (m, {
       conn,
       Func
@@ -26,7 +26,6 @@ module.exports = {
             remove(isFile)
          })
       } catch (e) {
-         console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },

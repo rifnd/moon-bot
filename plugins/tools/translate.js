@@ -1,8 +1,8 @@
 module.exports = {
    help: ['translate'],
+   command: ['tr'],
    use: 'lang text',
    tags: ['tools'],
-   command: /^(tr(anslate)?)$/i,
    run: async (m, {
       conn,
       usedPrefix,

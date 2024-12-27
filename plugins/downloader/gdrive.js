@@ -2,7 +2,6 @@ module.exports = {
    help: ['gdrive'],
    use: 'link',
    tags: ['downloader'],
-   command: /^(gdrive|googledrive)$/i,
    run: async (m, {
       conn,
       usedPrefix,

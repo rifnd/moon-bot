@@ -2,7 +2,6 @@ module.exports = {
    help: ['tagall'],
    use: 'text (optional)',
    tags: ['admin'],
-   command: /^(everyone|tagall)$/i,
    run: async (m, {
       conn,
       text,

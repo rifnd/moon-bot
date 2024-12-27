@@ -3,7 +3,6 @@ module.exports = {
    help: ['hdvideo'],
    use: 'reply video',
    tags: ['tools'],
-   command: /^(hdvideo)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -23,7 +22,7 @@ module.exports = {
                   video: result.data.url
                })
                if (!json.status) return m.reply(Func.jsonFormat(json))
-               conn.sendFile(m.chat, json.data.url, '', `🍟 *Fetching* : ${((new Date - old) * 1)} ms`, m)
+               conn.sendFile(m.chat, json.data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
             } else conn.reply(m.chat, Func.texted('bold', `🚩 Only for photo.`), m)
          } else {
             let q = m.quoted ? m.quoted : m
@@ -38,11 +37,12 @@ module.exports = {
                video: result.data.url
             })
             if (!json.status) return m.reply(Func.jsonFormat(json))
-            conn.sendFile(m.chat, json.data.url, '', `🍟 *Fetching* : ${((new Date - old) * 1)} ms`, m)
+            conn.sendFile(m.chat, json.data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
          }
       } catch (e) {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
-   premium: true,
+   limit: true,
+   premium: true
 }

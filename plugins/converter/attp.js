@@ -2,7 +2,6 @@ module.exports = {
    help: ['attp'],
    use: 'text',
    tags: ['converter'],
-   command: /^(attp)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -11,7 +10,7 @@ module.exports = {
       Func
    }) => {
       try {
-         let exif = global.db.data.setting
+         let exif = global.db.setting
          if (!text) return conn.reply(m.chat, Func.example(usedPrefix, command, 'moon bot'), m)
          if (text.length > 10) return conn.reply(m.chat, Func.texted('bold', '🚩 Max 10 character'), m)
          m.react('🕒')
@@ -24,7 +23,7 @@ module.exports = {
             author: exif.sk_author
          })
       } catch (e) {
-         console.log(e)
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true

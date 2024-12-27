@@ -2,7 +2,6 @@ const { execSync } = require('child_process')
 module.exports = {
    help: ['update'],
    tags: ['owner'],
-   command: /^(update)$/i,
    run: async (m, {
       conn,
       usedPrefix,

@@ -3,7 +3,6 @@ module.exports = {
    help: ['play'],
    use: 'query',
    tags: ['downloader'],
-   command: /^(play|lagu)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -21,17 +20,12 @@ module.exports = {
          var json = await Api.get('api/yta', {
             url: yt[0].url
          })
-         if (!json.status) {
-            var json = await Api.get('api/youtube', {
-               url: yt[0].url, type: 'mp3'
-            })
-         }
          if (!json.status) return conn.reply(m.chat, Func.jsonFormat(json), m)
          var caption = `乂  *Y T - P L A Y*\n\n`
-         caption += `  ∘  *Title* : ` + json.title + `\n`
-         caption += `  ∘  *Size* : ` + json.data.size + `\n`
-         caption += `  ∘  *Duration* : ` + json.duration + `\n`
-         caption += `  ∘  *Quality* : ` + json.data.quality + '\n\n'
+         caption += `   ∘  *Title* : ` + json.title + `\n`
+         caption += `   ∘  *Size* : ` + json.data.size + `\n`
+         caption += `   ∘  *Duration* : ` + json.duration + `\n`
+         caption += `   ∘  *Quality* : ` + json.data.quality + '\n\n'
          caption += global.footer
          const chSize = Func.sizeLimit(json.data.size, users.premium ? env.max_upload : env.max_upload_free)
          const isOver = users.premium ? `💀 File size (${json.data.size}) exceeds the maximum limit.` : `⚠️ File size (${json.data.size}), you can only download files with a maximum size of ${env.max_upload_free} MB and for premium users a maximum of ${env.max_upload} MB.`
@@ -46,8 +40,7 @@ module.exports = {
             })
          })
       } catch (e) {
-         console.log(e)
-         return m.reply(Func.jsonFormat(e))
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true

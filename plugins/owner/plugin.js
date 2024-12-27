@@ -2,7 +2,6 @@ module.exports = {
    help: ['plugen', 'plugdis'],
    use: 'plugin name',
    tags: ['owner'],
-   command: /^(plugen|plugdis)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -28,7 +27,7 @@ module.exports = {
       if (command === 'plugdis') {
          if (!setting.pluginDisable.includes(fileName)) {
             setting.pluginDisable.push(fileName)
-            global.db.data.setting.pluginDisable = setting.pluginDisable
+            global.db.setting.pluginDisable = setting.pluginDisable
             conn.reply(m.chat, Func.texted('bold', `🚩 Plugin ${fileName} successfully disabled.`), m)
          } else {
             return conn.reply(m.chat, Func.texted('bold', `🚩 Plugin ${fileName} is already disabled.`), m)
@@ -36,7 +35,7 @@ module.exports = {
       } else if (command === 'plugen') {
          if (setting.pluginDisable.includes(fileName)) {
             setting.pluginDisable = setting.pluginDisable.filter(plugin => plugin !== fileName)
-            global.db.data.setting.pluginDisable = setting.pluginDisable
+            global.db.setting.pluginDisable = setting.pluginDisable
             conn.reply(m.chat, Func.texted('bold', `🚩 Plugin ${fileName} successfully enabled.`), m)
          } else {
             return conn.reply(m.chat, Func.texted('bold', `🚩 Plugin ${fileName} is not disabled.`), m)

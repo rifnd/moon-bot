@@ -2,7 +2,6 @@ module.exports = {
    help: ['smeta'],
    use: 'query / reply media',
    tags: ['converter'],
-   command: /^(smeta|stikermeta|stickermeta)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -20,7 +19,7 @@ module.exports = {
          if (!/webp/.test(mime)) return conn.reply(m.chat, Func.texted('bold', `🚩 Reply to the sticker you want to make into a meta sticker.`), m)
          let img = await q.download()
          if (!img) return conn.reply(m.chat, global.status.wrong, m)
-         stiker = await addExif(img, packname || global.db.data.setting.sk_pack, author || global.db.data.setting.sk_author)
+         stiker = await addExif(img, packname || global.db.setting.sk_pack, author || global.db.setting.sk_author)
       } catch (e) {
          console.error(e)
          if (Buffer.isBuffer(e)) stiker = e

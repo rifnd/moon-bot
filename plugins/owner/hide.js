@@ -1,7 +1,6 @@
 module.exports = {
    help: ['+hide', '-hide'],
    tags: ['owner'],
-   command: /^(\+hide|\-hide)$/i,
    run: async (m, {
       conn,
       usedPrefix,

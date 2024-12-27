@@ -1,7 +1,6 @@
 module.exports = {
    help: ['wame'],
    tags: ['group'],
-   command: /^(wame)$/i,
    run: async (m, {
       conn,
       text

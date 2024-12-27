@@ -1,11 +1,10 @@
 module.exports = {
    help: ['premium'],
    tags: ['miscs'],
-   command: /^(premium)$/i,
    run: async (m, {
       conn,
       usedPrefix
    }) => {
-      conn.reply(m.chat, `🏷️ Upgrade to premium plan only Rp. 10,000,- to get unlimited limits for 1 month.\n\nIf you want to buy contact *${usedPrefix}owner*`, m)
+      conn.reply(m.chat, `IDR 10.000 ~ to get 30 Days premium & 2000 Limit`, m)
    }
 }

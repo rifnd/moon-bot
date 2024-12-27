@@ -1,19 +1,20 @@
 {
    "owner": "6281252848955",
    "owner_name": "Contact Support",
+   "database": "data",
    "limit": "10",
    "multiplier": "250",
    "min_reward": 100000,
    "max_reward": 500000,
-   "ram_limit": "1.2GB",
-   "max_upload": 150,
-   "max_upload_free": 40,
+   "ram_limit": "1GB",
+   "max_upload": 100,
+   "max_upload_free": 50,
    "timer": 180000,
    "timeout": 1800000,
+   "cooldown": 3,
    "evaluate_chars": ["=>", ">", "$", "~>", "!", "+", "/", "#", "."],
    "pairing": {
-     "state": false,
-     "number": ""
-   },
-   "databaseurl": ""
-}
+      "state": false,
+      "number": 62000
+   }
+ }

@@ -1,14 +1,13 @@
 module.exports = {
    help: ['mathsolver'],
-   use: 'query',
+   command: ['mathresolver'],
+   use: 'expression',
    tags: ['tools'],
-   command: /^(mathsolver)$/i,
    run: async (m, {
       conn,
       usedPrefix,
       command,
       text,
-      Scraper,
       Func
    }) => {
       try {
@@ -20,9 +19,9 @@ module.exports = {
          if (!json.status) return m.reply(Func.jsonFormat(json))
          m.reply(json.data.answer)
       } catch (e) {
-         console.log(e)
-         return m.reply(Func.jsonFormat(e))
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
+   limit: true,
    premium: true,
 }

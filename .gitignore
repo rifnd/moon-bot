@@ -22,9 +22,12 @@ rad.json
 TestResults.xml
 #About Bot
 node_modules
-session/
-tmp/
+session
+tmp
 database.json
+data.json
+data.store.json
 package-lock.json
 yarn.lock
 goorm.manifest
+backup.zip

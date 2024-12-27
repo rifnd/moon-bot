@@ -1,11 +1,8 @@
-const { Converter } = new (require('@moonr/func'))
-const fs = require('fs')
-const { exec } = require('child_process')
 module.exports = {
    help: ['sticker'],
+   command: ['s'],
    use: 'query / reply media',
    tags: ['converter'],
-   command: /^(s|sk|stiker|sgif)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -14,7 +11,7 @@ module.exports = {
       Func
    }) => {
       try {
-         let exif = global.db.data.setting
+         let exif = global.db.setting
          if (m.quoted ? m.quoted.message : m.msg.viewOnce) {
             let type = m.quoted ? Object.keys(m.quoted.message)[0] : m.mtype
             let q = m.quoted ? m.quoted.message[type] : m.msg
@@ -49,10 +46,9 @@ module.exports = {
                   packname: exif.sk_pack,
                   author: exif.sk_author
                })
-            } else conn.reply(m.chat, Func.texted('bold', `Stress ??`), m)
+            } else conn.reply(m.chat, Func.texted('bold', `🚩 Send or reply to the image you want to make into a sticker.`), m)
          }
       } catch (e) {
-         console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },

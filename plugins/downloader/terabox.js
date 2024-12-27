@@ -2,7 +2,6 @@ module.exports = {
    help: ['terabox'],
    use: 'link',
    tags: ['downloader'],
-   command: /^(terabox)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -25,7 +24,6 @@ module.exports = {
          if (chSize.oversize) return conn.reply(m.chat, isOver, m)
          conn.sendFile(m.chat, json.data.url, json.data.filename, '', m)
       } catch (e) {
-         console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },

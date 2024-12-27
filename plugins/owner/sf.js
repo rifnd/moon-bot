@@ -1,8 +1,8 @@
 module.exports = {
    help: ['savefile'],
+   command: ['sf', 'sfp'],
    use: 'reply code',
    tags: ['owner'],
-   command: /^(sf|savefile)$/i,
    run: async (m, {
       conn,
       usedPrefix,

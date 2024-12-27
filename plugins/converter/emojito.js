@@ -2,7 +2,6 @@ module.exports = {
    help: ['emojito'],
    use: 'emoji',
    tags: ['converter'],
-   command: /^(emojito)$/,
    run: async (m, {
       conn,
       usedPrefix,
@@ -23,7 +22,6 @@ module.exports = {
             author: setting.sk_author
          })
       } catch (e) {
-         console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },

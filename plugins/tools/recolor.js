@@ -2,7 +2,6 @@ module.exports = {
    help: ['recolor'],
    use: 'reply photo',
    tags: ['tools'],
-   command: /^(recolor)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -13,6 +12,7 @@ module.exports = {
          if (m.quoted ? m.quoted.message : m.msg.viewOnce) {
             let type = m.quoted ? Object.keys(m.quoted.message)[0] : m.mtype
             let q = m.quoted ? m.quoted.message[type] : m.msg
+            let old = new Date()
             if (/image/.test(type)) {
                m.react('🕒')
                let img = await conn.downloadMediaMessage(q)
@@ -21,7 +21,7 @@ module.exports = {
                   image: image.data.url
                })
                if (!json.status) return m.reply(Func.jsonFormat(json))
-               conn.sendFile(m.chat, json.data.url, 'image.jpg', '', m)
+               conn.sendFile(m.chat, json.data.url, 'image.jpg', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
             } else conn.reply(m.chat, Func.texted('bold', `🚩 Only for photo.`), m)
          } else {
             let q = m.quoted ? m.quoted : m
@@ -35,7 +35,7 @@ module.exports = {
                image: image.data.url
             })
             if (!json.status) return m.reply(Func.jsonFormat(json))
-            conn.sendFile(m.chat, json.data.url, 'image.jpg', '', m)
+            conn.sendFile(m.chat, json.data.url, 'image.jpg', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
          }
       } catch (e) {
          return conn.reply(m.chat, Func.jsonFormat(e), m)

@@ -1,8 +1,8 @@
 module.exports = {
    help: ['unbanned'],
+   command: ['unban', 'unbanchat'],
    use: 'mention or reply',
    tags: ['owner'],
-   command: /^(unbanned|unban|unbanchat)$/i,
    run: async (m, {
       conn,
       isOwner,
@@ -26,11 +26,10 @@ module.exports = {
          who = text ? text.replace(/[^0-9]/g, '') + '@s.whatsapp.net' : m.chat
       }
       try {
-         if (who.endsWith('g.us')) global.db.data.groups[who].isBanned = false
-         else global.db.data.users[who].banned = false
-         m.reply(`Done Unban! Bot aktif dichat ${await conn.getName(who) == undefined ? 'ini' : await conn.getName(who)}.`)
+         if (who.endsWith('g.us')) global.db.groups[who].isBanned = false
+         else global.db.users[who].banned = false
+         m.reply(`Successfully Unban, Bot active in ${await conn.getName(who) == undefined ? 'this chat' : await conn.getName(who)}.`)
       } catch (e) {
-         console.log(e)
          return m.reply(Func.jsonFormat(e))
       }
    },

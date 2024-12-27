@@ -1,8 +1,8 @@
 module.exports = {
    help: ['banned'],
+   command: ['ban', 'banchat'],
    use: 'mention or reply',
    tags: ['owner'],
-   command: /^(banned|ban|banchat)$/i,
    run: async (m, {
       conn,
       isOwner,
@@ -27,8 +27,8 @@ module.exports = {
       }
 
       try {
-         if (who.endsWith('g.us')) global.db.data.groups[who].isBanned = true
-         else global.db.data.users[who].banned = true
+         if (who.endsWith('g.us')) global.db.groups[who].isBanned = true
+         else global.db.users[who].banned = true
          conn.reply(m.chat, `Successfully banned! ${await conn.user.name} inactive on chat ${await conn.getName(who) == undefined ? 'this' : await conn.getName(who)}.`, m)
       } catch (e) {
          console.log(e)

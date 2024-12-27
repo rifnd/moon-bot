@@ -1,8 +1,8 @@
 module.exports = {
    help: ['delete'],
+   command: ['del'],
    use: 'reply chat',
    tags: ['group'],
-   command: /^(del|delete)$/i,
    run: async (m, {
       conn,
       isBotAdmin

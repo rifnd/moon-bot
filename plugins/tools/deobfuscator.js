@@ -2,7 +2,6 @@ module.exports = {
    help: ['deobfuscator'],
    use: 'code',
    tags: ['tools'],
-   command: /^(deobfuscator|denc)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -22,5 +21,6 @@ module.exports = {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
+   limit: true,
    premium: true
 }

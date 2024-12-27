@@ -1,9 +1,9 @@
 module.exports = {
-   async before(m, { conn, users, isPrems, setting, Func }) {
+   async before(m, { conn, users, isPrems, setting, body, Func }) {
       try {
          if (setting.autodownload && isPrems) {
             const regex = /^(https?:\/\/)?(www\.)?twitter|x\.com\/(?:#!\/)?([a-zA-Z0-9_]+)\/status(es)?\/(\d+)$/;
-            const links = m.text.match(regex)
+            const links = body.match(regex)
             if (links && links.length > 0) {
                const limitCost = 1
                if (users.limit < limitCost) {
@@ -17,6 +17,7 @@ module.exports = {
                      let json = await Api.get('api/twitter', {
                         url: link
                      })
+                     console.log(link)
                      if (!json.status) return conn.reply(m.chat, Func.jsonFormat(json), m)
                      let url = json.data.find((v) => v.url).url
                      await conn.sendFile(m.chat, url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)

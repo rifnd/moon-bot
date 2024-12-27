@@ -2,10 +2,10 @@ module.exports = {
    help: ['age'],
    use: 'reply photo',
    tags: ['tools'],
-   command: /^(age)$/i,
    run: async (m, {
       conn,
       usedPrefix,
+      command,
       Scraper,
       Func
    }) => {
@@ -22,12 +22,12 @@ module.exports = {
                })
                if (!json.status) return m.reply(Func.jsonFormat(json))
                conn.reply(m.chat, `Gender : ${json.data.gender}\nAge : ${json.data.age}`, m)
-            } else conn.reply(m.chat, Func.texted('bold', `🚩 Only for photo.`), m)
+            } else conn.reply(m.chat, 'Only for photo.', m)
          } else {
             let q = m.quoted ? m.quoted : m
             let mime = (q.msg || q).mimetype || ''
-            if (!mime) return conn.reply(m.chat, Func.texted('bold', `🚩 Reply photo.`), m)
-            if (!/image\/(jpe?g|png)/.test(mime)) return conn.reply(m.chat, Func.texted('bold', `🚩 Only for photo.`), m)
+            if (!mime) return conn.reply(m.chat, `Reply photo with command ${usedPrefix + command}.`, m)
+            if (!/image\/(jpe?g|png)/.test(mime)) return conn.reply(m.chat, 'Only for photo.', m)
             m.react('🕒')
             let img = await q.download()
             let image = await Scraper.uploader(img)
@@ -41,5 +41,6 @@ module.exports = {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
-   premium: true,
+   limit: true,
+   premium: true
 }

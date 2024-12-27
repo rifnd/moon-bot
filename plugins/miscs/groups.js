@@ -2,8 +2,8 @@ const moment = require('moment-timezone')
 moment.tz.setDefault(process.env.TZ).locale('id')
 module.exports = {
    help: ['groups'],
+   command: ['grouplist'],
    tags: ['miscs'],
-   command: /^(groups)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -15,9 +15,9 @@ module.exports = {
          let caption = `乂  *G R O U P - L I S T*\n\n`
          caption += `*“Bot has joined into ${groups.length} groups, send _${usedPrefix}gc_ or _${usedPrefix}gcopt_ to show all setup options.”*\n\n`
          groups.map((x, i) => {
-            let v = global.db.data.groups[x.id]
+            let v = global.db.groups[x.id]
             if (!v) {
-               global.db.data.groups[x.id] = {
+               global.db.groups[x.id] = {
                   activity: new Date * 1,
                   isBanned: false,
                   welcome: false,
@@ -37,7 +37,7 @@ module.exports = {
                   expired: 0,
                   stay: false
                }
-               v = global.db.data.groups[x.id]
+               v = global.db.groups[x.id]
             }
             caption += `›  *${(i + 1)}.* ${x.subject}\n`
             caption += `   *💳* : ${x.id.split`@`[0]}\n`

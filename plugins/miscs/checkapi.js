@@ -1,14 +1,14 @@
 module.exports = {
    help: ['checkapi'],
+   command: ['apikey'],
    tags: ['miscs'],
-   command: /^(checkapi|checkkey|apikey)$/i,
    run: async (m, {
       conn,
       Func
    }) => {
       try {
          let json = await Api.get('/v1/check-key', {})
-         if (!json.status) return m.reply(Func.jsonFormat(json))
+         if (!json.status) return m.reply(json.msg)
          let caption = '乂  *A P I K E Y*\n\n'
          caption += `   ◦  *Limit* : (${json.data.limit} / ${json.data.total})\n`
          caption += `   ◦  *Premium* : ${json.data.premium ? '√' : '×'}\n`
@@ -17,7 +17,6 @@ module.exports = {
          caption += global.footer
          conn.reply(m.chat, caption, m)
       } catch (e) {
-         console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    }

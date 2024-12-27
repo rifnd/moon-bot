@@ -2,13 +2,12 @@ module.exports = {
    help: ['setcover'],
    use: 'reply foto',
    tags: ['owner'],
-   command: /^(setcover|cover)$/i,
    run: async (m, {
       conn,
       Scraper,
       Func
    }) => {
-      let setting = global.db.data.setting
+      let setting = global.db.setting
       try {
          let q = m.quoted ? m.quoted : m
          let mime = (q.msg || q).mimetype || ''

@@ -3,7 +3,6 @@ module.exports = {
    help: ['mediafire'],
    use: 'link',
    tags: ['downloader'],
-   command: /^(mediafire|mf)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -35,7 +34,6 @@ module.exports = {
          })).data
          await conn.sendFile(m.chat, buffer, json.data.filename, '', m)
       } catch (e) {
-         console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },

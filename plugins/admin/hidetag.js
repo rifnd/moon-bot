@@ -2,7 +2,6 @@ module.exports = {
    help: ['hidetag'],
    use: 'text',
    tags: ['admin'],
-   command: /^(h?(idetag))$/i,
    run: async (m, {
       conn,
       usedPrefix,

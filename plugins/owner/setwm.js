@@ -2,7 +2,6 @@ module.exports = {
    help: ['setwm'],
    use: 'packname | author',
    tags: ['owner'],
-   command: /^(setwm)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -11,7 +10,7 @@ module.exports = {
       Func
    }) => {
       try {
-         let setting = global.db.data.setting
+         let setting = global.db.setting
          if (!text) return conn.reply(m.chat, Func.example(usedPrefix, command, 'Sticker by | @moon-bot'), m)
          let [packname, ...author] = text.split`|`
          author = (author || []).join`|`

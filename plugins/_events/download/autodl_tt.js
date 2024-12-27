@@ -1,9 +1,9 @@
 module.exports = {
-   async before(m, { conn, users, isPrems, setting, Func }) {
+   async before(m, { conn, users, body, isPrems, setting, Func }) {
       try {
          if (setting.autodownload && isPrems) {
             const regex = /^(?:https?:\/\/)?(?:www\.|vt\.|vm\.|t\.)?(?:tiktok\.com\/)(?:\S+)?$/;
-            const links = m.text.match(regex)
+            const links = body.match(regex)
             if (links && links.length > 0) {
                const limitCost = 1
                if (users.limit < limitCost) {

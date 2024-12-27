@@ -2,16 +2,15 @@ module.exports = {
    help: ['ava'],
    use: 'mention or reply',
    tags: ['group'],
-   command: /^(ava)$/i,
    run: async (m, {
       conn,
       text,
       Func
    }) => {
       let number = isNaN(text) ? (text.startsWith('+') ? text.replace(/[()+\s-]/g, '') : (text).split`@`[1]) : text
-      if (!text && !m.quoted) return conn.reply(m.chat, Func.texted('bold', `🚩 Mention or reply chat target.`), m)
-      if (isNaN(number)) return conn.reply(m.chat, Func.texted('bold', `🚩 Invalid number.`), m)
-      if (number.length > 15) return conn.reply(m.chat, Func.texted('bold', `🚩 Invalid format.`), m)
+      if (!text && !m.quoted) return conn.reply(m.chat, `Mention or reply chat target.`, m)
+      if (isNaN(number)) return conn.reply(m.chat, `Invalid number.`, m)
+      if (number.length > 15) return conn.reply(m.chat, `Invalid format.`, m)
       try {
          if (text) {
             var user = number + '@s.whatsapp.net'
@@ -25,7 +24,7 @@ module.exports = {
          try {
             var pic = await conn.profilePictureUrl(user, 'image')
          } catch { } finally {
-            if (!pic) return conn.reply(m.chat, Func.texted('bold', `🚩 He/She didn't put a profile picture.`), m)
+            if (!pic) return conn.reply(m.chat, `He/She didn't put a profile picture.`, m)
             conn.sendFile(m.chat, pic, '', '', m)
          }
       }

@@ -1,8 +1,8 @@
 module.exports = {
    help: ['en', 'dis'].map(v => v + 'able'),
+   command: ['on', 'off'],
    use: 'option',
    tags: ['admin', 'owner'],
-   command: /^(on|off|enable|disable)$/i,
    run: async (m, {
       conn,
       usedPrefix,
@@ -18,7 +18,7 @@ module.exports = {
       var type = (args[0] || '').toLowerCase()
       var isAll = false
       var isUser = false
-      var g = ['welcome', 'detect', 'antidelete', 'antilink', 'antivirtex', 'autosticker', 'antisticker', 'viewonce', 'filter']
+      var g = ['welcome', 'detect', 'antidelete', 'antilink', 'antivirtex', 'autosticker', 'antisticker', 'antiporn', 'viewonce', 'filter']
       var o = ['anticall', 'chatbot', 'levelup', 'self', 'online', 'antispam', 'debug', 'autodownload', 'groupmode', 'privatemode', 'game', 'rpg', 'noprefix']
       switch (type) {
          /** group setting */
@@ -34,7 +34,7 @@ module.exports = {
             }
             groupSet.welcome = isEnable
          }
-         break
+            break
          case 'detect': {
             if (!m.isGroup) {
                if (!isOwner) {
@@ -47,7 +47,7 @@ module.exports = {
             }
             groupSet.detect = isEnable
          }
-         break
+            break
          case 'antidelete': {
             if (!m.isGroup) {
                if (!isOwner) {
@@ -60,7 +60,7 @@ module.exports = {
             }
             groupSet.antidelete = isEnable
          }
-         break
+            break
          case 'antilink': {
             if (!m.isGroup) {
                if (!isOwner) {
@@ -73,7 +73,7 @@ module.exports = {
             }
             groupSet.antilink = isEnable
          }
-         break
+            break
          case 'antivirtex': {
             if (!m.isGroup) {
                if (!isOwner) {
@@ -86,7 +86,7 @@ module.exports = {
             }
             groupSet.antivirtex = isEnable
          }
-         break
+            break
          case 'autosticker': {
             if (!m.isGroup) {
                if (!isOwner) {
@@ -99,7 +99,7 @@ module.exports = {
             }
             groupSet.autosticker = isEnable
          }
-         break
+            break
          case 'antisticker': {
             if (!m.isGroup) {
                if (!isOwner) {
@@ -112,7 +112,20 @@ module.exports = {
             }
             groupSet.antisticker = isEnable
          }
-         break
+            break
+         case 'antiporn': {
+            if (!m.isGroup) {
+               if (!isOwner) {
+                  conn.reply(m.chat, global.status.owner, m)
+                  throw false
+               }
+            } else if (!isAdmin) {
+               conn.reply(m.chat, global.status.admin, m)
+               throw false
+            }
+            groupSet.antiporn = isEnable
+         }
+            break
          case 'viewonce': {
             if (!m.isGroup) {
                if (!isOwner) {
@@ -125,7 +138,7 @@ module.exports = {
             }
             groupSet.viewonce = isEnable
          }
-         break
+            break
          case 'filter': {
             if (!m.isGroup) {
                if (!isOwner) {
@@ -138,7 +151,7 @@ module.exports = {
             }
             groupSet.filter = isEnable
          }
-         break
+            break
 
          /** bot setting */
          case 'anticall': {
@@ -149,7 +162,7 @@ module.exports = {
             }
             setting.anticall = isEnable
          }
-         break
+            break
          case 'chatbot': {
             isAll = true
             if (!isOwner) {
@@ -158,7 +171,7 @@ module.exports = {
             }
             setting.chatbot = isEnable
          }
-         break
+            break
          case 'levelup': {
             isAll = true
             if (!isOwner) {
@@ -167,7 +180,7 @@ module.exports = {
             }
             setting.levelup = isEnable
          }
-         break
+            break
          case 'self': {
             isAll = true
             if (!isOwner) {
@@ -176,7 +189,7 @@ module.exports = {
             }
             setting.self = isEnable
          }
-         break
+            break
          case 'online': {
             isAll = true
             if (!isOwner) {
@@ -185,7 +198,7 @@ module.exports = {
             }
             setting.online = isEnable
          }
-         break
+            break
          case 'antispam': {
             isAll = true
             if (!isOwner) {
@@ -194,7 +207,7 @@ module.exports = {
             }
             setting.antispam = isEnable
          }
-         break
+            break
          case 'debug': {
             isAll = true
             if (!isOwner) {
@@ -203,7 +216,7 @@ module.exports = {
             }
             setting.debug = isEnable
          }
-         break
+            break
          case 'autodownload': {
             isAll = true
             if (!isOwner) {
@@ -212,7 +225,7 @@ module.exports = {
             }
             setting.autodownload = isEnable
          }
-         break
+            break
          case 'groupmode': {
             isAll = true
             if (!isOwner) {
@@ -221,7 +234,7 @@ module.exports = {
             }
             setting.groupmode = isEnable
          }
-         break
+            break
          case 'privatemode': {
             isAll = true
             if (!isOwner) {
@@ -230,7 +243,7 @@ module.exports = {
             }
             setting.privatemode = isEnable
          }
-         break
+            break
          case 'game': {
             isAll = true
             if (!isOwner) {
@@ -239,7 +252,7 @@ module.exports = {
             }
             setting.game = isEnable
          }
-         break
+            break
          case 'rpg': {
             isAll = true
             if (!isOwner) {
@@ -248,7 +261,7 @@ module.exports = {
             }
             setting.rpg = isEnable
          }
-         break
+            break
          case 'noprefix': {
             isAll = true
             if (!isOwner) {
@@ -257,11 +270,11 @@ module.exports = {
             }
             setting.noprefix = isEnable
          }
-         break
+            break
          default:
             var opt = `乂  *O P T I O N*\n${isOwner ? '\n' + o.map(v => '  ◦  ' + v).join`\n` : ''}${m.isGroup ? '\n' + g.map(v => '  ◦  ' + v).join`\n` : ''}\n\n${global.footer}`
             if (!/[01]/.test(command)) return conn.reply(m.chat, opt, m)
       }
-      conn.reply(m.chat, `*${type}* successfully *${isEnable ? 'enable' : 'disable'}* ${isAll ? 'for this bot' : isUser ? '' : 'for this group'}`.trim(), m)
+      conn.reply(m.chat, `*${type}* successfully *${isEnable ? 'enabled' : 'disabled'}* ${isAll ? 'for this bot' : isUser ? '' : 'for this group'}`.trim(), m)
    }
 }
