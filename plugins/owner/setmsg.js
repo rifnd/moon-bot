@@ -7,6 +7,7 @@ module.exports = {
       usedPrefix,
       command,
       text,
+      setting,
       Func
    }) => {
       try {
