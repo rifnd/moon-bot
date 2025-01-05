@@ -22,7 +22,7 @@ module.exports = {
             for (let jid of id) {
                await Func.delay(1500)
                await conn.sendMessageModify(jid, text, null, {
-                  thumbnail: await Func.fetchBuffer('https://qu.ax/lmNem.jpg'),
+                  thumbnail: await Func.fetchBuffer('https://i.ibb.co/184N0Zh/image.jpg'),
                   largeThumb: true,
                   url: global.db.setting.link,
                   mentions: command == 'bcgc' ? await (await conn.groupMetadata(jid)).participants.map(v => v.id) : []

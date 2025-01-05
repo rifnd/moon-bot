@@ -1,11 +1,11 @@
 "use strict"
 require('./lib/system/config')
-const { Connection, Mongo, Postgre, Functions: Func } = new (require('@moonr/utils')), { existsSync, mkdirSync, readdirSync, unlinkSync, statSync, openSync } = require('fs'), env = require('./config.json'), path = require('path')
+const { Connection, Mongo, Postgre, Functions: Func } = new (require('@moonr/utils')), { existsSync, mkdirSync, readdirSync, unlinkSync } = require('fs'), env = require('./config.json'), cron = require('node-cron')
 const database = /mongo/.test(process.env.DATABASE_URL) ? new Mongo(process.env.DATABASE_URL, env.database) : /postgres/.test(process.env.DATABASE_URL) ? new Postgre(process.env.DATABASE_URL, env.database) : new (require('./lib/system/localdb'))(env.database)
 
 const conn = new Connection({
+   directory: 'plugins', /** folder for plugins, you can change */
    session: 'session', /** this is for the folder storing the session */
-   store: 'data.store.json', /** file store */
    online: false, /** in for online view on whatsapp */
    browser: ['Ubuntu', 'Chrome', '20.0.04'] /** this is for the browser version */
 })
@@ -47,16 +47,16 @@ conn.once('prepare', async () => {
          } catch { }
       }, 60 * 1000 * 10)
 
-      /** clear session & store */
-      setInterval(async () => {
-         /** session */
+      /** clear session */
+      cron.schedule('0 0 * * *', () => {
          const sessionFiles = readdirSync('./session')
          if (sessionFiles.length > 0) {
-            sessionFiles.filter(v => v !== 'creds.json').map(v => unlinkSync('./session/' + v))
+            sessionFiles.filter(v => v !== 'creds.json').forEach(v => unlinkSync('./session/' + v))
          }
-         /** store file */
-         unlinkSync('data.store.json')
-      }, 60 * 1000 * 60)
+      }, {
+         scheduled: true,
+         timezone: process.env.TZ
+      })
 
       /** save database every 30 seconds */
       setInterval(async () => {
@@ -81,6 +81,7 @@ conn.ev('import', ctx => {
 
 /** incoming/outgoing group members */
 conn.ev('group-participants.update', async ctx => {
+   if (global.db.setting.self) return
    let group = global.db.groups[ctx.jid] || {}
    var text = ''
    switch (ctx.action) {
@@ -106,6 +107,7 @@ conn.ev('group-participants.update', async ctx => {
 
 /** detection of changes in the group */
 conn.ev('group.detect', async ctx => {
+   if (global.db.setting.self) return
    let group = global.db.groups[ctx.jid], text = ''
    if (ctx.action.subject) text = ('Group title has been changed to : @subject').replace('@subject', ctx.action.subject)
    if (ctx.action.inviteCode) text = ('Group link has been changed to :\n\nhttps://chat.whatsapp.com/@revoke').replace('@revoke', ctx.action.inviteCode)
@@ -116,18 +118,20 @@ conn.ev('group.detect', async ctx => {
 
 /** anti-delete message */
 conn.ev('message.delete', async ctx => {
+   if (global.db.setting.self) return
    let group = global.db.groups[ctx.jid] || {}
    if (group && group.antidelete) await conn.sock.copyNForward(ctx.jid, ctx.msg).catch(e => console.log(e, ctx.msg))
 })
 
 /** typing detection, recording while afk */
 conn.ev('presence.update', ctx => {
+   if (global.db.setting.self) return
    const sock = conn.sock
    if (!ctx) return
    const { id, presences } = ctx
    if (id.endsWith('g.us')) {
       for (let jid in presences) {
-         if (!presences[jid] || jid == sock.decodeJid(sock.user.id)) continue
+         if (!presences[jid] || jid == sock.decodeJid(sock.user.id) || jid === (sock.user.jid + '@s.whatsapp.net')) continue
          if ((presences[jid].lastKnownPresence === 'composing' || presences[jid].lastKnownPresence === 'recording') && global.db && global.db.users && global.db.users[jid] && global.db.users[jid].afk > -1) {
             sock.reply(id, `System detects activity from @${jid.replace(/@.+/, '')} after being offline for : ${Func.texted('bold', Func.toTime(new Date - global.db.users[jid].afk))}\n\n➠ ${Func.texted('bold', 'Reason')} : ${global.db.users[jid].afkReason ? global.db.users[jid].afkReason : '-'}`, global.db.users[jid].afkObj)
             global.db.users[jid].afk = -1

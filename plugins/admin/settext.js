@@ -28,8 +28,9 @@ module.exports = {
 const formatWel = (prefix, command) => {
    return `Sorry, can't return without text, and this explanation and how to use :
 
-*1.* +tag : for mention new member on welcome message.
-*2.* +grup : for getting group name.
+*1.* @tag : for mention new member on welcome message.
+*2.* @subject : for getting group name.
+*3.* @desc : for getting group description.
 
 • *Example* : ${prefix + command} Hi +tag, welcome to +grup group, we hope you enjoyed with us.`
 }
@@ -37,8 +38,8 @@ const formatWel = (prefix, command) => {
 const formatLef = (prefix, command) => {
    return `Sorry, can't return without text, and this explanation and how to use :
 
-*1.* +tag : for mention new member on left message.
-*2.* +grup : for getting group name.
+*1.* @tag : for mention new member on left message.
+*2.* @subject : for getting group name.
 
 • *Example* : ${prefix + command} Good by +tag`
 }

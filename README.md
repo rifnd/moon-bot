@@ -167,6 +167,23 @@ module.exports = {
 }
 ```
 
+### External Session
+
+Install depedency
+```bash
+$ npm install session@github:neoxr/session#mongodb 
+```
+in main.js
+```Javascript
+const { useMongoAuthState } = require('session')
+const conn = new Connection({
+   directory: 'plugins',
+   session: useMongoAuthState(process.env.DATABASE_URL, 'session'),
+   online: false,
+   browser: ['Ubuntu', 'Chrome', '20.0.04']
+})
+```
+
 <p align="center">This script is still in development and will continue to be updated, keep an eye on this repository, don't forget to give stars and forks</p>
 
 <p align="center">Adios.....</p>
