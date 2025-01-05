@@ -13,8 +13,7 @@ module.exports = {
          let q = m.quoted ? m.quoted : m
          let mime = (q.msg || q).mimetype || ''
          let chatJid = Object.entries(global.db.chats).filter(([jid, _]) => jid.endsWith('.net')).map(([jid, _]) => jid)
-         let groupList = async () => Object.entries(await conn.groupFetchAllParticipating()).slice(0).map(entry => entry[1])
-         let groupJid = await (await groupList()).map(v => v.id)
+         let groupJid = Object.keys(global.db.groups)
          const id = command == 'bc' ? chatJid : groupJid
          if (id.length == 0) return conn.reply(m.chat, Func.texted('bold', `🚩 Error, ID does not exist.`), m)
          m.react('🕒')
