@@ -3,6 +3,7 @@ const util = require('util')
 module.exports = {
    help: ['fetch'],
    command: ['get'],
+   use: 'url',
    tags: ['tools'],
    run: async (m, {
       conn,

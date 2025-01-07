@@ -17,5 +17,5 @@ module.exports = {
          conn.reply(m.chat, global.status.error, m)
       }
    },
-   limit: true
+   group: true
 }

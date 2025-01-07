@@ -1,6 +1,5 @@
 const { Functions: Func, Scraper, Print, Queque } = new (require('@moonr/utils'))
 const env = require('./config.json')
-const fs = require('fs')
 const cron = require('node-cron')
 
 module.exports = async (conn, ctx) => {
@@ -20,14 +19,12 @@ module.exports = async (conn, ctx) => {
       const isAdmin = m.isGroup ? adminList.includes(m.sender) : false
       const isBotAdmin = m.isGroup ? adminList.includes((conn.user.id.split`:`[0]) + '@s.whatsapp.net') : false
       const blockList = typeof await (await conn.fetchBlocklist()) != 'undefined' ? await (await conn.fetchBlocklist()) : []
-
       /** Queque */
       if (process.argv.includes('--queque') && m.text && !m.fromMe && !(isPrems)) {
          const id = m.id
          conn.msgqueque.add(id)
          await conn.msgqueque.waitQueue(id)
       }
-
       if (!setting.online) conn.sendPresenceUpdate('unavailable', m.chat)
       if (setting.online) {
          conn.sendPresenceUpdate('available', m.chat)
@@ -72,7 +69,7 @@ module.exports = async (conn, ctx) => {
       }
       cron.schedule('00 00 * * *', () => {
          setting.lastReset = Date.now()
-         Object.values(global.db.users).forEach(v => { if (v.limit < env.limit && !v.premium) { v.limit = env.limit } })
+         Object.values(global.db.users).map(v => v.limit < env.limit && !v.premium && (v.limit = env.limit))
          Object.entries(global.db.stats).map(([_, prop]) => prop.today = 0)
       }, {
          scheduled: true,
@@ -101,8 +98,7 @@ module.exports = async (conn, ctx) => {
             }
          } else {
             plugin = plugins[name]
-         }
-
+         } 
          if (!plugin) continue
          if (typeof plugin.all === 'function') {
             try {
@@ -111,27 +107,21 @@ module.exports = async (conn, ctx) => {
                console.error(e)
             }
          }
-
          if (typeof plugin.before === 'function') if (m.fromMe || m.isBot || m.chat.endsWith('broadcast') || await plugin.before.call(this, m, { match, body, blockList, conn: conn, prefixes, plugins, participants, groupMetadata, isOwner, isAdmin, isBotAdmin, isPrems, users, groupSet, chats, setting, chatUpdate, Func, Scraper, env })) continue
          if (typeof plugin !== 'function') continue
 
          if (match || setting.noprefix) {
             let isAccept = ((Array.isArray(plugin.command) && plugin.command.includes(command)) || (Array.isArray(plugin.help) && plugin.help.includes(command)))
             if (!isAccept) continue
-
+            m.plugin = name
+            m.isCommand = true
             users.hit += 1
             users.usebot = Date.now()
 
-            m.plugin = name
-            if (m.chat in global.db.groups || m.sender in global.db.users) {
-               if (!['unbanned.js'].includes(name.split('/').pop()) && groupSet && groupSet.isBanned) return
-               if (!['me.js'].includes(name.split('/').pop()) && users && (users.banned || new Date - users.ban_temporary < env.timeout)) return
-            }
-
             if (setting.error.includes(command)) return m.reply(Func.texted('bold', `🚩 Command _${usedPrefix + command}_ disabled.`))
             if (plugin.disabled || setting.pluginDisable.includes(name.split('/').pop())) return
-
-            if (m.fromMe || m.isBot || m.chat.endsWith('broadcast')) continue
+            if (!m.isGroup && env.blocks.some(no => m.sender.startsWith(no))) return conn.updateBlockStatus(m.sender, 'block')
+            if ((m.fromMe && m.isBot) || /broadcast|newsletter/.test(m.chat) || /edit/.test(m.mtype)) continue
             if (setting.self && !isOwner && !m.fromMe) continue
             if (setting.privatemode && !isOwner && !m.fromMe && m.isGroup) continue
             if (!m.isGroup && !['owner.js', 'price.js', 'reg.js', 'menfess.js', 'menfess_ev.js'].includes(name.split('/').pop()) && chats && !isPrems && !users.banned && new Date() * 1 - chats.lastchat < env.timeout) continue
@@ -143,53 +133,40 @@ module.exports = async (conn, ctx) => {
                }).then(() => chats.lastchat = new Date() * 1)
                continue
             }
-
+            if (!['me.js'].includes(name.split('/').pop()) && users && (users.banned || new Date - users.ban_temporary < env.timeout)) continue
+            if (m.isGroup && !['unbanned.js', 'groupinfo.js'].includes(name.split('/').pop()) && groupSet.isBanned) continue
+            
             if (plugin.owner && !isOwner) {
                m.reply(global.status.owner)
                continue
-            }
-            if (plugin.premium && !isPrems) {
+            } else if (plugin.premium && !isPrems) {
                m.reply(global.status.premium)
                continue
-            }
-            if (plugin.group && !m.isGroup) {
+            } else if (plugin.group && !m.isGroup) {
                m.reply(global.status.group)
                continue
-            }
-            if (plugin.botAdmin && !isBotAdmin) {
+            } else if (plugin.botAdmin && !isBotAdmin) {
                m.reply(global.status.botAdmin)
                continue
-            }
-            if (plugin.admin && !isAdmin) {
+            } else if (plugin.admin && !isAdmin) {
                m.reply(global.status.admin)
                continue
-            }
-            if (plugin.private && m.isGroup) {
+            } else if (plugin.private && m.isGroup) {
                m.reply(global.status.private)
                continue
-            }
-            if (plugin.error) {
+            } else if (plugin.error) {
                m.reply(global.status.errorF)
                continue
-            }
-            if (plugin.register == true && users.registered == false) {
+            } else if (plugin.register && !users.registered) {
                m.reply(global.status.register)
                continue
-            }
-            if (plugin.game && setting.game == false) {
+            } else if (plugin.game && !setting.game) {
                m.reply(global.status.game)
                continue
-            }
-
-            m.isCommand = true
-            let xp = 'exp' in plugin ? parseInt(plugin.exp) : 17
-            if (xp > 200) m.reply('Ngecit -_-')
-
-            if (plugin.limit && users.limit < plugin.limit * 1) {
+            } else if (plugin.limit && users.limit < plugin.limit * 1) {
                conn.reply(m.chat, `⚠️ You reached the limit and will be reset at 00.00\n\nTo get more limits upgrade to premium plans.`, m).then(() => users.premium = false)
                continue
-            }
-            if (plugin.limit && users.limit > 0) {
+            } else if (plugin.limit && users.limit > 0) {
                const limit = plugin.limit == 'Boolean' ? 1 : plugin.limit
                if (users.limit >= limit) {
                   users.limit -= limit
@@ -197,8 +174,7 @@ module.exports = async (conn, ctx) => {
                   conn.reply(m.chat, Func.texted('bold', `⚠️ Your limit is not enough to use this feature.`), m)
                   continue
                }
-            }
-            if (plugin.level > users.level) {
+            } else if (plugin.level > users.level) {
                conn.reply(m.chat, `⚠️ level *${plugin.level}* is required to use conn command. Your level *${users.level}*`, m)
                continue
             }
@@ -246,9 +222,5 @@ module.exports = async (conn, ctx) => {
          console.log(m, m.quoted, e)
       }
    }
+   Func.updateFile(require.resolve(__filename))
 }
-fs.watchFile(require.resolve(__filename), () => {
-   fs.unwatchFile(require.resolve(__filename))
-   Func.logFile("Update ~ 'handler.js'")
-   delete require.cache[require.resolve(__filename)]
-})

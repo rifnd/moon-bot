@@ -12,9 +12,10 @@
    "timer": 180000,
    "timeout": 1800000,
    "cooldown": 3,
+   "blocks": ["994", "221", "263", "212"],
    "evaluate_chars": ["=>", ">", "$", "~>", "!", "+", "/", "#", "."],
    "pairing": {
       "state": false,
-      "number": 62000
+      "number": 0
    }
  }

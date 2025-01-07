@@ -20,6 +20,7 @@ let handler = async (m, {
    }
 }
 handler.help = ['unreg']
+handler.use = 'serial number'
 handler.tags = ['user']
 handler.register = true
 handler.limit = 1

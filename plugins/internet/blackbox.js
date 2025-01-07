@@ -1,6 +1,6 @@
 module.exports = {
    help: ['blackbox'],
-   use: 'query',
+   use: 'prompt',
    tags: ['internet'],
    run: async (m, {
       conn,
