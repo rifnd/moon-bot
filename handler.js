@@ -1,5 +1,4 @@
-const { Functions: Func, Scraper, Print, Queque } = new (require('@moonr/utils'))
-const env = require('./config.json')
+const { Functions: Func, Scraper, Print, Queque, Config: env } = new (require('@moonr/utils'))
 const cron = require('node-cron')
 
 module.exports = async (conn, ctx) => {
@@ -25,11 +24,7 @@ module.exports = async (conn, ctx) => {
          conn.msgqueque.add(id)
          await conn.msgqueque.waitQueue(id)
       }
-      if (!setting.online) conn.sendPresenceUpdate('unavailable', m.chat)
-      if (setting.online) {
-         conn.sendPresenceUpdate('available', m.chat)
-         conn.readMessages([m.key])
-      }
+      if (setting.online) conn.readMessages([m.key])
       if (!users || typeof users.limit === undefined) return global.db.users = {
          jid: m.sender,
          banned: false,
@@ -57,6 +52,7 @@ module.exports = async (conn, ctx) => {
       if (users) {
          users.name = m.name
          users.lastseen = new Date() * 1
+         users.role = Func.role(users.level).name
       }
       if (chats) {
          chats.chat += 1

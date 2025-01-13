@@ -11,8 +11,7 @@ module.exports = {
       try {
          let users = Object.entries(global.db.users).length
          let chats = Object.keys(global.db.chats).filter(v => v.endsWith('.net')).length
-         let groupList = async () => Object.entries(await conn.groupFetchAllParticipating()).slice(0).map(entry => entry[1])
-         let groups = await (await groupList()).map(v => v.id).length
+         let groups = Object.keys(global.db.groups).filter(v => v.endsWith('g.us')).length
          let banned = Object.entries(global.db.users).filter(([jid, data]) => data.banned).length
          let premium = Object.entries(global.db.users).filter(([jid, data]) => data.premium).length
          class Hit extends Array {

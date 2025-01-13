@@ -18,7 +18,7 @@ module.exports = {
             text, style: command
          })
          if (!json.status) return conn.reply(m.chat, Func.jsonFormat(json), m)
-         conn.sendFile(m.chat, json.data.url, '', `Process : ${((new Date - old) * 1)} ms`, m)
+         conn.sendFile(m.chat, json.data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
       } catch (e) {
          conn.reply(m.chat, Func.jsonFormat(json), m)
       }

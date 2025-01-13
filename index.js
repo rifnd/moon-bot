@@ -37,10 +37,8 @@ CFonts.say('MOON BOT', {
    font: 'tiny',
    align: 'center',
    colors: ['system']
-})
-CFonts.say('Github : https://github.com/rifnd/moon-bot', {
+}), CFonts.say('Github : https://github.com/rifnd/moon-bot', {
    colors: ['system'],
    font: 'console',
    align: 'center'
-})
-start()
+}), start()

@@ -10,8 +10,7 @@ module.exports = {
       Func
    }) => {
       try {
-         let groupList = async () => Object.entries(await conn.groupFetchAllParticipating()).slice(0).map(entry => entry[1])
-         let groups = await groupList()
+         let groups = Object.entries(await conn.groupFetchAllParticipating()).map(entry => entry[1]).filter(group => !group.isCommunity) /** exclude community */
          let caption = `乂  *G R O U P - L I S T*\n\n`
          caption += `*“Bot has joined into ${groups.length} groups, send _${usedPrefix}gc_ or _${usedPrefix}gcopt_ to show all setup options.”*\n\n`
          groups.map((x, i) => {

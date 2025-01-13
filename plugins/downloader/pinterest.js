@@ -19,11 +19,15 @@ module.exports = {
          })
          if (!json.status) return m.reply(Func.jsonFormat(json))
          json.data.map(v => {
-            conn.sendFile(m.chat, v.url, v.type == 'video' ? Func.filename('mp4') : Func.filename('jpg'), `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
+            if (v.type == 'image') return conn.sendFile(m.chat, v.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
+            if (v.type == 'video') return conn.sendFile(m.chat, v.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
+            if (v.type == 'gif') return conn.sendFile(m.chat, v.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m, {
+               gif: true
+            })
          })
       } catch (e) {
          console.log(e)
-         return m.reply(Func.jsonFormat(e))
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    limit: true

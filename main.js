@@ -1,82 +1,70 @@
 "use strict"
 require('./lib/system/config')
-const { Connection, Mongo, Postgre, Functions: Func } = new (require('@moonr/utils')), { existsSync, mkdirSync, readdirSync, unlinkSync } = require('fs'), env = require('./config.json'), cron = require('node-cron')
+const { Connection, Mongo, Postgre, Functions: Func, Config: env } = new (require('@moonr/utils')), { existsSync, mkdirSync, readdirSync, unlinkSync } = require('fs'), cron = require('node-cron')
 const database = /mongo/.test(process.env.DATABASE_URL) ? new Mongo(process.env.DATABASE_URL, env.database) : /postgres/.test(process.env.DATABASE_URL) ? new Postgre(process.env.DATABASE_URL, env.database) : new (require('./lib/system/localdb'))(env.database)
 
 const conn = new Connection({
    directory: 'plugins', /** folder for plugins, you can change */
    session: 'session', /** this is for the folder storing the session */
-   online: false, /** in for online view on whatsapp */
+   online: true, /** in for online view on whatsapp */
    browser: ['Ubuntu', 'Chrome', '20.0.04'] /** this is for the browser version */
 })
 
 /** connection already established */
 conn.once('connect', async ex => {
-   try {
-      /** database */
-      global.db = { users: {}, groups: {}, chats: {}, setting: {}, stats: {}, sticker: {}, msgs: {}, store: [], transactions: [], ...(await database.fetch() || {}) }
-      /** save database */
-      await database.save(global.db)
-   } catch (e) {
-      console.error(e)
-   }
+   /** database */
+   global.db = { users: {}, groups: {}, chats: {}, setting: {}, stats: {}, sticker: {}, msgs: {}, store: [], transactions: [], ...(await database.fetch() || {}) }
+   /** save database */
+   await database.save(global.db)
 })
 
 /** for connection preparation */
 conn.once('prepare', async () => {
-   try {
-      /* auto restart if ram usage is over */
-      const ramCheck = setInterval(() => {
-         var ramUsage = process.memoryUsage().rss
-         if (ramUsage >= require('bytes')(env.ram_limit)) {
-            clearInterval(ramCheck)
-            process.send('reset')
+   /* auto restart if ram usage is over */
+   const ramCheck = setInterval(() => {
+      var ramUsage = process.memoryUsage().rss
+      if (ramUsage >= require('bytes')(env.ram_limit)) {
+         clearInterval(ramCheck)
+         process.send('reset')
+      }
+   }, 60 * 1000)
+
+   /* create temp directory if doesn't exists */
+   if (!existsSync('./tmp')) mkdirSync('./tmp')
+
+   /* clear temp folder every 10 minutes */
+   setInterval(async () => {
+      try {
+         const tmpFiles = readdirSync('./tmp')
+         if (tmpFiles.length > 0) {
+            tmpFiles.filter(v => !v.endsWith('.file')).map(v => unlinkSync('./tmp/' + v))
          }
-      }, 60 * 1000)
+      } catch { }
+   }, 60 * 1000 * 10)
 
-      /* create temp directory if doesn't exists */
-      if (!existsSync('./tmp')) mkdirSync('./tmp')
+   /** clear session */
+   cron.schedule('0 0 * * *', () => {
+      const sessionFiles = readdirSync('./session')
+      if (sessionFiles.length > 0) {
+         sessionFiles.filter(v => v !== 'creds.json').forEach(v => unlinkSync('./session/' + v))
+      }
+   }, {
+      scheduled: true,
+      timezone: process.env.TZ
+   })
 
-      /* clear temp folder every 10 minutes */
-      setInterval(async () => {
-         try {
-            const tmpFiles = readdirSync('./tmp')
-            if (tmpFiles.length > 0) {
-               tmpFiles.filter(v => !v.endsWith('.file')).map(v => unlinkSync('./tmp/' + v))
-            }
-         } catch { }
-      }, 60 * 1000 * 10)
-
-      /** clear session */
-      cron.schedule('0 0 * * *', () => {
-         const sessionFiles = readdirSync('./session')
-         if (sessionFiles.length > 0) {
-            sessionFiles.filter(v => v !== 'creds.json').forEach(v => unlinkSync('./session/' + v))
-         }
-      }, {
-         scheduled: true,
-         timezone: process.env.TZ
-      })
-
-      /** save database every 30 seconds */
-      setInterval(async () => {
-         if (global.db) await database.save(global.db)
-      }, 60_000)
-   } catch (e) {
-      console.error(e)
-   }
+   /** save database every 30 seconds */
+   setInterval(async () => {
+      if (global.db) await database.save(global.db)
+   }, 60_000)
 })
 
 /** reloading important files */
 conn.ev('import', ctx => {
-   try {
-      require('./handler')(conn.sock, ctx)
-      require('./lib/system/simple')(conn.sock)
-      require('./lib/system/functions')
-      require('./lib/system/scraper')
-   } catch (e) {
-      console.error(e)
-   }
+   require('./handler')(conn.sock, ctx)
+   require('./lib/system/simple')(conn.sock)
+   require('./lib/system/functions')
+   require('./lib/system/scraper')
 })
 
 /** incoming/outgoing group members */
@@ -125,21 +113,19 @@ conn.ev('message.delete', async ctx => {
 
 /** typing detection, recording while afk */
 conn.ev('presence.update', ctx => {
-   if (global.db.setting.self) return
-   const sock = conn.sock
    if (!ctx) return
    const { id, presences } = ctx
    if (id.endsWith('g.us')) {
       for (let jid in presences) {
-         if (!presences[jid] || jid == sock.decodeJid(sock.user.id) || jid === (sock.user.jid + '@s.whatsapp.net')) continue
+         if (!presences[jid] || jid == conn.sock.decodeJid(conn.sock.user.id)) continue
          if ((presences[jid].lastKnownPresence === 'composing' || presences[jid].lastKnownPresence === 'recording') && global.db && global.db.users && global.db.users[jid] && global.db.users[jid].afk > -1) {
-            sock.reply(id, `System detects activity from @${jid.replace(/@.+/, '')} after being offline for : ${Func.texted('bold', Func.toTime(new Date - global.db.users[jid].afk))}\n\n➠ ${Func.texted('bold', 'Reason')} : ${global.db.users[jid].afkReason ? global.db.users[jid].afkReason : '-'}`, global.db.users[jid].afkObj)
+            conn.sock.reply(id, `System detects activity from @${jid.replace(/@.+/, '')} after being offline for : ${Func.texted('bold', Func.toTime(new Date - global.db.users[jid].afk))}\n\n➠ ${Func.texted('bold', 'Reason')} : ${global.db.users[jid].afkReason ? global.db.users[jid].afkReason : '-'}`, global.db.users[jid].afkObj)
             global.db.users[jid].afk = -1
             global.db.users[jid].afkReason = ''
             global.db.users[jid].afkObj = {}
          }
       }
-   }
+   } else { }
 })
 
 /** reject call */

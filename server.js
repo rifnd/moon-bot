@@ -1,3 +1,4 @@
+const { Functions: Func } = new (require('@moonr/utils'))
 const http = require('http')
 const express = require('express')
 const app = express()
@@ -7,8 +8,10 @@ const server = async () => {
    app.get('/', async (req, res) => {
       res.status(200).json({
          status: true,
-         uptime: process.uptime(),
-         timestamp: new Date().toISOString()
+         data: {
+            uptime: Func.toTime(process.uptime() * 1000),
+            timestamp: new Date().toISOString()
+         }
       })
    })
    const index = http.createServer(app)

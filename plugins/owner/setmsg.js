@@ -32,8 +32,9 @@ const explain = (prefix, command) => {
 *1.* +tag : for mention sender.
 *2.* +name : to getting sender name.
 *3.* +greeting : to display greetings by time.
-*4.* +limit : to display sender limit.
-*5.* +premium : display whether the sender is premium
+*4.* +db : to display database.
+*5.* +limit : to display sender limit.
+*6.* +premium : display whether the sender is premium
 
 • *Example* : ${prefix + command} Hi +tag +greeting, i'm an automation system`
 }
