@@ -29,8 +29,8 @@ module.exports = {
          const chSize = Func.sizeLimit(json.data.size, users.premium ? env.max_upload : env.max_upload_free)
          const isOver = users.premium ? `💀 File size (${json.data.size}) exceeds the maximum limit.` : `⚠️ File size (${json.data.size}), you can only download files with a maximum size of ${env.max_upload_free} MB and for premium users a maximum of ${env.max_upload} MB.`
          if (chSize.oversize) return conn.reply(m.chat, isOver, m)
-         const result = await format(json.data.url, './tmp/' + Func.filename('mp4'))
-         conn.sendFile(m.chat, result, json.data.filename, caption, m)
+         //const result = await format(json.data.url, './tmp/' + Func.filename('mp4'))
+         conn.sendFile(m.chat, json.data.url, json.data.filename, caption, m)
       } catch (e) {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
@@ -38,9 +38,9 @@ module.exports = {
    limit: true
 }
 
-const ffmpeg = require('fluent-ffmpeg')
+/*const ffmpeg = require('fluent-ffmpeg')
 async function format(inputPath, outputPath) {
    return new Promise((resolve, reject) => {
       ffmpeg(inputPath).output(outputPath).videoCodec('libx264').audioCodec('aac').toFormat('mp4').on('end', () => resolve(outputPath)).on('error', (err) => reject(err)).run()
    })
-}
+}*/

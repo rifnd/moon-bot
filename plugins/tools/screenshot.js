@@ -1,5 +1,6 @@
 module.exports = {
-   help: ['ss', 'ssweb'],
+   help: ['screenshot'],
+   command: ['ss'],
    use: 'link',
    tags: ['tools'],
    run: async (m, {
@@ -10,30 +11,16 @@ module.exports = {
       Func
    }) => {
       try {
-         if (!args[0]) return m.reply(Func.example(usedPrefix, command, 'https://api.alyachan.dev'))
-         if (!/^https?:\/\//.test(args[0])) return m.reply('Prefix links with https://')
-         let old = new Date()
-         switch (command) {
-            case 'ss':
-            case 'screenshot': {
-               m.react('🕒')
-               const json = await Api.get('api/ssweb', {
-                  url: args[0], mode: 'mobile'
-               })
-               if (!json.status) return m.reply(Func.jsonFormat(json))
-               conn.sendFile(m.chat, json.data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
-            }
-            break
-            case 'ssweb': {
-               m.react('🕒')
-               const json = await Api.get('api/ssweb', {
-                  url: args[0], mode: 'desktop'
-               })
-               if (!json.status) return m.reply(Func.jsonFormat(json))
-               conn.sendFile(m.chat, json.data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
-            }
-            break
-         }
+         if (!args[1]) return conn.reply(m.chat, Func.example(usedPrefix, command, 'mobile https://api.alyachan.dev'), m)
+         if (!/^https?:\/\//.test(args[1])) return conn.reply(m.chat, Func.texted('bold', '🚩 Prefix the link with https:// or http://'), m)
+         let old = new Date(), mode = args[0].toLowerCase(), url = args[1]
+         if (!['mobile', 'desktop'].includes(mode)) return conn.reply(m.chat, Func.texted('bold', '🚩 Use mobile or desktop mode.'), m)
+         m.react('🕒')
+         const json = await Api.get('api/ssweb', {
+            url: url, mode: mode
+         })
+         if (!json.status) return conn.reply(m.chat, Func.jsonFormat(json), m)
+         conn.sendFile(m.chat, json.data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
       } catch (e) {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }

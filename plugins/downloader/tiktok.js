@@ -21,9 +21,9 @@ module.exports = {
          if (!json.status) return m.reply(Func.jsonFormat(json))
          let teks = `乂  *T I K T O K*\n\n`
          teks += `   ∘  *Author* : ${json.author.nickname}\n`
-         teks += `   ∘  *Like* : ${json.stats.likes}\n`
-         teks += `   ∘  *Share* : ${json.stats.share}\n`
-         teks += `   ∘  *Comment* : ${json.stats.comment}\n`
+         teks += `   ∘  *Like* : ${Func.formatNumber(json.stats.likes)}\n`
+         teks += `   ∘  *Share* : ${Func.formatNumber(json.stats.share)}\n`
+         teks += `   ∘  *Comment* : ${Func.formatNumber(json.stats.comment)}\n`
          teks += `   ∘  *Duration* : ${json.duration}\n`
          teks += `   ∘  *Sound* : ${json.music_info.title} - ${json.music_info.author}\n`
          teks += `   ∘  *Caption* : ${json.title}\n`
@@ -38,11 +38,8 @@ module.exports = {
             } else {
                conn.sendFile(m.chat, result.url, Func.filename('mp4'), teks, m)
             }
-         } else if (command == 'tikwm') {
-            conn.sendFile(m.chat, json.data.find(v => v.type == 'watermark').url, Func.filename('mp4'), teks, m)
-         } else if (command == 'tikmp3') {
-            conn.sendFile(m.chat, json.music_info.url, Func.filename('mp3'), '', m)
-         }
+         } else if (command == 'tikwm') return conn.sendFile(m.chat, json.data.find(v => v.type == 'watermark').url, Func.filename('mp4'), teks, m)
+         else if (command == 'tikmp3') return conn.sendFile(m.chat, json.music_info.url, Func.filename('mp3'), '', m)
       } catch (e) {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }

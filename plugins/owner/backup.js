@@ -1,11 +1,11 @@
 const { Mongo, Postgre } = new (require('@moonr/utils'))
 const { writeFileSync, readFileSync } = require('fs')
-const env = require('../../config.json')
 module.exports = {
    help: ['backup'],
    tags: ['owner'],
    run: async (m, {
       conn,
+      env,
       Func
    }) => {
       try {
