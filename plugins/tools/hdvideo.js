@@ -23,12 +23,12 @@ module.exports = {
                })
                if (!json.status) return m.reply(Func.jsonFormat(json))
                conn.sendFile(m.chat, json.data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
-            } else conn.reply(m.chat, Func.texted('bold', `🚩 Only for photo.`), m)
+            } else conn.reply(m.chat, Func.texted('bold', `🚩 Only for video.`), m)
          } else {
             let q = m.quoted ? m.quoted : m
             let mime = (q.msg || q).mimetype || ''
-            if (!mime) return conn.reply(m.chat, Func.texted('bold', `🚩 Reply photo.`), m)
-            if (!/video\/(mp4)/.test(mime)) return conn.reply(m.chat, Func.texted('bold', `🚩 Only for photo.`), m)
+            if (!mime) return conn.reply(m.chat, Func.texted('bold', `🚩 Reply video.`), m)
+            if (!/video\/(mp4)/.test(mime)) return conn.reply(m.chat, Func.texted('bold', `🚩 Only for video.`), m)
             m.react('🕒')
             let old = new Date()
             let vid = await q.download()
