@@ -73,6 +73,7 @@ global.footer = Func.Styles('simple whatsapp bot made by moon')
 Install buildpack
 
 - Heroku/Nodejs
+- Heroku/Python
 - https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
 - https://github.com/DuckyTeam/heroku-buildpack-imagemagick.git
 

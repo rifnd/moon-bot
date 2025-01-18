@@ -2,7 +2,7 @@ const { Functions: Func, Scraper, Print, Queque, Config: env } = new (require('@
 const cron = require('node-cron')
 
 module.exports = async (conn, ctx) => {
-   var { m, chatUpdate, match, body, command, args, _args, text, plugins, prefix, usedPrefix, prefixes } = ctx
+   var { m, chatUpdate, store, match, body, command, args, _args, text, plugins, prefix, usedPrefix, prefixes } = ctx
    try {
       conn.msgqueque = conn.msgqueque || new Queque()
       require('./lib/system/schema')(m, env)
@@ -94,16 +94,16 @@ module.exports = async (conn, ctx) => {
             }
          } else {
             plugin = plugins[name]
-         } 
+         }
          if (!plugin) continue
          if (typeof plugin.all === 'function') {
-            try {
+            try { 
                await plugin.all.call(conn, m, chatUpdate)
             } catch (e) {
                console.error(e)
             }
          }
-         if (typeof plugin.before === 'function') if (m.fromMe || m.isBot || m.chat.endsWith('broadcast') || await plugin.before.call(this, m, { match, body, blockList, conn: conn, prefixes, plugins, participants, groupMetadata, isOwner, isAdmin, isBotAdmin, isPrems, users, groupSet, chats, setting, chatUpdate, Func, Scraper, env })) continue
+         if (typeof plugin.before === 'function') if (m.fromMe || m.isBot || m.chat.endsWith('broadcast') || await plugin.before.call(this, m, { match, body, blockList, conn: conn, store, prefixes, plugins, participants, groupMetadata, isOwner, isAdmin, isBotAdmin, isPrems, users, groupSet, chats, setting, chatUpdate, Func, Scraper, env })) continue
          if (typeof plugin !== 'function') continue
 
          if (match || setting.noprefix) {
@@ -131,7 +131,7 @@ module.exports = async (conn, ctx) => {
             }
             if (!['me.js'].includes(name.split('/').pop()) && users && (users.banned || new Date - users.ban_temporary < env.timeout)) continue
             if (m.isGroup && !['unbanned.js', 'groupinfo.js'].includes(name.split('/').pop()) && groupSet.isBanned) continue
-            
+
             if (plugin.owner && !isOwner) {
                m.reply(global.status.owner)
                continue
@@ -174,7 +174,7 @@ module.exports = async (conn, ctx) => {
                conn.reply(m.chat, `⚠️ level *${plugin.level}* is required to use conn command. Your level *${users.level}*`, m)
                continue
             }
-            let extra = { match, body, blockList, usedPrefix, _args, args, command, text, conn: conn, plugins, participants, groupMetadata, isOwner, isAdmin, isBotAdmin, isPrems, users, groupSet, chats, setting, chatUpdate, Func, Scraper, env }
+            let extra = { match, body, blockList, usedPrefix, _args, args, command, text, conn: conn, store, plugins, participants, groupMetadata, isOwner, isAdmin, isBotAdmin, isPrems, users, groupSet, chats, setting, chatUpdate, Func, Scraper, env }
             try {
                await plugin.call(conn, m, extra)
             } catch (e) {

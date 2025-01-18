@@ -16,7 +16,7 @@
 #    under the License.
 
 import csv
-import datetime
+from datetime import datetime, timezone
 import errno
 import math
 import os
@@ -957,7 +957,7 @@ class SpeedtestResults(object):
         self.client = client or {}
 
         self._share = None
-        self.timestamp = '%sZ' % datetime.datetime.utcnow().isoformat()
+        self.timestamp = datetime.now(timezone.utc).isoformat()
         self.bytes_received = 0
         self.bytes_sent = 0
 
