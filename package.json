@@ -27,13 +27,14 @@
       "queque": "node index.js --queque"
    },
    "dependencies": {
-      "@moonr/utils": "^0.4.5",
-      "@whiskeysockets/baileys": "npm:@neoxr/baileys",
+      "@moonr/utils": "^0.5.2",
+      "@whiskeysockets/baileys": "npm:@im-dims/baileys-md@^7.0.2",
       "archiver": "^7.0.1",
       "bytes": "^3.1.2",
       "cfonts": "^3.3.0",
       "express": "^4.21.2",
       "ignore": "^7.0.0",
+      "jimp": "^0.22.12",
       "node-cron": "^3.0.0",
       "yt-search": "^2.10.4"
    }

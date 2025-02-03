@@ -82,14 +82,14 @@ conn.ev('group-participants.update', async ctx => {
             thumbnail: pic,
             url: global.db.setting.link
          })
-      break
+         break
       case 'promote':
          text = ('@user is now Admin!')
       case 'demote':
          if (!text) text = ('@user is now not Admin!')
          text = text.replace('@user', '@' + ctx.member.split('@')[0])
-         if (group.detect) conn.sock.fakeText(ctx.jid, text, global.footer)
-      break
+         if (group.detect) conn.sock.reply(ctx.jid, text, Func.fake(1, 'Group Detect'))
+         break
    }
 })
 
@@ -101,12 +101,11 @@ conn.ev('group.detect', async ctx => {
    if (ctx.action.inviteCode) text = ('Group link has been changed to :\n\nhttps://chat.whatsapp.com/@revoke').replace('@revoke', ctx.action.inviteCode)
    if (ctx.action.announce === true) text = 'Group has been closed'
    if (ctx.action.announce === false) text = 'Group has been opened'
-   if (group && group.detect) conn.sock.fakeText(ctx.jid, text, global.footer)
+   if (group && group.detect) conn.sock.reply(ctx.jid, text, Func.fake(1, 'Group Detect'))
 })
 
 /** anti-delete message */
 conn.ev('message.delete', async ctx => {
-   if (global.db.setting.self) return
    let group = global.db.groups[ctx.jid] || {}
    if (group && group.antidelete) await conn.sock.copyNForward(ctx.jid, ctx.msg).catch(e => console.log(e, ctx.msg))
 })
