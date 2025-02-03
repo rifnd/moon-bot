@@ -61,7 +61,7 @@ conn.once('prepare', async () => {
 
 /** reloading important files */
 conn.ev('import', ctx => {
-   require('./handler')(conn.sock, ctx)
+   require('./handler')(conn.sock, ctx, database)
    require('./lib/system/simple')(conn.sock)
    require('./lib/system/functions')
    require('./lib/system/scraper')
@@ -82,14 +82,14 @@ conn.ev('group-participants.update', async ctx => {
             thumbnail: pic,
             url: global.db.setting.link
          })
-         break
+      break
       case 'promote':
          text = ('@user is now Admin!')
       case 'demote':
          if (!text) text = ('@user is now not Admin!')
          text = text.replace('@user', '@' + ctx.member.split('@')[0])
          if (group.detect) conn.sock.reply(ctx.jid, text, Func.fake(1, 'Group Detect'))
-         break
+      break
    }
 })
 

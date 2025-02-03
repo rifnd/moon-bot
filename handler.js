@@ -1,7 +1,7 @@
 const { Functions: Func, Scraper, Print, Queque, Config: env } = new (require('@moonr/utils'))
 const cron = require('node-cron')
 
-module.exports = async (conn, ctx) => {
+module.exports = async (conn, ctx, database) => {
    var { m, chatUpdate, store, match, body, command, args, _args, text, plugins, prefix, usedPrefix, prefixes } = ctx
    try {
       conn.msgqueque = conn.msgqueque || new Queque()
@@ -10,7 +10,7 @@ module.exports = async (conn, ctx) => {
       const groupSet = global.db.groups[m.chat]
       const chats = global.db.chats[m.chat]
       const setting = global.db.setting
-      const isOwner = [env.owner, ...setting.owners].map(v => v + '@s.whatsapp.net').includes(m.sender)
+      const isOwner = [conn.decodeJid(conn.user.id).replace(/@.+/, ''), env.owner, ...setting.owners].map(v => v + '@s.whatsapp.net').includes(m.sender)
       const isPrems = users.premium || isOwner
       const groupMetadata = m.isGroup ? await conn.groupMetadata(m.chat) : {}
       const participants = m.isGroup ? groupMetadata ? groupMetadata.participants : [] : [] || []
@@ -24,7 +24,11 @@ module.exports = async (conn, ctx) => {
          conn.msgqueque.add(id)
          await conn.msgqueque.waitQueue(id)
       }
-      if (setting.online) conn.readMessages([m.key])
+      if (!setting.online) conn.sendPresenceUpdate('unavailable', m.chat)
+      if (setting.online) {
+         conn.sendPresenceUpdate('available', m.chat)
+         conn.readMessages([m.key])
+      }
       if (!users || typeof users.limit === undefined) return global.db.users = {
          jid: m.sender,
          banned: false,
@@ -97,13 +101,13 @@ module.exports = async (conn, ctx) => {
          }
          if (!plugin) continue
          if (typeof plugin.all === 'function') {
-            try { 
+            try {
                await plugin.all.call(conn, m, chatUpdate)
             } catch (e) {
                console.error(e)
             }
          }
-         if (typeof plugin.before === 'function') if (m.fromMe || m.isBot || m.chat.endsWith('broadcast') || await plugin.before.call(this, m, { match, body, blockList, conn: conn, store, prefixes, plugins, participants, groupMetadata, isOwner, isAdmin, isBotAdmin, isPrems, users, groupSet, chats, setting, chatUpdate, Func, Scraper, env })) continue
+         if (typeof plugin.before === 'function') if (m.fromMe || m.isBot || m.chat.endsWith('broadcast') || await plugin.before.call(this, m, { match, body, blockList, conn: conn, store, database, prefixes, plugins, participants, groupMetadata, isOwner, isAdmin, isBotAdmin, isPrems, users, groupSet, chats, setting, chatUpdate, Func, Scraper, env })) continue
          if (typeof plugin !== 'function') continue
 
          if (match || setting.noprefix) {
@@ -174,7 +178,7 @@ module.exports = async (conn, ctx) => {
                conn.reply(m.chat, `⚠️ level *${plugin.level}* is required to use conn command. Your level *${users.level}*`, m)
                continue
             }
-            let extra = { match, body, blockList, usedPrefix, _args, args, command, text, conn: conn, store, plugins, participants, groupMetadata, isOwner, isAdmin, isBotAdmin, isPrems, users, groupSet, chats, setting, chatUpdate, Func, Scraper, env }
+            let extra = { match, body, blockList, usedPrefix, _args, args, command, text, conn: conn, store, database, plugins, participants, groupMetadata, isOwner, isAdmin, isBotAdmin, isPrems, users, groupSet, chats, setting, chatUpdate, Func, Scraper, env }
             try {
                await plugin.call(conn, m, extra)
             } catch (e) {

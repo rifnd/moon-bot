@@ -1,15 +1,14 @@
-const { Mongo, Postgre } = new (require('@moonr/utils'))
 const { writeFileSync, readFileSync } = require('fs')
 module.exports = {
    help: ['backup'],
    tags: ['owner'],
    run: async (m, {
       conn,
+      database,
       env,
       Func
    }) => {
       try {
-         const database = /mongo/.test(process.env.DATABASE_URL) ? new Mongo(process.env.DATABASE_URL, env.database) : /postgres/.test(process.env.DATABASE_URL) ? new Postgre(process.env.DATABASE_URL, env.database) : new (require('../../lib/system/localdb'))(env.database)
          m.react('🕒')
          await database.save(global.db)
          writeFileSync(env.database + '.json', JSON.stringify(global.db, null, 3), 'utf-8')

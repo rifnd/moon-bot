@@ -1,4 +1,3 @@
-const { Mongo, Postgre } = new (require('@moonr/utils'))
 const { readFileSync } = require('fs')
 module.exports = {
    help: ['restore'],
@@ -6,11 +5,11 @@ module.exports = {
    run: async (m, {
       conn,
       command,
+      database,
       env,
       Func
    }) => {
       try {
-         const database = /mongo/.test(process.env.DATABASE_URL) ? new Mongo(process.env.DATABASE_URL, env.database) : /postgres/.test(process.env.DATABASE_URL) ? new Postgre(process.env.DATABASE_URL, env.database) : new (require('../../lib/system/localdb'))(env.database)
          if (m.quoted && /document/.test(m.quoted.mtype) && m.quoted.mimetype === 'application/json') {
             const fn = await Func.getFile(await m.quoted.download())
             if (!fn.status) return m.reply('File cannot be downloaded.')
@@ -20,7 +19,7 @@ module.exports = {
             })
          } else m.reply('Reply to the backup file first then reply with this feature.')
       } catch (e) {
-         console.log(e)
+         return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
    owner: true
