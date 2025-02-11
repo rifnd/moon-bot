@@ -132,7 +132,7 @@ conn.ev('call', async ctx => {
    if (global.db.setting && global.db.setting.anticall) {
       for (const id of ctx) {
          if (id.status === 'offer') {
-            let msg = await conn.sock.fakeText(id.from, `Sorry for now, we cannot accept calls, either in groups or privately\n\nIf you need help or request features, please chat with the owner :p`, global.footer)
+            let msg = await conn.sock.reply(id.from, `Sorry for now, we cannot accept calls, either in groups or privately\n\nIf you need help or request features, please chat with the owner :p`, Func.fake(1, 'Anti Call'))
             conn.sock.sendContact(id.from, [{
                name: env.owner_name,
                number: env.owner,

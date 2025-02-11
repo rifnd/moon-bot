@@ -24,10 +24,11 @@ TestResults.xml
 node_modules
 session
 tmp
-database.json
-data.json
-data.store.json
-package-lock.json
+database.*
+data.*
+data.store.*
+store.data.*
+package-lock.*
 yarn.lock
 goorm.manifest
 backup.zip

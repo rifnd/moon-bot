@@ -46,7 +46,7 @@ module.exports = async (conn, ctx, database) => {
          })
       }
       if (users && (new Date * 1) >= users.expired && users.expired != 0) {
-         return conn.reply(users.jid, Func.texted('italic', '🚩 Your premium package has expired, thank you for buying and using our service.')).then(async () => {
+         return conn.reply(m.chat, Func.texted('italic', '🚩 Your premium package has expired, thank you for buying and using our service.')).then(async () => {
             users.premium = false
             users.expired = 0
             users.limit = env.limit
@@ -204,7 +204,7 @@ module.exports = async (conn, ctx, database) => {
    } catch (e) {
       console.error(e)
    } finally {
-      let stats = global.db.stats
+      let stats = (global.db && global.db.stats) || {}
       if (m) {
          if (m.plugin) {
             let now = +new Date()
