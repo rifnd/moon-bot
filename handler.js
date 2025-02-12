@@ -69,8 +69,8 @@ module.exports = async (conn, ctx, database) => {
       }
       cron.schedule('00 00 * * *', () => {
          setting.lastReset = Date.now()
-         Object.values(global.db.users).map(v => v.limit < env.limit && !v.premium && (v.limit = env.limit))
-         Object.entries(global.db.stats).map(([_, prop]) => prop.today = 0)
+         Object.values(global.db.users).forEach(v => { if (v.limit < env.limit && !v.premium) { v.limit = env.limit } })
+         Object.values(global.db.stats).forEach(prop => prop.today = 0)
       }, {
          scheduled: true,
          timezone: process.env.TZ
