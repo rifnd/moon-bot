@@ -9,26 +9,23 @@ module.exports = {
       Func
    }) => {
       try {
-         let users = Object.entries(global.db.users).length
-         let chats = Object.keys(global.db.chats).filter(v => v.endsWith('.net')).length
-         let groups = Object.keys(global.db.groups).filter(v => v.endsWith('g.us')).length
-         let banned = Object.entries(global.db.users).filter(([jid, data]) => data.banned).length
-         let premium = Object.entries(global.db.users).filter(([jid, data]) => data.premium).length
+         let users = Object.entries(global.db.users)
+         let chats = Object.keys(global.db.chats)
+         let groups = Object.keys(global.db.groups)
          class Hit extends Array {
             total(key) {
                return this.reduce((a, b) => a + (b[key] || 0), 0)
             }
          }
          let sum = new Hit(...Object.values(global.db.stats))
-         let hitstat = sum.total('total') != 0 ? sum.total('total') : 0
          const stats = {
-            users,
-            chats,
-            groups,
-            banned,
+            users: users.length,
+            chats: chats.filter(v => v.endsWith('.net')).length,
+            groups: groups.filter(v => v.endsWith('g.us')).length,
+            banned: users.filter(([_, v]) => v.banned).length,
             blocked: blockList.length,
-            premium,
-            hitstat,
+            premium: users.filter(([_, v]) => v.premium).length,
+            hitstat: sum.total('hitstat') != 0 ? sum.total('hitstat') : 0,
             uptime: Func.toTime(process.uptime() * 1000)
          }
          const system = global.db.setting

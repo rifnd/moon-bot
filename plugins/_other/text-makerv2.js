@@ -27,7 +27,7 @@ module.exports = {
          if (/captainamerica/.test(command)) link = 'https://en.ephoto360.com/create-a-cinematic-captain-america-text-effect-online-715.html'
          if (/amongus2/.test(command)) link = 'https://en.ephoto360.com/create-a-banner-game-among-us-with-your-name-763.html'
          if (/latestspace/.test(command)) link = 'https://en.ephoto360.com/latest-space-3d-text-effect-online-559.html'
-         let json = await Api.get('api/textmaker', {
+         let json = await Api.get('api/textmaker2', {
             url: link, text1, text2
          })
          if (!json.status) return conn.reply(m.chat, Func.jsonFormat(json), m)

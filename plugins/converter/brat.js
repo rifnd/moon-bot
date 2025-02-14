@@ -11,17 +11,29 @@ module.exports = {
       Func
    }) => {
       try {
-         if (!text) return conn.reply(m.chat, Func.example(usedPrefix, command, 'moon-bot'), m)
-         if (text.length > 50) return client.reply(m.chat, Func.texted('bold', `🚩 Max 50 character.`), m)
+         const args = text.trim().split(' ')
+         const mode = args[0] === 'gif' ? 'gif' : 'text'
+         const content = mode === 'gif' ? args.slice(1).join(' ') : text.trim()
+         if (!content) return conn.reply(m.chat, Func.example(usedPrefix, command, 'moon-bot'), m)
+         if (content.length > 100) return conn.reply(m.chat, Func.texted('bold', '🚩 Text is too long, max 100 characters.'), m)
          m.react('🕒')
-         let json = await Api.get('api/brat', {
-            text
-         })
-         if (!json.status) return conn.reply(m.chat, Func.texted('bold', `🚩 Can't convert text to sticker.`), m)
-         conn.sendSticker(m.chat, json.data.url, m, {
-            packname: setting.sk_pack,
-            author: setting.sk_author
-         })
+         if (mode === 'gif') {
+            let json = await Api.get('api/bratgif', {
+               text: content
+            })
+            conn.sendSticker(m.chat, json.data.url, m, {
+               packname: m.pushName,
+               author: setting.sk_author
+            })
+         } else {
+            let json = await Api.get('api/brat', {
+               text: content
+            })
+            conn.sendSticker(m.chat, json.data.url, m, {
+               packname: m.pushName,
+               author: setting.sk_author
+            })
+         }
       } catch (e) {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }

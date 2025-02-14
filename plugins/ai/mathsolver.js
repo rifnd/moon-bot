@@ -2,7 +2,7 @@ module.exports = {
    help: ['mathsolver'],
    command: ['mathresolver'],
    use: 'expression',
-   tags: ['tools'],
+   tags: ['ai'],
    run: async (m, {
       conn,
       usedPrefix,

@@ -1,7 +1,7 @@
 module.exports = {
-   help: ['code'],
+   help: ['article'],
    use: 'query | lang',
-   tags: ['internet'],
+   tags: ['ai'],
    run: async (m, {
       conn,
       usedPrefix,
@@ -10,14 +10,14 @@ module.exports = {
       Func
    }) => {
       try {
-         if (!text) return m.reply(Func.example(usedPrefix, command, 'How to create delay function | js'))
-         let [code, act] = text.split` | `
+         if (!text) return m.reply(Func.example(usedPrefix, command, 'hujan | Indonesian'))
+         let [teks, iso] = text.split` | `
          conn.react(m.chat, '🕒', m.key)
-         const json = await Api.get('api/ai-code', {
-            text: code, action: act
+         const json = await Api.get('api/ai-article', {
+            text: teks, lang: iso
          })
          if (!json.status) return m.reply(Func.jsonFormat(json))
-         m.reply(json.data.code)
+         m.reply(json.data.content)
       } catch (e) {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }

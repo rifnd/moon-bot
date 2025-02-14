@@ -1,7 +1,7 @@
 module.exports = {
    help: ['igstalk'],
    use: 'username',
-   tags: ['tools'],
+   tags: ['internet'],
    run: async (m, {
       conn,
       usedPrefix,

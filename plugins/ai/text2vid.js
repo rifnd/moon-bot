@@ -1,7 +1,7 @@
 module.exports = {
    help: ['text2vid'],
    use: 'prompt | model',
-   tags: ['tools'],
+   tags: ['ai'],
    run: async (m, {
       conn,
       usedPrefix,

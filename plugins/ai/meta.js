@@ -1,7 +1,7 @@
 module.exports = {
    help: ['meta'],
    use: 'prompt',
-   tags: ['internet'],
+   tags: ['ai'],
    run: async (m, {
       conn,
       usedPrefix,

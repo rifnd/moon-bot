@@ -1,7 +1,7 @@
 module.exports = {
    help: ['cai'],
    command: ['character-ai'],
-   tags: ['internet'],
+   tags: ['ai'],
    run: async (m, {
       conn,
       usedPrefix,

@@ -1,7 +1,7 @@
 module.exports = {
    help: ['text2img'],
    use: 'prompt | negative | model | ratio',
-   tags: ['tools'],
+   tags: ['ai'],
    run: async (m, {
       conn,
       usedPrefix,

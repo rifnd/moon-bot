@@ -2,7 +2,7 @@ module.exports = {
    help: ['openai'],
    command: ['ai'],
    use: 'query',
-   tags: ['internet'],
+   tags: ['ai'],
    run: async (m, {
       conn,
       usedPrefix,
