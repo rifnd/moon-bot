@@ -2,7 +2,7 @@ module.exports = {
    help: ['gemini', 'bard'],
    use: 'query',
    tags: ['ai'],
-   run: async (m, {``
+   run: async (m, {
       conn,
       usedPrefix,
       command,
