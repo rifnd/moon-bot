@@ -6,12 +6,12 @@ module.exports = {
       conn,
       usedPrefix,
       command,
+      args,
       text,
       setting,
       Func
    }) => {
       try {
-         const args = text.trim().split(' ')
          const mode = args[0] === 'gif' ? 'gif' : 'text'
          const content = mode === 'gif' ? args.slice(1).join(' ') : text.trim()
          if (!content) return conn.reply(m.chat, Func.example(usedPrefix, command, 'moon-bot'), m)
@@ -21,7 +21,8 @@ module.exports = {
             let json = await Api.get('api/bratgif', {
                text: content
             })
-            conn.sendSticker(m.chat, json.data.url, m, {
+            const buffer = Buffer.from(json.data, 'base64')
+            conn.sendSticker(m.chat, buffer, m, {
                packname: m.pushName,
                author: setting.sk_author
             })

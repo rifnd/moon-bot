@@ -27,5 +27,6 @@ module.exports = {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
    },
-   limit: 5
+   limit: 5,
+   error: true
 }
