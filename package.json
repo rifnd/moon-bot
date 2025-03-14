@@ -16,6 +16,9 @@
    "license": "MIT",
    "author": "rifnd",
    "main": "index.js",
+   "engines": {
+      "node": ">= 20.x"
+   },
    "directories": {
       "lib": "lib"
    },
@@ -27,7 +30,7 @@
       "queque": "node index.js --queque"
    },
    "dependencies": {
-      "@moonr/utils": "^0.5.9",
+      "@moonr/utils": "^0.6.2",
       "@whiskeysockets/baileys": "npm:@neoxr/baileys",
       "archiver": "^7.0.1",
       "bytes": "^3.1.2",

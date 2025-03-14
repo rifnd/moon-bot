@@ -7,7 +7,7 @@ const conn = new Connection({
    directory: 'plugins', /** folder for plugins, you can change */
    session: 'session', /** this is for the folder storing the session */
    online: true, /** in for online view on whatsapp */
-   browser: ['Ubuntu', 'Chrome', '20.0.04'] /** this is for the browser version */
+   bypass_ephemeral: true
 })
 
 /** connection already established */
