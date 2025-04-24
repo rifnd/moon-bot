@@ -18,7 +18,7 @@ module.exports = {
       var type = (args[0] || '').toLowerCase()
       var isAll = false
       var isUser = false
-      var g = ['welcome', 'detect', 'antidelete', 'antilink', 'antivirtex', 'autosticker', 'antisticker', 'antiporn', 'viewonce', 'filter']
+      var g = ['welcome', 'detect', 'antidelete', 'antilink', 'antivirtex', 'autosticker', 'antisticker', 'antiporn', 'viewonce', 'filter', 'antitagsw']
       var o = ['anticall', 'chatbot', 'levelup', 'self', 'online', 'antispam', 'debug', 'autodownload', 'groupmode', 'privatemode', 'game', 'rpg', 'noprefix']
       switch (type) {
          /** group setting */
@@ -150,6 +150,19 @@ module.exports = {
                throw false
             }
             groupSet.filter = isEnable
+         }
+            break
+         case 'antitagsw': {
+            if (!m.isGroup) {
+               if (!isOwner) {
+                  conn.reply(m.chat, global.status.owner, m)
+                  throw false
+               }
+            } else if (!isAdmin) {
+               conn.reply(m.chat, global.status.admin, m)
+               throw false
+            }
+            groupSet.antitagsw = isEnable
          }
             break
 

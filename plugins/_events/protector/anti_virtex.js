@@ -1,5 +1,5 @@
 let handler = (m) => m
-handler.before = async function(m, {
+handler.before = async function (m, {
    conn,
    groupSet,
    isBotAdmin,
@@ -7,7 +7,7 @@ handler.before = async function(m, {
    Func
 }) {
    try {
-      if (m.isGroup && !m.fromMe && body && (groupSet.antivirtex && body.match(/(৭৭৭৭৭৭৭৭|๒๒๒๒๒๒๒๒|๑๑๑๑๑๑๑๑|ดุท้่เึางืผิดุท้่เึางื)/gi) || groupSet.antivirtex && body.length > 10000)) return conn.sendMessage(m.chat, {
+      if (!m.fromMe && body && (groupSet.antivirtex && body.match(/(৭৭৭৭৭৭৭৭|๒๒๒๒๒๒๒๒|๑๑๑๑๑๑๑๑|ดุท้่เึางืผิดุท้่เึางื)/gi) || groupSet.antivirtex && body.length > 10000)) return conn.sendMessage(m.chat, {
          delete: {
             remoteJid: m.chat,
             fromMe: false,
@@ -20,5 +20,5 @@ handler.before = async function(m, {
    }
    return true
 }
-handler.botAdmin = true
+handler.botAdmin = handler.group = true
 module.exports = handler

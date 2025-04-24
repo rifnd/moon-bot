@@ -1,5 +1,7 @@
 const { Functions: Func, Scraper, Print, Queque, Config: env } = new (require('@moonr/utils'))
 const cron = require('node-cron')
+const cooldownMap = new Map()
+const COOLDOWN_MS = env.cooldown * 1000
 
 module.exports = async (conn, ctx, database) => {
    var { m, chatUpdate, store, match, body, command, args, _args, text, plugins, prefix, usedPrefix, prefixes } = ctx
@@ -66,6 +68,7 @@ module.exports = async (conn, ctx, database) => {
          conn.reply(m.chat, `You are back online after being offline for : ${Func.texted('bold', Func.toTime(new Date - users.afk))}\n\n• ${Func.texted('bold', 'Reason')}: ${users.afkReason ? users.afkReason : '-'}`, m)
          users.afk = -1
          users.afkReason = ''
+         users.afkObj = {}
       }
       cron.schedule('00 00 * * *', () => {
          setting.lastReset = Date.now()
@@ -101,18 +104,49 @@ module.exports = async (conn, ctx, database) => {
          }
          if (!plugin) continue
          if (typeof plugin.all === 'function') {
+            if (plugin.owner && !isOwner) continue
+            if (plugin.group && !m.isGroup) continue
+            if (plugin.private && m.isGroup) continue
+            if (plugin.admin && !isAdmin) continue
+            if (plugin.botAdmin && !isBotAdmin) continue
+            if (plugin.premium && !isPrems) continue
+            if (plugin.disabled || setting.pluginDisable.includes(name.split('/').pop())) continue
             try {
                await plugin.all.call(conn, m, chatUpdate)
             } catch (e) {
                console.error(e)
             }
          }
-         if (typeof plugin.before === 'function') if (m.fromMe || m.isBot || m.chat.endsWith('broadcast') || await plugin.before.call(this, m, { match, body, blockList, conn: conn, store, database, prefixes, plugins, participants, groupMetadata, isOwner, isAdmin, isBotAdmin, isPrems, users, groupSet, chats, setting, chatUpdate, Func, Scraper, env })) continue
-         if (typeof plugin !== 'function') continue
+         if (typeof plugin.before === 'function') {
+            if (plugin.owner && !isOwner) continue
+            if (plugin.group && !m.isGroup) continue
+            if (plugin.private && m.isGroup) continue
+            if (plugin.admin && !isAdmin) continue
+            if (plugin.botAdmin && !isBotAdmin) continue
+            if (plugin.premium && !isPrems) continue
+            if (plugin.disabled || setting.pluginDisable.includes(name.split('/').pop())) continue
 
+            if (m.fromMe || m.isBot || m.chat.endsWith('broadcast')) continue
+            const isBlocked = await plugin.before.call(this, m, {
+               match, body, store, blockList, conn: conn, command, prefixes, plugins,
+               participants, groupMetadata, isOwner, isAdmin,
+               isBotAdmin, isPrems, users, groupSet, chats, setting, chatUpdate,
+               database, Func, Scraper, env
+            })
+            if (isBlocked) continue
+         }
+         if (typeof plugin !== 'function') continue
          if (match || setting.noprefix) {
             let isAccept = ((Array.isArray(plugin.command) && plugin.command.includes(command)) || (Array.isArray(plugin.help) && plugin.help.includes(command)))
             if (!isAccept) continue
+
+            /** cooldown per command */
+            let lastUsed = cooldownMap.get(m.sender) || 0
+            if (Date.now() - lastUsed < COOLDOWN_MS) {
+               continue
+            }
+            cooldownMap.set(m.sender, Date.now())
+
             m.plugin = name
             m.isCommand = true
             users.hit += 1

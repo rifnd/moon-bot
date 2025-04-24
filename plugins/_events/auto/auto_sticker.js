@@ -8,7 +8,7 @@ module.exports = {
       Func
    }) {
       try {
-         if (m.isGroup && groupSet.autosticker && /video|image/.test(m.mtype)) {
+         if (groupSet.autosticker && /video|image/.test(m.mtype)) {
             let mime = m.msg.mimetype
             if (/image\/(jpe?g|png)/.test(mime)) {
                let img = await m.download()
@@ -31,6 +31,6 @@ module.exports = {
          console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
-      return true
-   }
+   },
+   group: true
 }

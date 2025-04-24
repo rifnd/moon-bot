@@ -10,7 +10,7 @@ module.exports = {
       Func
    }) => {
       try {
-         if (m.quoted && /document/.test(m.quoted.mtype) && m.quoted.mimetype === 'application/json') {
+         if (m.quoted && /document/.test(m.quoted.mtype) && /json/.test(m.quoted.fileName)) {
             const fn = await Func.getFile(await m.quoted.download())
             if (!fn.status) return m.reply('File cannot be downloaded.')
             global.db = JSON.parse(readFileSync(fn.file, 'utf-8'))

@@ -2,14 +2,13 @@ let handler = (m) => m
 handler.before = async function (m, {
    conn,
    body,
-   isAdmin,
    isBotAdmin,
    groupSet,
    Scraper,
    Func
 }) {
    try {
-      if (!m.fromMe && m.isGroup && groupSet.antiporn && /image/.test(m.mtype) && !isAdmin && isBotAdmin) {
+      if (!m.fromMe && groupSet.antiporn && /image/.test(m.mtype) && !isAdmin) {
          let media = await Scraper.uploader(await m.download())
          let json = await Api.get('api/detect-porn', {
             image: media.data.url
@@ -30,6 +29,6 @@ handler.before = async function (m, {
    } catch (e) {
       console.log(e)
    }
-   return true
 }
+handler.group = handler.botAdmin = true
 module.exports = handler

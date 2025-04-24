@@ -35,6 +35,6 @@ module.exports = {
       } catch (e) {
          console.log(e)
       }
-      return true
-   }
+   },
+   error: false
 }

@@ -7,7 +7,7 @@ module.exports = {
       Func
    }) {
       try {
-         if (setting.chatbot && body && !env.evaluate_chars.some(v => body.startsWith(v)) && !m.isGroup) {
+         if (setting.chatbot && body && !env.evaluate_chars.some(v => body.startsWith(v))) {
             const json = await Api.post('api/completions', {
                model: 'cognitivecomputations/dolphin-2.9.1-llama-3-70b',
                messages: JSON.stringify([{ role: 'system', content: 'Be a helpful assistant' }, { role: 'user', content: `${body}` }])
@@ -18,6 +18,7 @@ module.exports = {
       } catch (e) {
          console.log(e)
       }
-      return true
-   }
+   },
+   private: true,
+   error: false
 }

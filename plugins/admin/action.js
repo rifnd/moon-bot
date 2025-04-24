@@ -10,12 +10,12 @@ module.exports = {
       participants,
       Func
    }) => {
-      let input = text ? text : m.quoted ? m.quoted.sender : m.mentionedJid.length > 0 ? m.mentioneJid[0] : false
+      const input = m?.mentionedJid?.[0] || m?.quoted?.sender || text
       if (!input) return conn.reply(m.chat, Func.texted('bold', `🚩 Mention or reply chat target.`), m)
-      let p = await conn.onWhatsApp(input.trim())
-      if (p.length == 0) return conn.reply(m.chat, Func.texted('bold', `🚩 Invalid number.`), m)
-      let jid = conn.decodeJid(p[0].jid)
-      let number = jid.replace(/@.+/, '')
+      const p = await conn.onWhatsApp(input.trim())
+      if (!p.length) return conn.reply(m.chat, Func.texted('bold', `🚩 Invalid number.`), m)
+      const jid = conn.decodeJid(p[0].jid)
+      const number = jid.replace(/@.+/, '')
       if (command == 'kick') {
          let member = participants.find(u => u.id == jid)
          if (!member) return conn.reply(m.chat, Func.texted('bold', `🚩 @${number} already left or does not exist in this group.`), m)

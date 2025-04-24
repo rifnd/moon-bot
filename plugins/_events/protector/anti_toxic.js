@@ -10,7 +10,7 @@ handler.before = async function before(m, {
    Func
 }) {
    try {
-      if (m.isGroup && groupSet.filter && !isAdmin && !m.fromMe) {
+      if (groupSet.filter && !isAdmin && isBotAdmin && !m.fromMe) {
          let toxic = setting.toxic
          if (body && (new RegExp('\\b' + toxic.join('\\b|\\b') + '\\b')).test(body.toLowerCase())) {
             groupSet.member[m.sender].warning += 1
@@ -41,7 +41,6 @@ handler.before = async function before(m, {
    } catch (e) {
       return conn.reply(m.chat, Func.jsonFormat(e), m)
    }
-   return true
 }
-handler.botAdmin = true
+handler.group = true
 module.exports = handler

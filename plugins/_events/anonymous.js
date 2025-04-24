@@ -20,5 +20,7 @@ module.exports = {
          } : {})
       }
       return true
-   }
+   },
+   private: true,
+   error: false
 }

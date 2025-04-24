@@ -6,7 +6,7 @@ handler.before = async function (m, {
    isBotAdmin,
    groupSet
 }) {
-   if (m.isGroup && groupSet.antilink && !isAdmin && body) {
+   if (groupSet.antilink && !isAdmin && body) {
       if (body.match(/(chat.whatsapp.com)/gi) && !body.includes(await conn.groupInviteCode(m.chat)) || body.match(/(wa.me)/gi)) return conn.sendMessage(m.chat, {
          delete: {
             remoteJid: m.chat,
@@ -16,6 +16,6 @@ handler.before = async function (m, {
          }
       })//.then(() => conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove'))
    }
-   return true
 }
+handler.group = handler.botAdmin = true
 module.exports = handler

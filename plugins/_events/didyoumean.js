@@ -31,6 +31,6 @@ module.exports = {
             conn.reply(m.chat, `Maybe the command you are using is not right, try the following recommendations :\n\n${recommendations}`, m)
          }
       }
-      return true
-   }
+   },
+   error: false
 }

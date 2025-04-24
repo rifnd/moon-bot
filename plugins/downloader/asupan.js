@@ -10,25 +10,32 @@ module.exports = {
       Func
    }) => {
       try {
-         m.react('🕒')
+         conn.sendReact(m.chat, '🕒', m.key)
          let old = new Date()
          let json = await Api.get('api/tiktok-post', {
-            q: args[0] || Func.random(['_hanna4yours', 'moodaaii', 'imnotnoncakeithh', 'athaw041', 'jacquelinesndr', 'joanne_flute', 'auwa___', 'aikolovesushi', 'liayuhuuu_', 'mrchellacty', 'michellechristoo', 'nauraurelia0'])
+            q: args[0] || Func.random(['_hanna4yours', 'moodaaii', 'imnotnoncakeithh', 'athaw041', 'jacquelinesndr', 'joanne_flute', 'auwa___', 'aikolovesushi', 'liayuhuuu_', 'mrchellacty', 'michellechristoo', 'nauraurelia0', 'kharisma_ptw', 'avcdchs_'])
          })
-         if (!json.status) return m.reply(Func.jsonFormat(json))
-         let ran = Math.floor(json.data.length * Math.random())
-         let cap = `乂  *A S U P A N*\n\n`
-         cap += `   ∘  *Author* : ${json.data[ran].author.nickname}\n`
-         cap += `   ∘  *Views* : ${Func.formatNumber(json.data[ran].play_count)}\n`
-         cap += `   ∘  *Like* : ${Func.formatNumber(json.data[ran].digg_count)}\n`
-         cap += `   ∘  *Comment* : ${Func.formatNumber(json.data[ran].comment_count)}\n`
-         cap += `   ∘  *Share* : ${Func.formatNumber(json.data[ran].share_count)}\n`
-         cap += `   ∘  *Duration* : ${Func.timeFormat(json.data[ran].duration)}\n`
-         cap += `   ∘  *Sound* : ${json.data[ran].music_info.title} - ${json.data[ran].music_info.author}\n`
-         cap += `   ∘  *Caption* : ${json.data[ran].title}\n`
-         cap += `   ◦  *Fetching* : ${(new Date() - old) * 1} ms\n\n`
-         cap += global.footer
-         conn.sendFile(m.chat, json.data[ran].play, '', cap, m)
+         if (!json.status) return conn.reply(m.chat, `🚩 ${json.msg}`, m)
+         let result = await Func.random(json.data)
+         let capt = '乂  *A S U P A N*\n\n'
+         capt += `   ◦  *Views* : ${Func.formatNumber(result.stats.views)}\n`
+         capt += `   ◦  *Likes* : ${Func.formatNumber(result.stats.likes)}\n`
+         capt += `   ◦  *Comments* : ${Func.formatNumber(result.stats.comment)}\n`
+         capt += `   ◦  *Shares* : ${Func.formatNumber(result.stats.share)}\n`
+         capt += `   ◦  *Duration* : ${result.duration}\n`
+         capt += `   ◦  *Quality* : ${result.quality}\n`
+         capt += `   ◦  *Uploaded* : ${result.taken_at}\n`
+         capt += `   ◦  *Size* : ${result.size}\n`
+         capt += `   ◦  *Process* : ${((new Date - old) * 1)} ms\n\n`
+         capt += '乂  *A U T H O R*\n\n'
+         capt += `   ◦  *Author* : ${result.author.nickname} (@${result.author.fullname})\n`
+         capt += `   ◦  *Verified* : ${result.author.verified ? 'Yes' : 'No'}\n`
+         capt += `   ◦  *Followers* : ${Func.formatNumber(result.author.followers)}\n`
+         capt += `   ◦  *Bio* : ${result.author.signature}\n\n`
+         capt += '乂  *M U S I C - I N F O*\n\n'
+         capt += `   ◦  ${result.music_info.title} - ${result.music_info.author}\n\n`
+         capt += global.footer
+         conn.sendFile(m.chat, result.data[0].url, '', capt, m)
       } catch (e) {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }

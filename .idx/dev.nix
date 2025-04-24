@@ -2,19 +2,25 @@
 # see: https://developers.google.com/idx/guides/customize-idx-env
 { pkgs, ... }: {
   # Which nixpkgs channel to use.
-  channel = "stable-23.11"; # or "unstable"
+  channel = "stable-24.11"; # or "unstable"
 
   # Use https://search.nixos.org/packages to find packages
   packages = [
-    pkgs.nodejs_18
+    pkgs.nodejs_20
     pkgs.neofetch
     pkgs.jellyfin-ffmpeg
     pkgs.imagemagick
     pkgs.libwebp
+    pkgs.yarn
+    pkgs.libuuid
   ];
 
   # Sets environment variables in the workspace
-  env = {};
+  env = {
+    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+      pkgs.libuuid
+    ];
+  };
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [

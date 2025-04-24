@@ -1,7 +1,14 @@
 "use strict"
-require('./lib/system/config')
-const { Connection, Mongo, Postgre, Functions: Func, Config: env } = new (require('@moonr/utils')), { existsSync, mkdirSync, readdirSync, unlinkSync } = require('fs'), cron = require('node-cron')
-const database = /mongo/.test(process.env.DATABASE_URL) ? new Mongo(process.env.DATABASE_URL, env.database) : /postgres/.test(process.env.DATABASE_URL) ? new Postgre(process.env.DATABASE_URL, env.database) : new (require('./lib/system/localdb'))(env.database)
+const { Connection, Mongo, Postgre, Functions: Func, Config: env } = new (require('@moonr/utils'))
+require('./lib/system/config'), require('./lib/system/functions'), require('./lib/system/scraper')
+const { existsSync, mkdirSync, readdirSync, unlinkSync } = require('fs')
+const cron = require('node-cron')
+
+const database = /mongo/.test(process.env.DATABASE_URL)
+   ? new Mongo(process.env.DATABASE_URL, env.database)
+   : /postgres/.test(process.env.DATABASE_URL)
+      ? new Postgre(process.env.DATABASE_URL, env.database)
+      : new (require('./lib/system/localdb'))(env.database)
 
 const conn = new Connection({
    directory: 'plugins', /** folder for plugins, you can change */
@@ -63,8 +70,6 @@ conn.once('prepare', async () => {
 conn.ev('import', ctx => {
    require('./handler')(conn.sock, ctx, database)
    require('./lib/system/simple')(conn.sock)
-   require('./lib/system/functions')
-   require('./lib/system/scraper')
 })
 
 /** incoming/outgoing group members */
@@ -76,7 +81,11 @@ conn.ev('group-participants.update', async ctx => {
       case 'add':
       case 'remove':
          let pic = await conn.sock.profilePictureUrl(ctx.member, 'image') || await Func.fetchBuffer('./src/image/default.jpg')
-         text = (ctx.action === 'add' ? (group.sWelcome || 'Welcome to @subject @user\n\n@desc').replace('@user', '@' + ctx.member.split('@')[0]).replace('@subject', ctx.subject).replace('@desc', ctx.groupMetadata.desc.toString()) : (group.sBye || 'Goodbye @user.').replace('@user', '@' + ctx.member.split('@')[0]))
+         text = (ctx.action === 'add' ? (group.sWelcome || 'Welcome to @subject @user\n\n@desc')
+            .replace('@user', '@' + ctx.member.split('@')[0])
+            .replace('@subject', ctx.subject)
+            .replace('@desc', ctx.groupMetadata.desc.toString() || '') : (group.sBye || 'Goodbye @user.')
+            .replace('@user', '@' + ctx.member.split('@')[0]))
          if (group && group.welcome) conn.sock.sendMessageModify(ctx.jid, text, null, {
             largeThumb: true,
             thumbnail: pic,

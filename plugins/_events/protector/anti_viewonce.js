@@ -7,7 +7,7 @@ module.exports = {
       Func
    }) {
       try {
-         if (m.isGroup && m.msg && m.msg.viewOnce && !isOwner && groupSet.viewonce) {
+         if (m.msg && m.msg.viewOnce && !isOwner && groupSet.viewonce) {
             let media = await conn.downloadMediaMessage(m.msg)
             if (/image/.test(m.mtype)) {
                conn.sendFile(m.chat, media, Func.filename('jpg'), body ? body : '', m)
@@ -19,6 +19,6 @@ module.exports = {
          console.log(e)
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }
-      return true
-   }
+   },
+   group: true
 }
