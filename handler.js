@@ -198,7 +198,7 @@ module.exports = async (conn, ctx, database) => {
                m.reply(global.status.game)
                continue
             } else if (plugin.limit && users.limit < plugin.limit * 1) {
-               conn.reply(m.chat, `⚠️ You reached the limit and will be reset at 00.00\n\nTo get more limits upgrade to premium plans.`, m).then(() => users.premium = false)
+               conn.reply(m.chat, `⚠️ You reached the limit and will be reset at 00.00\n\nTo get more limits upgrade to premium plans.`, m)
                continue
             } else if (plugin.limit && users.limit > 0) {
                const limit = plugin.limit == 'Boolean' ? 1 : plugin.limit

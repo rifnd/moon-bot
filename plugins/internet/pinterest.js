@@ -23,15 +23,10 @@ module.exports = {
          for (let i = 0; i < 5; i++) {
             var rand = Math.floor(json.data.length * Math.random())
             medias.push({
-               type: 'image',
-               data: { url: json.data[rand].url }
+               url: json.data[rand].url
             })
          }
-         if (medias.length === 1) {
-            await conn.sendFile(m.chat, medias[0].data.url, '', `🍟 *Process* : ${((new Date - old) * 1)} ms`, m)
-         } else {
-            await conn.sendAlbumMessage(m.chat, medias, { caption: `🍟 Process : ${((new Date - old) * 1)} ms`, quoted: m })
-         }
+         conn.sendAlbumMessage(m.chat, medias, m)
       } catch (e) {
          return conn.reply(m.chat, Func.jsonFormat(e), m)
       }

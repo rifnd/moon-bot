@@ -1,5 +1,5 @@
 module.exports = {
-   async function(m, {
+   async before(m, {
       conn,
       env,
       Func
@@ -7,17 +7,14 @@ module.exports = {
       try {
          setInterval(async () => {
             let day = 86400000 * 3, now = new Date() * 1
-            Object.values(global.db.users).filter(v => now - v.lastseen > day && !v.premium && !v.banned && v.exp < 1000000).map(v => {
-               let user = global.db.users[v.jid]
-               if (user) delete global.db.users[v.jid]
+            Object.entries(global.db.users).filter(([jid, user]) => now - user.lastseen > day && !user.premium && !user.banned).forEach(([jid, user]) => {
+               delete global.db.users[jid]
             })
-            Object.values(global.db.chats).filter(v => now - v.lastseen > day).map(v => {
-               let chat = global.db.chats[v.jid]
-               if (chat) delete global.db.chats[v.jid]
+            Object.entries(global.db.chats).filter(([jid, chat]) => now - chat.lastseen > day).forEach(([jid, chat]) => {
+               delete global.db.chats[jid]
             })
-            Object.values(global.db.groups).filter(v => now - v.activity > day).map(v => {
-               let group = global.db.groups[v.jid]
-               if (group) delete global.db.groups[v.jid]
+            Object.entries(global.db.groups).filter(([jid, group]) => now - group.activity > day).forEach(([jid, group]) => {
+               delete global.db.groups[jid]
             })
          }, 60_000)
       } catch (e) {

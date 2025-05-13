@@ -11,17 +11,20 @@ module.exports = {
       Func
    }) => {
       try {
-         if (!text) return m.reply(Func.example(usedPrefix, command, 'hi'))
+         if (!text) return conn.reply(m.chat, Func.example(usedPrefix, command, 'mark itu orang atau alien'), m)
          m.react('🕒')
          var result = await Api.get('api/ai-meta', {
             prompt: text
          })
-         if (!result.status) return m.reply(result.msg || null)
+         var media = []
+         if (!result.status) return conn.reply(m.chat, `🚩 ${result.msg}`, m)
          if (result.data.imagine_media.length != 0) {
             result.data.imagine_media.map(async v => {
-               await conn.sendFile(m.chat, v.uri, '', '', m)
-               await Func.delay(1500)
+               media.push({
+                  url: v.uri
+               })
             })
+            conn.sendAlbumMessage(m.chat, media, m)
          } else {
             conn.reply(m.chat, result.data.content, m)
          }
@@ -30,5 +33,4 @@ module.exports = {
       }
    },
    limit: true,
-   premium: true
 }

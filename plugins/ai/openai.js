@@ -14,7 +14,7 @@ module.exports = {
       try {
          if (!text) return m.reply(Func.example(usedPrefix, command, 'moonbot'))
          m.react('🕒')
-         var result = await Api.get('api/gpt-3.5-turbo', {
+         var result = await Api.get('api/openai', {
             prompt: text
          })
          if (!result.status) return m.reply(Func.jsonFormat(result))

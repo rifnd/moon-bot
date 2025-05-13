@@ -84,7 +84,7 @@ conn.ev('group-participants.update', async ctx => {
          text = (ctx.action === 'add' ? (group.sWelcome || 'Welcome to @subject @user\n\n@desc')
             .replace('@user', '@' + ctx.member.split('@')[0])
             .replace('@subject', ctx.subject)
-            .replace('@desc', ctx.groupMetadata.desc.toString() || '') : (group.sBye || 'Goodbye @user.')
+            .replace('@desc', ctx.groupMetadata.desc || '') : (group.sBye || 'Goodbye @user.')
             .replace('@user', '@' + ctx.member.split('@')[0]))
          if (group && group.welcome) conn.sock.sendMessageModify(ctx.jid, text, null, {
             largeThumb: true,
