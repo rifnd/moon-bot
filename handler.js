@@ -126,7 +126,7 @@ module.exports = async (conn, ctx, database) => {
             if (plugin.premium && !isPrems) continue
             if (plugin.disabled || setting.pluginDisable.includes(name.split('/').pop())) continue
 
-            if (m.fromMe || m.isBot || m.chat.endsWith('broadcast')) continue
+            if (m.isBot || m.chat.endsWith('broadcast')) continue
             const isBlocked = await plugin.before.call(this, m, {
                match, body, store, blockList, conn: conn, command, prefixes, plugins,
                participants, groupMetadata, isOwner, isAdmin,
@@ -155,7 +155,7 @@ module.exports = async (conn, ctx, database) => {
             if (setting.error.includes(command)) return m.reply(Func.texted('bold', `🚩 Command _${usedPrefix + command}_ disabled.`))
             if (plugin.disabled || setting.pluginDisable.includes(name.split('/').pop())) return
             if (!m.isGroup && env.blocks.some(no => m.sender.startsWith(no))) return conn.updateBlockStatus(m.sender, 'block')
-            if ((m.fromMe && m.isBot) || /broadcast|newsletter/.test(m.chat) || /edit/.test(m.mtype)) continue
+            if (m.isBot || m.chat.endsWith('broadcast') || /Edited/.test(m.mtype)) continue
             if (setting.self && !isOwner && !m.fromMe) continue
             if (setting.privatemode && !isOwner && !m.fromMe && m.isGroup) continue
             if (!m.isGroup && !['owner.js', 'price.js', 'reg.js', 'menfess.js', 'menfess_ev.js'].includes(name.split('/').pop()) && chats && !isPrems && !users.banned && new Date() * 1 - chats.lastchat < env.timeout) continue

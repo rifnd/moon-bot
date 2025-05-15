@@ -13,7 +13,7 @@ module.exports = {
       Func
    }) => {
       try {
-         conn.menu = conn.menu ? conn.menu : {}
+         //conn.menu = conn.menu ? conn.menu : {}
          const style = setting.style
          const local_size = fs.existsSync('./' + env.database + '.json') ? await Func.getSize(fs.statSync('./' + env.database + '.json').size) : ''
          const message = setting.msg.replace('+tag', `@${m.sender.replace(/@.+/g, '')}`).replace('+name', m.name).replace('+limit', users.limit).replace('+premium', Func.switcher(users.premium, '√', '×')).replace('+greeting', Func.greeting()).replace('+db', (/mongo/.test(process.env.DATABASE_URL) ? 'MongoDB' : /postgresql/.test(process.env.DATABASE_URL) ? 'PostgreSQL' : `Local : ${local_size}`))
