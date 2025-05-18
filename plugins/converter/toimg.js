@@ -15,7 +15,7 @@ module.exports = {
          if (!m.quoted) return conn.reply(m.chat, Func.texted('bold', `🚩 Reply to sticker you want to convert to an image/photo (not supported for sticker animation).`), m)
          if (m.quoted.mimetype != 'image/webp') return conn.reply(m.chat, Func.texted('bold', `🚩 Reply to sticker you want to convert to an image/photo (not supported for sticker animation).`), m)
          m.react('🕒')
-         let media = await conn.saveMediaMessage(m.quoted)
+         let media = await conn.downloadAndSaveMediaMessage(m.quoted)
          let file = Func.filename('png')
          let isFile = path.join(tmpdir(), file)
          exec(`ffmpeg -i ${media} ${isFile}`, (err, stderr, stdout) => {
