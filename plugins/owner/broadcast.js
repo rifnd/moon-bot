@@ -43,25 +43,27 @@ module.exports = {
             for (let jid of id) {
                await Func.delay(1500)
                let media = await q.download()
-               await conn.sendFile(jid, media, '', q.text ? '乂  *B R O A D C A S T*\n\n' + q.text : '', null, null,
-                  command == 'bcgc' ? {
-                     contextInfo: {
-                        mentionedJid: await (await conn.groupMetadata(jid)).participants.map(v => v.id)
-                     }
-                  } : {})
+               await conn.sendFile(jid, media, '', q.text ? '乂  *B R O A D C A S T*\n\n' + q.text : '', null, {
+                  netral: true
+               }, command == 'bcgc' ? {
+                  contextInfo: {
+                     mentionedJid: await (await conn.groupMetadata(jid)).participants.map(v => v.id)
+                  }
+               } : {})
             }
             conn.reply(m.chat, Func.texted('bold', `🚩 Successfully send broadcast message to ${id.length} ${command == 'bc' ? 'chats' : 'groups'}`), m)
          } else if (/audio/.test(mime)) {
             for (let jid of id) {
                await Func.delay(1500)
                let media = await q.download()
-               await conn.sendFile(jid, media, '', '', null, null,
-                  command == 'bcgc' ? {
-                     ptt: q.ptt,
-                     contextInfo: {
-                        mentionedJid: await (await conn.groupMetadata(jid)).participants.map(v => v.id)
-                     }
-                  } : {})
+               await conn.sendFile(jid, media, '', '', null, {
+                  netral: true
+               }, command == 'bcgc' ? {
+                  ptt: q.ptt,
+                  contextInfo: {
+                     mentionedJid: await (await conn.groupMetadata(jid)).participants.map(v => v.id)
+                  }
+               } : {})
             }
             conn.reply(m.chat, Func.texted('bold', `🚩 Successfully send broadcast message to ${id.length} ${command == 'bc' ? 'chats' : 'groups'}`), m)
          } else conn.reply(m.chat, Func.texted('bold', `🚩 Media / text not found or media is not supported.`), m)
