@@ -11,7 +11,7 @@ module.exports = {
    }) => {
       try {
          if (!args[0]) return m.reply(Func.example(usedPrefix, command, 'https://www.threads.net/t/CuiXbGvPyJz/?igshid=NTc4MTIwNjQ2YQ=='))
-         if (!args[0].match('threads.net')) return conn.reply(m.chat, global.status.invalid, m)
+         if (!/https?:\/\/(?:www\.)?(threads\.(net|com)|[\w-]+\.com)\/[^\s"]*/i.test(args[0])) return conn.reply(m.chat, global.status.invalid, m)
          let old = new Date()
          m.react('🕒')
          var json = await Api.get('api/threads', {
