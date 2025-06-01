@@ -18,9 +18,14 @@ module.exports = {
                         conn.reply(m.chat, Func.jsonFormat(json), m)
                         continue
                      }
-                     let result = json.data.find(v => v.quality === 'HD') || json.data.find(v => v.quality === 'SD')
+                     let result = json.data.find(v => v.quality == 'HD') || json.data.find(v => v.quality == 'SD')
                      if (result) {
-                        await conn.sendFile(m.chat, result.url, Func.filename('mp4'), `◦ *Quality* : ${result.quality}`, m)
+                        conn.sendFile(m.chat, result.url, Func.filename(result.quality === 'jpeg' ? 'jpeg' : 'mp4'), `◦ *Quality* : ${result.quality}`, m)
+                     } else {
+                        json.data.map(async v => {
+                           await conn.sendFile(m.chat, v.url, Func.filename(v.quality === 'jpeg' ? 'jpeg' : 'mp4'), `◦ *Quality* : ${v.quality}`, m)
+                           await Func.delay(1500)
+                        })
                      }
                   } catch (e) {
                      conn.reply(m.chat, Func.jsonFormat(e), m)
