@@ -15,7 +15,7 @@ module.exports = {
          m.react('🕒')
          let img = await q.download()
          if (!img) return conn.reply(m.chat, global.status.wrong, m)
-         let link = await Scraper.uploadImageV2(img)
+         let link = await Scraper.imgbb(img)
          if (!link.status) return m.reply(Func.jsonFormat(link))
          setting.cover = link.data.url
          conn.reply(m.chat, Func.texted('bold', `🚩 Cover successfully set.`), m)
