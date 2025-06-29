@@ -40,5 +40,8 @@
       "jimp": "^0.22.12",
       "node-cron": "^3.0.0",
       "yt-search": "^2.10.4"
+   },
+   "devDependencies": {
+      "css-select": "5.1.0"
    }
 }
